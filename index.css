@@ -1,0 +1,14 @@
+#overviewContainer
+{
+	width: 1000px;
+	height: 50px;
+}
+
+#overviewScrollbar, #overviewBackground
+{
+	width: 1000px;
+	height: 50px;
+	position: absolute;
+	top: 0px;
+}
+
