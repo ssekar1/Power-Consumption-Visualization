@@ -12,3 +12,10 @@
 	top: 0px;
 }
 
+.left-handle, .right-handle
+{
+	fill: white;
+	fillOpacity: .3;
+	strokeStyle: #088;
+}
+
