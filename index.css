@@ -15,7 +15,16 @@
 .left-handle, .right-handle
 {
 	fill: white;
-	fillOpacity: .3;
+	opacity: .3;
 	stroke: #088;
 }
+
+.scrollbar
+{
+	fill: white;
+	opacity: .3;
+	stroke: #088;
+}
+
+
 
