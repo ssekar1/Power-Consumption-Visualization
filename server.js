@@ -106,6 +106,14 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
+
+	self.routes['/query'] = function(req, res) {
+		var queries = require('queries');
+		queries.connect(self.dbURL);
+
+		res.setHeader('Content-Type', 'text/html');
+		res.send('{json: "here"}');
+	}
     };
 
 
