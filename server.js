@@ -26,6 +26,8 @@ var SampleApp = function() {
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
 	self.dbURL = process.env.OPENSHIFT_MYSQL_DB_URL;
+	
+	console.log(self.dbURL);
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
