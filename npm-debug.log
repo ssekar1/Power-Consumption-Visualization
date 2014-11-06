@@ -1,0 +1,48 @@
+info it worked if it ends with ok
+verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+verbose cli   'install',
+verbose cli   'mysql' ]
+info using npm@1.1.21
+info using node@v0.6.18
+verbose C:\Program Files (x86)\nodejs\\node.exe node symlink
+verbose config file C:\Users\chris\.npmrc
+verbose config file C:\Program Files (x86)\nodejs\etc\npmrc
+verbose config file C:\Program Files (x86)\nodejs\node_modules\npm\npmrc
+verbose caching C:\Users\chris\Documents\CMSC 691\powerVis\package.json
+verbose loadDefaults OpenShift-Sample-App@1.0.0
+verbose from cache C:\Users\chris\Documents\CMSC 691\powerVis\package.json
+verbose readDependencies: using package.json deps
+verbose cache add [ 'mysql', null ]
+silly cache add: name, spec, args [ undefined, 'mysql', [ 'mysql', null ] ]
+verbose parsed url { pathname: 'mysql', path: 'mysql', href: 'mysql' }
+verbose addNamed [ 'mysql', '' ]
+verbose addNamed [ null, '' ]
+silly name, range, hasData [ 'mysql', '', false ]
+verbose raw, before any munging mysql
+verbose url resolving [ 'https://registry.npmjs.org/', './mysql' ]
+verbose url resolved https://registry.npmjs.org/mysql
+http GET https://registry.npmjs.org/mysql
+ERR! Error: SSL Error: SELF_SIGNED_CERT_IN_CHAIN
+ERR!     at ClientRequest.<anonymous> (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\request\main.js:483:26)
+ERR!     at ClientRequest.g (events.js:156:14)
+ERR!     at ClientRequest.emit (events.js:67:17)
+ERR!     at HTTPParser.parserOnIncomingClient [as onIncoming] (http.js:1256:7)
+ERR!     at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:91:29)
+ERR!     at CleartextStream.socketOnData [as ondata] (http.js:1288:20)
+ERR!     at CleartextStream._push (tls.js:375:27)
+ERR!     at SecurePair.cycle (tls.js:734:20)
+ERR!     at EncryptedStream.write (tls.js:130:13)
+ERR!     at Socket.ondata (stream.js:38:26)
+ERR! You may report this log at:
+ERR!     <http://github.com/isaacs/npm/issues>
+ERR! or email it to:
+ERR!     <npm-@googlegroups.com>
+ERR! 
+ERR! System Windows_NT 6.1.7601
+ERR! command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "mysql"
+ERR! cwd C:\Users\chris\Documents\CMSC 691\powerVis
+ERR! node -v v0.6.18
+ERR! npm -v 1.1.21
+ERR! message SSL Error: SELF_SIGNED_CERT_IN_CHAIN
+verbose exit [ 1, true ]
