@@ -6,11 +6,12 @@
   <title>Power Consumption Visualization</title>
   <link rel="stylesheet" type="text/css" href="/css" />
    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  
   <script>
   	$(document).ready(function(){
   		var overviewCanvas = document.getElementById("overviewBackground");
   	  	var ovContext = overviewCanvas.getContext("2d");
-  	
+		console.log("paint the canvas");  	
   		ovContext.fillRect(0, 0, 200, 5);
   		ovContext.fillRect(300, 5, 200, 5);
   		ovContext.fillRect(0, 10, 200, 5);
@@ -21,6 +22,7 @@
 <body>
 <div id="overviewContainer">
 <canvas id="overviewBackground"></canvas>
+
 <svg id="overviewScrollbar">
 	<g class="scroll">
 		<rect class="scrollbar" style="fill: white; fillOpacity: .3; " x="0" y="0" width="100%" height="100%"></rect>
