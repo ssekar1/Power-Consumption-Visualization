@@ -111,7 +111,10 @@ var SampleApp = function() {
 		var queries = require('queries');
 		queries.connect(self.dbURL);
 
+<<<<<<< HEAD
 		res.setHeader('Content-Type', 'text/html');
+=======
+>>>>>>> e9e03f7ed0cacfb97c1f51ec0c92e4db241dea7e
 		res.send('{json: "here"}');
 	}
     };
