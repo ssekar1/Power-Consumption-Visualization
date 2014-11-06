@@ -26,8 +26,6 @@ var SampleApp = function() {
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
 	self.dbURL = process.env.OPENSHIFT_MYSQL_DB_URL;
-	
-	console.log(self.dbURL);
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
@@ -107,6 +105,17 @@ var SampleApp = function() {
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
+        };
+
+	self.routes['/css'] = function(req, res)
+	{
+		res.setHeader('Content-Type', 'text/css');
+		res.send(self.cache_get('index.css'));
+	}
+
+	self.routes['/data'] = function(req, res) {
+            res.setHeader('Content-Type', 'application/json');
+            res.send("{ someVar: 3}");
         };
     };
 
