@@ -119,6 +119,11 @@ var SampleApp = function() {
 			var circuits = req.params.circuits;
 			
 			self.pool.query('SELECT min(unixTimestamp), max(unixTimestamp), AVG(circuit1kw) from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
+				if(err)
+				{
+					console.log(err);
+					res.send(err);
+				}
 				res.send(rows);
 			});
         };
