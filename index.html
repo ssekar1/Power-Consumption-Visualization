@@ -12,18 +12,24 @@
   	var ovWidth = $("#overviewBackground").css("width");
   	var ovHeight = $("#overviewBackground").css("height");
   	
-  	d3.json("/data/circuitsByMinute", function(error, data){
+  	//$.getJSON("/data/circuitMax");
+  	//$.getJSON("/data/circuitMin");
+  	
+  	$.getJSON("/data/circuitsByMinute").done(function(data)
+  	{
   		var startTimeRange = new Date(data[0].start);
   		var endTimeRange = new Date(data[data.length - 1].end);
-  		
   		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
   		
-  		var ovBackground = d3.select("#overviewBackground");
-  		
-  		ovBackground.selectAll("g.circuit1").attr("transform", "translate(0,2)")
-  		.data(data).enter()
-  		.append("rect")
-  		.attr("x", function(d){
+  		var canvas = document.getElementById("overviewBackground");
+  		var context = canvas.getContext("2d");
+
+  		$.each(data, function(i, d){
+  			console.log(i + new Date(d.start));
+  		});
+  	});
+  	
+  	/*	.attr("x", function(d){
   			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
   			return ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth;
   		})
@@ -32,14 +38,14 @@
   			return ((new Date(d.end).getTime() - new Date(d.end).getTime()) / rangeInMilliseconds) * ovWidth;
   		})
   		.attr("height", 5)
-  		.attr("style", function(d) {"fill: " + d3.hsl(30, 1, d.c1)});
+  		.attr("style", function(d) {"fill: " + d3.hsl(30, 1, d.c1)});*/
   	});
   	
   </script>
 </head>
 <body>
 <div id="overviewContainer">
-<svg id="overviewBackground"></svg>
+<canvas id="overviewBackground"></canvas>
 
 <svg id="overviewScrollbar">
 	<g class="scroll">
