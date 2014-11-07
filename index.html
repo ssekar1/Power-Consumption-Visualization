@@ -9,8 +9,6 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
   <script>
   	  	
-  	var ovWidth = $("#overviewBackground").css("width");
-  	var ovHeight = $("#overviewBackground").css("height");
   	var c1Max = .5;
   	
   	//$.getJSON("/data/circuitMax");
@@ -26,10 +24,12 @@
   		var context = canvas.getContext("2d");
 
   		$.each(data, function(i, d){
-  			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
-  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth;
+  			console.log("current start time from range: " + (new Date(d.start).getTime() - startTimeRange.getTime()));
+  			console.log("")
+  			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width);
+  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
   			var y = 0;
-  			var w = ((new Date(d.end).getTime() - new Date(d.end).getTime()) / rangeInMilliseconds) * ovWidth;
+  			var w = ((new Date(d.end).getTime() - new Date(d.end).getTime()) / rangeInMilliseconds) * canvas.width;
   			var h = 5;
   			context.fillStyle = "rgba(0,0,0," + d.c1 / c1Max + ")";
   			context.fillRect(x,y,w,h);
