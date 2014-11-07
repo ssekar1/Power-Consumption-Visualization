@@ -13,9 +13,25 @@
   	var ovHeight = $("#overviewBackground").css("height");
   	
   	d3.json("/data/circuitsByMinute", function(error, data){
-  		console.log(data);
-  		//var ovBackground = d3.select("#overviewBackground")
-  		//.append("g").attr("")
+  		var startTimeRange = new Date(data[0].start);
+  		var endTimeRange = new Date(data[data.length - 1].end);
+  		
+  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
+  		
+  		var ovBackground = d3.select("#overviewBackground");
+  		
+  		ovBackground.selectAll("g.circuit1").attr("transform", "translate(0,2)")
+  		.data(data).enter()
+  		.append("rect")
+  		.attr("x", function(d){ 
+  			return ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth;
+  		})
+  		.attr("y", 0)
+  		.attr("width", function(d){
+  			return ((new Date(d.end).getTime() - new Date(d.end).getTime()) / rangeInMilliseconds) * ovWidth;
+  		})
+  		.attr("height", 5)
+  		.attr("style", function(d) {"fill: " + d3.hsl(30, 1, d.c1)});
   	})
   	
   </script>
