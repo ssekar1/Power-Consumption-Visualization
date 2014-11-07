@@ -1,13 +1,13 @@
 #overviewContainer
 {
 	width: 1000px;
-	height: 50px;
+	height: 105px;
 }
 
 #overviewScrollbar, #overviewBackground
 {
 	width: 1000px;
-	height: 50px;
+	height: 105px;
 	position: absolute;
 	top: 0px;
 }
@@ -17,6 +17,7 @@
 	fill: white;
 	opacity: .3;
 	stroke: #088;
+	display: none;
 }
 
 .scrollbar
@@ -24,6 +25,7 @@
 	fill: white;
 	opacity: .3;
 	stroke: #088;
+	display:none;
 }
 
 
