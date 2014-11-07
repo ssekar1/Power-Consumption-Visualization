@@ -10,6 +10,7 @@
   <script>
   	  	
   	var c1Max = .5;
+  	var c2Max
   	
   	//$.getJSON("/data/circuitMax");
   	//$.getJSON("/data/circuitMin");
@@ -24,14 +25,14 @@
   		var context = canvas.getContext("2d");
 
   		$.each(data, function(i, d){
-  			console.log("current start time from range: " + (new Date(d.start).getTime() - startTimeRange.getTime()));
-  			console.log("")
-  			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width);
   			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
   			var y = 0;
   			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
   			var h = 5;
   			context.fillStyle = "rgba(0,0,0," + d.c1 / c1Max + ")";
+  			context.fillRect(x,y,w,h);
+  			y+=5;
+  			context.fillStyle = "rgba(0,0,0," + d.c2 / c2Max + ")";
   			context.fillRect(x,y,w,h);
   		});
   	});
