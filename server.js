@@ -118,12 +118,12 @@ var SampleApp = function() {
 	self.routes['/data/circuitsByMinute'] = function(req, res) {
 			var circuits = req.params.circuits;
 			
-			self.pool.query('SELECT min(unixTimestamp) as start, max(unixTimestamp) as end, AVG(circuit1kw) as circuit1 ' +
-					'AVG(circuit2kw) as circuit2, AVG(circuit3kw) as circuit3, AVG(circuit4kw) as circuit4, AVG(circuit5kw) as circuit5,' +
-					'AVG(circuit6kw) as circuit6, AVG(circuit7Akw) as circuit7A, AVG(circuit7Bkw) as circuit7B, AVG(circuit8kw) as circuit8,' +
-					'AVG(circuit9kw) as circuit9, AVG(circuit10kw) as circuit10, AVG(circuit11kw) as circuit11, AVG(circuit12kw) as circuit12,' +
-					'AVG(circuit13kw) as circuit13, AVG(circuit14kw) as circuit14, AVG(circuit15kw) as circuit15, AVG(circuit16kw) as circuit16,' +
-					'AVG(circuit17kw) as circuit17, AVG(circuit18kw) as circuit18, AVG(circuit19kw) as circuit19, AVG(circuit20kw) as circuit20' +
+			self.pool.query('SELECT min(unixTimestamp), max(unixTimestamp), AVG(circuit1kw), ' +
+					'AVG(circuit2kw), AVG(circuit3kw), AVG(circuit4kw), AVG(circuit5kw),' +
+					'AVG(circuit6kw), AVG(circuit7Akw), AVG(circuit7Bkw), AVG(circuit8kw),' +
+					'AVG(circuit9kw), AVG(circuit10kw), AVG(circuit11kw), AVG(circuit12kw),' +
+					'AVG(circuit13kw), AVG(circuit14kw), AVG(circuit15kw), AVG(circuit16kw),' +
+					'AVG(circuit17kw), AVG(circuit18kw), AVG(circuit19kw), AVG(circuit20kw)' +
 					' from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
 				if(err)
 				{
