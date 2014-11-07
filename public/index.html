@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Power Consumption Visualization</title>
+  <link rel="stylesheet" type="text/css" href="/css" />
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  
+  <script>
+  	$(document).ready(function(){
+  		var overviewCanvas = document.getElementById("overviewBackground");
+  	  	var ovContext = overviewCanvas.getContext("2d");
+		console.log("paint the canvas");  	
+  		ovContext.fillRect(0, 0, 200, 5);
+  		ovContext.fillRect(300, 5, 200, 5);
+  		ovContext.fillRect(0, 10, 200, 5);
+  	});
+  	
+  	
+  </script>
+</head>
+<body>
+<div id="overviewContainer">
+<canvas id="overviewBackground"></canvas>
+
+<svg id="overviewScrollbar">
+	<g class="scroll">
+		<rect class="scrollbar" x="0" y="0" width="100%" height="100%"></rect>
+		<g class="left-handle" transform="translate(0,0)">
+		<polygon points="0,0 0,50 10,50 10,45 5,45 5,5 10,5 10,0"></polygon>
+		</g>
+		<g class="right-handle" transform="translate(990, 0)">
+		<polygon points="0,0 10,0 10,50 0,50 0,45 5,45 5,5 0,5"></polygon>
+		</g>
+	</g>
+</svg>
+</div>
+<div id="zoomContainer">
+</div>
+</body>
+</html>
