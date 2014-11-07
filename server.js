@@ -98,11 +98,6 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
-
 	self.routes['/data'] = function(req, res) {
             res.setHeader('Content-Type', 'application/json');
             res.send("{ someVar: 3}");
