@@ -29,7 +29,7 @@
   			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width);
   			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
   			var y = 0;
-  			var w = ((new Date(d.end).getTime() - new Date(d.end).getTime()) / rangeInMilliseconds) * canvas.width;
+  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
   			var h = 5;
   			context.fillStyle = "rgba(0,0,0," + d.c1 / c1Max + ")";
   			context.fillRect(x,y,w,h);
