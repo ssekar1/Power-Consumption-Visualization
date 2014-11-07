@@ -23,7 +23,8 @@
   		ovBackground.selectAll("g.circuit1").attr("transform", "translate(0,2)")
   		.data(data).enter()
   		.append("rect")
-  		.attr("x", function(d){ 
+  		.attr("x", function(d){
+  			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
   			return ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth;
   		})
   		.attr("y", 0)
