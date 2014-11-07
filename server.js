@@ -123,7 +123,7 @@ var SampleApp = function() {
 					'AVG(circuit6kw), AVG(circuit7Akw), AVG(circuit7Bkw), AVG(circuit8kw),' +
 					'AVG(circuit9kw), AVG(circuit10kw), AVG(circuit11kw), AVG(circuit12kw),' +
 					'AVG(circuit13kw), AVG(circuit14kw), AVG(circuit15kw), AVG(circuit16kw),' +
-					'AVG(circuit17kw), AVG(circuit18kw), AVG(circuit19kw), AVG(circuit20kw)' +
+					'AVG(circuit17kw), AVG(circuit18kw), AVG(circuit19kw), AVG(circuit20kw) as circuit20' +
 					' from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
 				if(err)
 				{
