@@ -2,7 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-
+var mysql = require('mysql');
 
 /**
  *  Define the sample application.
@@ -25,7 +25,8 @@ var SampleApp = function() {
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
-	self.dbURL = process.env.OPENSHIFT_MYSQL_DB_URL;
+        self.dbURL = process.env.OPENSHIFT_MYSQL_DB_URL;
+        self.pool = mysql.createPool(self.dbURL);
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
@@ -114,9 +115,12 @@ var SampleApp = function() {
 		res.send(self.cache_get('index.css'));
 	}
 
-	self.routes['/data'] = function(req, res) {
-            res.setHeader('Content-Type', 'application/json');
-            res.send("{ someVar: 3}");
+	self.routes['/data/circuitsByMinute'] = function(req, res) {
+			var circuits = req.params.circuits;
+			
+			pool.query('SELECT min(unixTimestamp), max(unixTimestamp), AVG(circuit1kw) from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
+				res.send(rows);
+			});
         };
     };
 
