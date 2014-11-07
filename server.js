@@ -98,10 +98,21 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
+        self.routes['/asciimo'] = function(req, res) {
+            var link = "http://i.imgur.com/kmbjB.png";
+            res.send("<html><body><img src='" + link + "'></body></html>");
+        };
+
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
+
+	self.routes['/index.css'] = function(req, res)
+	{
+		res.setHeader('Content-Type', 'text/css');
+		res.send(self.cache_get('public/index.css'));
+	}
 
 	self.routes['/data'] = function(req, res) {
             res.setHeader('Content-Type', 'application/json');
@@ -118,7 +129,6 @@ var SampleApp = function() {
         self.createRoutes();
         self.app = express.createServer();
 
-        self.app.use(express.static(__dirname + '/public'));
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
             self.app.get(r, self.routes[r]);
