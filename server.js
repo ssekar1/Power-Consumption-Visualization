@@ -108,6 +108,12 @@ var SampleApp = function() {
             res.send(self.cache_get('index.html') );
         };
 
+	self.routes['/css'] = function(req, res)
+	{
+		res.setHeader('Content-Type', 'text/css');
+		res.send(self.cache_get('index.css'));
+	}
+
 	self.routes['/data'] = function(req, res) {
             res.setHeader('Content-Type', 'application/json');
             res.send("{ someVar: 3}");
