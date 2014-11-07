@@ -11,6 +11,7 @@
   	  	
   	var ovWidth = $("#overviewBackground").css("width");
   	var ovHeight = $("#overviewBackground").css("height");
+  	var c1Max = .5;
   	
   	//$.getJSON("/data/circuitMax");
   	//$.getJSON("/data/circuitMin");
@@ -25,7 +26,13 @@
   		var context = canvas.getContext("2d");
 
   		$.each(data, function(i, d){
-  			console.log(i + new Date(d.start));
+  			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
+  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth;
+  			var y = 0;
+  			var w = ((new Date(d.end).getTime() - new Date(d.end).getTime()) / rangeInMilliseconds) * ovWidth;
+  			var h = 5;
+  			context.fillStyle = "rgba(0,0,0," + d.c1 / c1Max + ")";
+  			context.fillRect(x,y,w,h);
   		});
   	});
   	
