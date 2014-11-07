@@ -25,7 +25,7 @@ var SampleApp = function() {
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
-        self.dbURL = process.env.OPENSHIFT_MYSQL_DB_URL;
+        self.dbURL = process.env.OPENSHIFT_MYSQL_DB_URL + "?database=powerconsumption";
         self.pool = mysql.createPool(self.dbURL);
 
         if (typeof self.ipaddress === "undefined") {
