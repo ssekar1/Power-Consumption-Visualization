@@ -118,7 +118,7 @@ var SampleApp = function() {
 	self.routes['/data/circuitsByMinute'] = function(req, res) {
 			var circuits = req.params.circuits;
 			
-			pool.query('SELECT min(unixTimestamp), max(unixTimestamp), AVG(circuit1kw) from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
+			self.pool.query('SELECT min(unixTimestamp), max(unixTimestamp), AVG(circuit1kw) from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
 				res.send(rows);
 			});
         };
