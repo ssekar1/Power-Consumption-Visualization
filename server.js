@@ -110,8 +110,30 @@ var SampleApp = function() {
 		res.send(self.cache_get('index.css'));
 	}
 
-	self.routes['/data/powerEvents/'] = function(req, res) {
+	self.routes['/data/powerEvents'] = function(req, res) {
 		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents', function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+			}
+			
+			res.send(rows);
+		});
+	};
+	
+	self.routes['/data/powerEvents/:circuits'] = function(req, res) {
+		var circuits = ["c1", "c2", "c3", "c4", "c5", "c6", "c7a", "c7b", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20"];
+		var selectedCircuits = req.params.circuits.split(",");
+		var queryString = "SELECT start, end, circuit, avgKW FROM powerEvents WHERE circuits IN(";
+		
+		selectedCircuits.forEach(function(c){
+			queryString += "'" + c + "', ";
+		});
+		
+		queryString = queryString.substring(0, queryString.length - 2);
+		queryString += ")";
+		
+		self.pool.query(queryString, function(err, rows, fields){
 			if(err)
 			{
 				console.log(err);
@@ -134,6 +156,31 @@ var SampleApp = function() {
 			res.send(rows);
 		});
 	};
+	
+	self.routes['/data/powerEvents/:circuits/:start/:end'] = function(req, res) {
+		var start = new Date(parseInt(req.params.start, 10));
+		var end = new Date(parseInt(req.params.end, 10));
+		var circuits = ["c1", "c2", "c3", "c4", "c5", "c6", "c7a", "c7b", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20"];
+		var selectedCircuits = req.params.circuits.split(",");
+		var queryString = "SELECT start, end, circuit, avgKW FROM powerEvents WHERE circuits IN(";
+		
+		selectedCircuits.forEach(function(c){
+			queryString += "'" + c + "', ";
+		});
+		
+		queryString = queryString.substring(0, queryString.length - 2);
+		queryString += ")";
+		queryString += " AND start >= ? AND end <= ?";
+		self.pool.query(queryString, [start, end], function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+			}
+			
+			res.send(rows);
+		});
+	};
+	}
 	
 	self.routes['/data/circuitsByMinute'] = function(req, res) {
 		var circuits = req.params.circuits;
