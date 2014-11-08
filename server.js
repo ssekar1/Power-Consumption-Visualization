@@ -126,7 +126,7 @@ var SampleApp = function() {
 		var queryString = "SELECT unixTimestamp as ts, ";
 		
 		selectedCircuits.forEach(function(item) {
-			queryString += circuits[circuit[Integer.parseInt(item)]] + ", ";
+			queryString += circuits[circuits[Integer.parseInt(item)]] + ", ";
 		});
 		
 		queryString = queryString.substring(queryString.length - 2, queryString.length);
