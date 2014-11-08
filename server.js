@@ -140,7 +140,7 @@ var SampleApp = function() {
 				res.send(err);
 			}
 			
-			var events = [], sum, count, start, end, ts = fields[0].name, cir = data.fields[1].name, firstRow = true;
+			var events = [], sum, count, start, end, ts = fields[0].name, cir = fields[1].name, firstRow = true;
 			rows.forEach(function(d){
 			    if(firstRow)
 			    {
