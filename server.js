@@ -139,6 +139,7 @@ var SampleApp = function() {
 				console.log(err);
 				res.send(err);
 			}
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send({ "rows": rows, "fields": fields});
 		});	
 	};
