@@ -127,7 +127,7 @@ var SampleApp = function() {
 		console.log(queryString);
 		selectedCircuits.forEach(function(item) {
 			console.log(item);
-			queryString += circuits[circuits[parseInt(item, 10)]] + ", ";
+			queryString += circuits[parseInt(item, 10)] + ", ";
 			console.log(queryString);
 		});
 		
