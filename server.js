@@ -99,11 +99,6 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
@@ -115,6 +110,50 @@ var SampleApp = function() {
 		res.send(self.cache_get('index.css'));
 	}
 
+	self.routes['/data/powerEvents/'] = function(req, res) {
+		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents', [start, end], function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+			}
+			
+			res.send(rows);
+		});
+	};
+	
+	self.routes['/data/powerEvents/:start/:end'] = function(req, res) {
+		var start = new Date(parseInt(req.params.start, 10));
+		var end = new Date(parseInt(req.params.end, 10));
+		
+		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents WHERE start >= ? AND end <= ?', [start, end], function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+			}
+			
+			res.send(rows);
+		});
+	};
+	
+	self.routes['/data/circuitsByMinute'] = function(req, res) {
+		var circuits = req.params.circuits;
+		
+		self.pool.query('SELECT min(unixTimestamp) as start, max(unixTimestamp) as end, AVG(circuit1kw) as c1, ' +
+				'AVG(circuit2kw) as c2, AVG(circuit3kw) as c3, AVG(circuit4kw) as c4, AVG(circuit5kw) as c5,' +
+				'AVG(circuit6kw) as c6, AVG(circuit7Akw) as c7a, AVG(circuit7Bkw) as c7b, AVG(circuit8kw) as c8,' +
+				'AVG(circuit9kw) as c9, AVG(circuit10kw) as c10, AVG(circuit11kw) as c11, AVG(circuit12kw) as c12,' +
+				'AVG(circuit13kw) as c13, AVG(circuit14kw) as c14, AVG(circuit15kw) as c15, AVG(circuit16kw) as c16,' +
+				'AVG(circuit17kw) as c17, AVG(circuit18kw) as c18, AVG(circuit19kw) as c19, AVG(circuit20kw) as c20' +
+				' from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+				res.send(err);
+			}
+			res.send(rows);
+		});
+    };
+	
 	self.routes['/data/indexEvents/:circuits'] = function(req, res) {
 		
 		var circuits = ["circuit1kw as c1", "circuit2kw as c2", "circuit3kw as c3", "circuit4kw as c4", "circuit5kw as c5", "circuit6kw as c6", 
@@ -173,24 +212,6 @@ var SampleApp = function() {
 		});	
 	};
 	
-	self.routes['/data/circuitsByMinute'] = function(req, res) {
-			var circuits = req.params.circuits;
-			
-			self.pool.query('SELECT min(unixTimestamp) as start, max(unixTimestamp) as end, AVG(circuit1kw) as c1, ' +
-					'AVG(circuit2kw) as c2, AVG(circuit3kw) as c3, AVG(circuit4kw) as c4, AVG(circuit5kw) as c5,' +
-					'AVG(circuit6kw) as c6, AVG(circuit7Akw) as c7a, AVG(circuit7Bkw) as c7b, AVG(circuit8kw) as c8,' +
-					'AVG(circuit9kw) as c9, AVG(circuit10kw) as c10, AVG(circuit11kw) as c11, AVG(circuit12kw) as c12,' +
-					'AVG(circuit13kw) as c13, AVG(circuit14kw) as c14, AVG(circuit15kw) as c15, AVG(circuit16kw) as c16,' +
-					'AVG(circuit17kw) as c17, AVG(circuit18kw) as c18, AVG(circuit19kw) as c19, AVG(circuit20kw) as c20' +
-					' from powerreadings group by year, month, day, hour, minute', function(err, rows, fields){
-				if(err)
-				{
-					console.log(err);
-					res.send(err);
-				}
-				res.send(rows);
-			});
-        };
     };
 
 
