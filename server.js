@@ -164,9 +164,8 @@ var SampleApp = function() {
 			            
 			    }
 			});
-			console.log("rows: " + rows.length);
-			console.log("events: " + events.length);
-			self.pool.query("INSERT INTO powerevents SET ?", events, function(err, results){});
+			
+			self.pool.query("INSERT INTO powerevents SET ?", events, function(err, results){console.log(err)});
 			
 			res.send("DONE indexing");
 		});	
