@@ -111,7 +111,7 @@ var SampleApp = function() {
 	}
 
 	self.routes['/data/powerEvents/'] = function(req, res) {
-		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents', [start, end], function(err, rows, fields){
+		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents', function(err, rows, fields){
 			if(err)
 			{
 				console.log(err);
