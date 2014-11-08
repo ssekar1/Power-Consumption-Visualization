@@ -139,7 +139,7 @@ var SampleApp = function() {
 				console.log(err);
 				res.send(err);
 			}
-			res.send({ "rows": rows, "fields": fields);
+			res.send({ "rows": rows, "fields": fields});
 		});	
 	};
 	
