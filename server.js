@@ -115,7 +115,7 @@ var SampleApp = function() {
 		res.send(self.cache_get('index.css'));
 	}
 
-	self.routes['/data/rawData/:circuits'] = function(req, res) {
+	self.routes['/data/indexEvents/:circuits'] = function(req, res) {
 		
 		var circuits = ["circuit1kw as c1", "circuit2kw as c2", "circuit3kw as c3", "circuit4kw as c4", "circuit5kw as c5", "circuit6kw as c6", 
 		            "circuit7akw as c7a", "circuit1kw as c7b", "circuit8kw as c8", "circuit9kw as c9", "circuit10kw as c10", "circuit11kw as c11",
@@ -139,8 +139,35 @@ var SampleApp = function() {
 				console.log(err);
 				res.send(err);
 			}
-			res.setHeader("Access-Control-Allow-Origin", "*");
-			res.send({ "rows": rows, "fields": fields.map(function(f){return f.name})});
+			
+			var events = [], sum, count, start, end, ts = fields[0].name, cir = data.fields[1].name, firstRow = true;
+			rows.forEach(function(d){
+			    if(firstRow)
+			    {
+			        	firstRow = !firstRow;
+			            sum = d[cir];
+			            count = 1;
+			            start = end = new Date(d[ts]);
+			    }
+			    else if( Math.abs((sum / count - d[cir])) < 0.01)
+			    {
+			            sum += d[cir];
+			            count++;
+			            end = new Date(d[ts]);
+			    }
+			    else
+			    {
+			            events.push({"start": start, "end": end, "circuit" : cir, "avgKW": sum / count});
+			            start = end = new Date(d[ts]);
+			            sum = d[cir];
+			            count = 1;
+			            
+			    }
+			});
+			
+			self.pool.query("INSERT INTO powerevents SET ?", events, function(err, results){});
+			
+			res.send("DONE indexing")});
 		});	
 	};
 	
