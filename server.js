@@ -115,7 +115,7 @@ var SampleApp = function() {
 		res.send(self.cache_get('index.css'));
 	}
 
-	self.routes['/data/rawData'] = function(req, res) {
+	self.routes['/data/rawData/:circuits'] = function(req, res) {
 		
 		var circuits = ["circuit1kw as c1", "circuit2kw as c2", "circuit3kw as c3", "circuit4kw as c4", "circuit5kw as c5", "circuit6kw as c6", 
 		            "circuit7akw as c7a", "circuit1kw as c7b", "circuit8kw as c8", "circuit9kw as c9", "circuit10kw as c10", "circuit11kw as c11",
