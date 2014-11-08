@@ -157,7 +157,7 @@ var SampleApp = function() {
 			    }
 			    else
 			    {
-			            events.push([start, end, cir, sum / count]);
+			            events.push({"start": start, "end": end, "circuit" : cir, "avgKW": sum / count});
 			            start = end = new Date(d[ts]);
 			            sum = d[cir];
 			            count = 1;
@@ -165,7 +165,9 @@ var SampleApp = function() {
 			    }
 			});
 			
-			self.pool.query("INSERT INTO powerEvents (start, end, circuit, avgKW) VALUES ?", events, function(err, results){console.log(err)});
+			events.forEach(function(event){
+				self.pool.query("INSERT INTO powerEvents SET ?", event, function(err, results){console.log(err)});
+			});
 			
 			res.send("DONE indexing");
 		});	
