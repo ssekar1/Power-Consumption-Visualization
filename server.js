@@ -166,7 +166,7 @@ var SampleApp = function() {
 			});
 			
 			events.forEach(function(event){
-				self.pool.query("INSERT INTO powerEvents SET ?", event, function(err, results){console.log(err)});
+				self.pool.query("INSERT INTO powerEvents SET ?", event, function(err, results){if(err) console.log(err);});
 			});
 			
 			res.send("DONE indexing");
