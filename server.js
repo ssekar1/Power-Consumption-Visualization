@@ -124,17 +124,13 @@ var SampleApp = function() {
 		
 		var selectedCircuits = req.params.circuits.split(",");
 		var queryString = "SELECT unixTimestamp as ts, ";
-		console.log(queryString);
+		
 		selectedCircuits.forEach(function(item) {
-			console.log(item);
 			queryString += circuits[parseInt(item, 10)] + ", ";
-			console.log(queryString);
 		});
 		
 		queryString = queryString.substring(0, queryString.length - 2);
-		console.log(queryString);
 		queryString += " FROM powerreadings";
-		console.log(queryString);
 				
 		
 		self.pool.query(queryString, function(err, rows, fields){
@@ -143,7 +139,7 @@ var SampleApp = function() {
 				console.log(err);
 				res.send(err);
 			}
-			res.send(rows);
+			res.send({ "rows": rows, "fields": fields);
 		});	
 	};
 	
