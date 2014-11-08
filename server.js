@@ -126,11 +126,12 @@ var SampleApp = function() {
 		var queryString = "SELECT unixTimestamp as ts, ";
 		console.log(queryString);
 		selectedCircuits.forEach(function(item) {
+			console.log(item);
 			queryString += circuits[circuits[parseInt(item, 10)]] + ", ";
 			console.log(queryString);
 		});
 		
-		queryString = queryString.substring(queryString.length - 2, queryString.length);
+		queryString = queryString.substring(0, queryString.length - 2);
 		console.log(queryString);
 		queryString += " FROM powerreadings";
 		console.log(queryString);
