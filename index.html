@@ -13,27 +13,28 @@
   var maxValues;
   	$.getJSON("/data/circuitMax").done(function(data){
   		maxValues = data;
+  	}).then(function(data){
+  		$.getJSON("/data/powerEvents").done(function(data)
+  			  	{
+  			  		var startTimeRange = new Date(data[0].start);
+  			  		var endTimeRange = new Date(data[data.length - 1].end);
+  			  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
+  			  		
+  			  		var canvas = document.getElementById("overviewBackground");
+  			  		var context = canvas.getContext("2d");
+
+  			  		$.each(data, function(i, d){
+  			  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
+  			  			var y = 0;
+  			  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
+  			  			var h = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
+  			  			
+  			  			context.fillStyle = "rgba(0,0,0," + d.avgKW / maxValues[d.circuit] + ")";
+  			  	  		context.fillRect(x,y,w,h);  			
+  			  		});
+  			  	});	
   	});
   	
-  	$.getJSON("/data/powerEvents").done(function(data)
-  	{
-  		var startTimeRange = new Date(data[0].start);
-  		var endTimeRange = new Date(data[data.length - 1].end);
-  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
-  		
-  		var canvas = document.getElementById("overviewBackground");
-  		var context = canvas.getContext("2d");
-
-  		$.each(data, function(i, d){
-  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
-  			var y = 0;
-  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
-  			var h = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
-  			
-  			context.fillStyle = "rgba(0,0,0," + d.avgKW / maxValues[d.circuit] + ")";
-  	  		context.fillRect(x,y,w,h);  			
-  		});
-  	});
   	
   	/*	.attr("x", function(d){
   			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
