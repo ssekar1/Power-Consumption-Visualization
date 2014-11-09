@@ -17,9 +17,9 @@
   var selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   var maxCircuitValue;
   	$.getJSON("/data/circuitMax").done(function(data){
-  		$.each(data, function (i, d){
+  		$.each(data[0], function (i, d){
   			console.log(d);
-  			maxCircuitValue = max(d, maxCircuitValue);
+  			maxCircuitValue = Math.max(d, maxCircuitValue);
   		});
   	}).then(function(data){
   		$.getJSON("/data/powerEvents").done(function(events)
