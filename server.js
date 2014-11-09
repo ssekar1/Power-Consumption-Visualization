@@ -228,6 +228,7 @@ var SampleApp = function() {
 		circuits.forEach(function(sqlCircuit){
 			var queryString = "SELECT unixTimestamp as ts, " + sqlCircuit + " FROM powerreadings order by unixTimestamp";
 			
+			console.log(queryString);
 			self.pool.query(queryString, function(err, rows, fields){
 				if(err)
 				{
