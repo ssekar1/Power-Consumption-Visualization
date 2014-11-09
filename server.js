@@ -218,59 +218,66 @@ var SampleApp = function() {
 		});
     };
 	
-	self.routes['/data/indexEvents'] = function(req, res) {
+	self.routes['/data/indexEvents/:circuits'] = function(req, res) {
 		
 		var circuits = ["circuit1kw as c1", "circuit2kw as c2", "circuit3kw as c3", "circuit4kw as c4", "circuit5kw as c5", "circuit6kw as c6", 
 		            "circuit7akw as c7a", "circuit1kw as c7b", "circuit8kw as c8", "circuit9kw as c9", "circuit10kw as c10", "circuit11kw as c11",
 		            "circuit12kw as c12", "circuit13kw as c13", "circuit14kw as c14", "circuit15kw as c15", "circuit16kw as c16", "circuit17kw as c17", 
 		            "circuit18kw as c18", "circuit19kw as c19", "circuit20kw as c20"];
 		
-		circuits.forEach(function(sqlCircuit){
-			var queryString = "SELECT unixTimestamp as ts, " + sqlCircuit + " FROM powerreadings order by unixTimestamp";
+		var selectedCircuits = req.params.circuits.split(",");
+		var queryString = "SELECT unixTimestamp as ts, ";
+		
+		selectedCircuits.forEach(function(item) {
+			queryString += circuits[parseInt(item, 10)] + ", ";
+		});
+		
+		queryString = queryString.substring(0, queryString.length - 2);
+		queryString += " FROM powerreadings order by unixTimestamp";
+				
+		console.log(queryString);
+		
+		self.pool.query(queryString, function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+				res.send(err);
+			}
 			
-			console.log(queryString);
-			self.pool.query(queryString, function(err, rows, fields){
-				if(err)
+			var events = [], sum, count, start, end, ts = fields[0].name, cir = fields[1].name, firstRow = true;
+			rows.forEach(function(d){
+				if(firstRow)
+			    {
+						console.log("in first row");
+			        	firstRow = !firstRow;
+			            sum = d[cir];
+			            count = 1;
+			            start = end = new Date(d[ts]);
+			    }
+			    else if( Math.abs((sum / count - d[cir])) < 0.01)
+			    {
+			            sum += d[cir];
+			            count++;
+			            end = new Date(d[ts]);
+			    }
+			    else
+			    {
+			            events.push({"start": start, "end": end, "circuit" : cir, "avgKW": sum / count});
+			            start = end = new Date(d[ts]);
+			            sum = d[cir];
+			            count = 1;       
+			    }
+			});
+			
+			events.forEach(function(event){
+				if (event.end.getTime() < event.start.getTime())
 				{
-					console.log(err);
-					res.send(err);
+					console.log(event);
 				}
-				
-				var events = [], sum, count, start, end, ts = fields[0].name, cir = fields[1].name, firstRow = true;
-				rows.forEach(function(d){
-					if(firstRow)
-				    {
-							console.log("in first row");
-				        	firstRow = !firstRow;
-				            sum = d[cir];
-				            count = 1;
-				            start = end = new Date(d[ts]);
-				    }
-				    else if( Math.abs((sum / count - d[cir])) < 0.01)
-				    {
-				            sum += d[cir];
-				            count++;
-				            end = new Date(d[ts]);
-				    }
-				    else
-				    {
-				            events.push({"start": start, "end": end, "circuit" : cir, "avgKW": sum / count});
-				            start = end = new Date(d[ts]);
-				            sum = d[cir];
-				            count = 1;       
-				    }
-				});
-				
-				events.forEach(function(event){
-					if (event.end.getTime() < event.start.getTime())
-					{
-						console.log(event);
-					}
-					self.pool.query("INSERT INTO powerEvents SET ?", event, function(err, results){if(err) console.log(err);});
-				});
-				
-				res.send("DONE indexing");
-			});	
+				self.pool.query("INSERT INTO powerEvents SET ?", event, function(err, results){if(err) console.log(err);});
+			});
+			
+			res.send("DONE indexing");
 		});	
 	};
 	
