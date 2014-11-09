@@ -30,7 +30,9 @@
   			  			var h = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
   			  			
   			  			context.fillStyle = "rgba(0,0,0," + d.avgKW / maxValues[d.circuit] + ")";
-  			  	  		context.fillRect(x,y,w,h);  			
+  			  	  		context.fillRect(x,y,w,h);
+  			  	  		
+  			  	  		console.log("x: " + x + " y: " + y + " w: " + w + " h: " + h + " opacity: " + (d.avgKW / maxValues[d.circuit]));
   			  		});
   			  	});	
   	});
