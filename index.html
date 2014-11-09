@@ -83,9 +83,9 @@
   		var labels = d3.select("#labels").append("svg")
   		.attr("width", document.getElementById("labels").clientWidth)
   		.attr("height", document.getElementById("labels").clientHeight)
-  		.data(selectedCircuits).append("g")
-  		.attr("transform", function (d){ return "translate(" + document.getElementById("labels").clientWidth + ", " + (d * svgBox.height / selectedCircuits.length) + ")";})
-  		.append("text")
+  		.data(selectedCircuits)..append("text")
+  		.attr("x", function (d){ return document.getElementById("labels").clientWidth;})
+  		.attr("y", function (d){ return (d * svgBox.height / selectedCircuits.length);})  		
   		.attr("text-anchor", "end")
   		.attr("font-size", function(d) {return (svgBox.height / selectedCircuits.length) + "px"; })
   		.text(function(d) {return indexToName[d]});
