@@ -233,8 +233,9 @@ var SampleApp = function() {
 		});
 		
 		queryString = queryString.substring(0, queryString.length - 2);
-		queryString += " FROM powerreadings";
+		queryString += " FROM powerreadings order by unixTimestamp limit 50";
 				
+		console.log(queryString);
 		
 		self.pool.query(queryString, function(err, rows, fields){
 			if(err)
@@ -245,7 +246,9 @@ var SampleApp = function() {
 			
 			var events = [], sum, count, start, end, ts = fields[0].name, cir = fields[1].name, firstRow = true;
 			rows.forEach(function(d){
-			    if(firstRow)
+				console.log(d[cir]);
+				console.log(d[ts]);
+				if(firstRow)
 			    {
 			        	firstRow = !firstRow;
 			            sum = d[cir];
@@ -263,9 +266,9 @@ var SampleApp = function() {
 			            events.push({"start": start, "end": end, "circuit" : cir, "avgKW": sum / count});
 			            start = end = new Date(d[ts]);
 			            sum = d[cir];
-			            count = 1;
-			            
+			            count = 1;       
 			    }
+				console.log (sum / count);
 			});
 			
 			events.forEach(function(event){
