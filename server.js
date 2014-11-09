@@ -111,12 +111,12 @@ var SampleApp = function() {
 	}
 	
 	self.routes['/data/circuitMax'] = function(req, res) {
-		self.pool.query('SELECT max(circuit1kw) as maxc1, max(circuit2kw) as maxc2, max(circuit3kw) as maxc3, max(circuit4kw) as maxc4, ' +
-				'max(circuit5kw) as maxc5, max(circuit6kw) as maxc6, max(circuit7akw) as maxc7a, ' +
-				'max(circuit7bkw) as maxc7b, max(circuit8kw) as maxc8, max(circuit9kw) as maxc9, max(circuit10kw) as maxc10, ' + 
-				'max(circuit11kw) as maxc11, max(circuit12kw) as maxc12, max(circuit13kw) as maxc13, max(circuit14kw) as maxc14, ' +
-				'max(circuit15kw) as maxc15, max(circuit16kw) as maxc16, max(circuit17kw) as maxc17, max(circuit18kw) as maxc18, ' +
-				'max(circuit19kw) as maxc19, max(circuit20kw) as maxc20 from powerreadings', function(err, rows, fields){
+		self.pool.query('SELECT max(circuit1kw) as c1, max(circuit2kw) as c2, max(circuit3kw) as c3, max(circuit4kw) as c4, ' +
+				'max(circuit5kw) as c5, max(circuit6kw) as c6, max(circuit7akw) as c7a, ' +
+				'max(circuit7bkw) as c7b, max(circuit8kw) as c8, max(circuit9kw) as c9, max(circuit10kw) as c10, ' + 
+				'max(circuit11kw) as c11, max(circuit12kw) as c12, max(circuit13kw) as c13, max(circuit14kw) as c14, ' +
+				'max(circuit15kw) as c15, max(circuit16kw) as c16, max(circuit17kw) as c17, max(circuit18kw) as c18, ' +
+				'max(circuit19kw) as c19, max(circuit20kw) as c20 from powerreadings', function(err, rows, fields){
 			if(err)
 			{
 				console.log(err);
