@@ -111,7 +111,7 @@
     background-color:purple;
 }
 
-#zoomView
+#zoomViewContainer
 {
     position: absolute;
     left: 20%;
@@ -119,6 +119,12 @@
     top: 0;
     bottom: 0;
     background-color: black;
+}
+
+#zoomView
+{
+	width: 100%;
+	height: 100%;
 }
 
 .left-handle, .right-handle

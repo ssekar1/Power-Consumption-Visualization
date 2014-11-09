@@ -16,6 +16,7 @@
   var circuitNameToIndex = {"c1":0, "c2":1, "c3":2, "c4":3, "c5":4, "c6":5, "c7a":6, "c7b":7, "c8":8, "c9":9, "c10":10, "c11":11, "c12":12, "c13":13, "c14":14, "c15":15, "c16":16, "c17":17, "c18":18, "c19":19, "c20": 20};	
   var selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   var maxCircuitValue = 0;
+  var powerEvents;
   	$.getJSON("/data/circuitMax").done(function(data){
   		$.each(data[0], function (i, d){
   			console.log(d);
@@ -24,23 +25,57 @@
   	}).then(function(data){
   		$.getJSON("/data/powerEvents").done(function(events)
 	  	{
-	  		var startTimeRange = new Date(events[0].start);
-	  		var endTimeRange = new Date(events[events.length - 1].end);
-	  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
-	  		
-	  		var canvas = document.getElementById("overviewBackground");
-	  		var context = canvas.getContext("2d");
-
-	  		$.each(events, function(i, d){
-	  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
-	  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
-	  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
-	  			var h = (canvas.height / selectedCircuits.length);
-	  			context.fillStyle = "rgba(0,0,0," + (d.avgKW / maxCircuitValue) + ")";
-	  	  		context.fillRect(x,y,w,h);
-	  		});
+  			powerEvents = events;
+  			drawOverview(events);
 	  	});	
   	});
+  	
+  	function drawOverview(events)
+  	{
+  		var startTimeRange = new Date(events[0].start);
+  		var endTimeRange = new Date(events[events.length - 1].end);
+  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
+  		
+  		var canvas = document.getElementById("overviewBackground");
+  		var context = canvas.getContext("2d");
+
+  		$.each(events, function(i, d){
+  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
+  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
+  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
+  			var h = (canvas.height / selectedCircuits.length);
+  			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
+  	  		context.fillRect(x,y,w,h);
+  		});
+  	}
+  	
+  	function getColor(value){
+  	    //value from 0 to 1
+  	    var hue=((1-value)*120).toString(10);
+  	    return ["hsl(",hue,",100%,50%)"].join("");
+  	}
+  	
+  	function drawZoomView(events, start, end)
+  	{
+  		var rangeInMilliseconds = end.getTime() - start.getTime();
+  		var svgBox = svg.getBoundingClientRect();
+  		var svg = d3.select("#zoomView");
+  		var totalWidth = svg.width;
+  		var totalHeight = svg.height;
+  		
+  		console.log(totalWidth + " " + totalHeight);
+  		svg.selectAll(".events").data(events).enter()
+  		.append("rect")
+  		.attr("x", function(d){ return (new Date(d.start).getTime() - start.getTime()) / rangeInMilliseconds * svgBox.width;})
+  		.attr("y", function(d){ return circuitNameToIndex[d.circuit] * (svgBox.height / selectedCircuits.length);})
+  		.attr("w", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds * svgBox.width})
+  		.attr("h", function(d){ return svgBox.height / selectedCircuits.length;})
+  		.attr("data-start", function(d){ return d.start;})
+  		.attr("data-end", function(d){ return d.end;})
+  		.attr("avgKW", function(d){ return d.avgKW})
+  		.attr("fill", getColor(return d.avgKW / maxCircuitValue));
+  		
+  	}
   	
   	$(document).ready( function(){
   		$("#circuitSelector input").puicheckbox();
@@ -90,7 +125,8 @@
         <div id="zoomContainer">
             <div id="labels">
             </div>
-            <div id="zoomView">
+            <div id="zoomViewContainer">
+            	<svg id="zoomView"></svg>
             </div>
         </div>
     </div>
