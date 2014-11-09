@@ -250,6 +250,7 @@ var SampleApp = function() {
 				console.log(d[ts]);
 				if(firstRow)
 			    {
+						console.log("in first row");
 			        	firstRow = !firstRow;
 			            sum = d[cir];
 			            count = 1;
@@ -257,12 +258,14 @@ var SampleApp = function() {
 			    }
 			    else if( Math.abs((sum / count - d[cir])) < 0.01)
 			    {
+			    		console.log("same bin");
 			            sum += d[cir];
 			            count++;
 			            end = new Date(d[ts]);
 			    }
 			    else
 			    {
+			    		console.log("start new bin");
 			            events.push({"start": start, "end": end, "circuit" : cir, "avgKW": sum / count});
 			            start = end = new Date(d[ts]);
 			            sum = d[cir];
@@ -272,6 +275,10 @@ var SampleApp = function() {
 			});
 			
 			events.forEach(function(event){
+				if (event.end.getTime() < event.start.getTime())
+				{
+					console.log(event);
+				}
 				self.pool.query("INSERT INTO powerEvents SET ?", event, function(err, results){if(err) console.log(err);});
 			});
 			
