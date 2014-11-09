@@ -149,6 +149,8 @@ var SampleApp = function() {
 		queryString = queryString.substring(0, queryString.length - 2);
 		queryString += ")";
 		
+		console.log(queryString);
+		
 		self.pool.query(queryString, function(err, rows, fields){
 			if(err)
 			{
