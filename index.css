@@ -14,7 +14,6 @@
     right: 0;
     top: 0;
     bottom: 50%;
-    background-color: green;
 }
 
 #visBottomContainer
@@ -33,7 +32,7 @@
     right: 50%;
     top: 0;
     bottom: 0;
-    background-color: yellow;
+	border: 1px solid black;
 }
 
 #circuitLevels
@@ -43,7 +42,7 @@
     right: 25%;
     top: 0;
     bottom: 0;
-    background-color: blue;
+    border: 1px solid black;
 }
 
 #circuitQuery
@@ -53,7 +52,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: orange;
+    border: 1px solid black;
 }
 
 
@@ -103,11 +102,10 @@
 #labels
 {
     position: absolute;
-    top: 0;
+    top: 30px;
     bottom: 0;
     left: 0;
     right: 80%;
-    background-color:purple;
 }
 
 #zoomViewContainer
@@ -140,6 +138,3 @@
 	stroke: #088;
 	display:none;
 }
-
-
-
