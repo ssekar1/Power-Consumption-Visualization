@@ -64,16 +64,13 @@
   		var rangeInMilliseconds = end.getTime() - start.getTime();
   		var svgBox = document.getElementById("zoomView").getBoundingClientRect();
   		var svg = d3.select("#zoomView");
-  		var totalWidth = svg.width;
-  		var totalHeight = svg.height;
   		
-  		console.log(totalWidth + " " + totalHeight);
   		svg.selectAll(".events").data(events).enter()
   		.append("rect")
   		.attr("x", function(d){ return (new Date(d.start).getTime() - start.getTime()) / rangeInMilliseconds * svgBox.width;})
   		.attr("y", function(d){ return circuitNameToIndex[d.circuit] * (svgBox.height / selectedCircuits.length);})
-  		.attr("w", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds * svgBox.width})
-  		.attr("h", function(d){ return svgBox.height / selectedCircuits.length;})
+  		.attr("width", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds * svgBox.width})
+  		.attr("height", function(d){ return svgBox.height / selectedCircuits.length;})
   		.attr("data-start", function(d){ return d.start;})
   		.attr("data-end", function(d){ return d.end;})
   		.attr("avgKW", function(d){ return d.avgKW;})
