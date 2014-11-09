@@ -25,14 +25,12 @@
 
   			  		$.each(events, function(i, d){
   			  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
-  			  			var y = 0;
+  			  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
   			  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
-  			  			var h = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
+  			  			var h = (canvas.height / selectedCircuits.length);
   			  			
   			  			context.fillStyle = "rgba(0,0,0," + d.avgKW / maxValues[d.circuit] + ")";
   			  	  		context.fillRect(x,y,w,h);
-  			  	  		
-  			  	  		console.log("x: " + x + " y: " + y + " w: " + w + " h: " + h + " opacity: " + (d.avgKW / maxValues[d.circuit]));
   			  		});
   			  	});	
   	});
