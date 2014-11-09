@@ -269,6 +269,10 @@ var SampleApp = function() {
 			    }
 			});
 			
+			if (count !== 1) {
+				events.push({"start": start, "end": end, "circuit" : cir, "avgKW": sum / count});
+			}
+			
 			events.forEach(function(event){
 				if (event.end.getTime() < event.start.getTime())
 				{
