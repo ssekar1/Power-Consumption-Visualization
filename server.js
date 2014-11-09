@@ -108,7 +108,19 @@ var SampleApp = function() {
 	{
 		res.setHeader('Content-Type', 'text/css');
 		res.send(self.cache_get('index.css'));
-	}
+	};
+	
+	self.routes['/css/prime-ui'] = function(req, res)
+	{
+		res.setHeader('Content-Type', 'text/css');
+		res.send(self.cache_get('prime-ui.css'));
+	};
+	
+	self.routes['/css/prime-ui'] = function(req, res)
+	{
+		res.setHeader('Content-Type', 'application/js');
+		res.send(self.cache_get('prime-ui.js'));
+	};
 	
 	self.routes['/data/circuitMax'] = function(req, res) {
 		self.pool.query('SELECT max(circuit1kw) as c1, max(circuit2kw) as c2, max(circuit3kw) as c3, max(circuit4kw) as c4, ' +

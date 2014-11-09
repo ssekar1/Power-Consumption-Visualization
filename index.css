@@ -1,12 +1,12 @@
 #overviewContainer
 {
-	width: 1000px;
+	width: 100%;
 	height: 105px;
 }
 
 #overviewScrollbar, #overviewBackground
 {
-	width: 1000px;
+	width: 100%;
 	height: 105px;
 	position: absolute;
 	top: 0px;

@@ -5,8 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Power Consumption Visualization</title>
   <link rel="stylesheet" type="text/css" href="/css" />
+  <link rel="stylesheet" type="text/css" href="/css/prime-ui" />
+  
+  <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/kendo-ui-core/2014.1.416/js/kendo.core.min.js"></script>
+  <script src="/js/prime-ui"></script>
   <script>
   var circuitNameToIndex = {"c1":0, "c2":1, "c3":2, "c4":3, "c5":4, "c6":5, "c7a":6, "c7b":7, "c8":8, "c9":9, "c10":10, "c11":11, "c12":12, "c13":13, "c14":14, "c15":15, "c16":16, "c17":17, "c18":18, "c19":19, "c20": 20};	
   var selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -15,25 +21,29 @@
   		maxValues = data;
   	}).then(function(data){
   		$.getJSON("/data/powerEvents").done(function(events)
-  			  	{
-  			  		var startTimeRange = new Date(events[0].start);
-  			  		var endTimeRange = new Date(events[events.length - 1].end);
-  			  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
-  			  		
-  			  		var canvas = document.getElementById("overviewBackground");
-  			  		var context = canvas.getContext("2d");
+	  	{
+	  		var startTimeRange = new Date(events[0].start);
+	  		var endTimeRange = new Date(events[events.length - 1].end);
+	  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
+	  		
+	  		var canvas = document.getElementById("overviewBackground");
+	  		var context = canvas.getContext("2d");
 
-  			  		$.each(events, function(i, d){
-  			  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
-  			  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
-  			  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
-  			  			var h = (canvas.height / selectedCircuits.length);
-  			  			context.fillStyle = "rgba(0,0,0," + (d.avgKW / maxValues[d.circuit]) * (w/canvas.width) + ")";
-  			  	  		context.fillRect(x,y,w,h);
-  			  		});
-  			  	});	
+	  		$.each(events, function(i, d){
+	  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
+	  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
+	  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
+	  			var h = (canvas.height / selectedCircuits.length);
+	  			context.fillStyle = "rgba(0,0,0," + (d.avgKW / maxValues[d.circuit]) * (w/canvas.width) + ")";
+	  	  		context.fillRect(x,y,w,h);
+	  		});
+	  	});	
   	});
   	
+  	$("#circuitSelector input").puicheckbox();
+  	
+  	$("#startDate").datepicker();
+  	$("#endDate").datepicker();
   	
   	/*	.attr("x", function(d){
   			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
@@ -66,6 +76,35 @@
 </svg>
 </div>
 <div id="zoomContainer">
+</div>
+
+<div id="circuitSelector">
+	<input type="checkbox" value="Circuit 1" />
+	<input type="checkbox" value="Circuit 2" />
+	<input type="checkbox" value="Circuit 3" />
+	<input type="checkbox" value="Circuit 4" />
+	<input type="checkbox" value="Circuit 5" />
+	<input type="checkbox" value="Circuit 6" />
+	<input type="checkbox" value="Circuit 7A" />
+	<input type="checkbox" value="Circuit 7B" />
+	<input type="checkbox" value="Circuit 8" />
+	<input type="checkbox" value="Circuit 9" />
+	<input type="checkbox" value="Circuit 10" />
+	<input type="checkbox" value="Circuit 11" />
+	<input type="checkbox" value="Circuit 12" />
+	<input type="checkbox" value="Circuit 13" />
+	<input type="checkbox" value="Circuit 14" />
+	<input type="checkbox" value="Circuit 15" />
+	<input type="checkbox" value="Circuit 16" />
+	<input type="checkbox" value="Circuit 17" />
+	<input type="checkbox" value="Circuit 18" />
+	<input type="checkbox" value="Circuit 19" />
+	<input type="checkbox" value="Circuit 20" />
+</div>
+
+<div id="dateRangeSelector">
+	Start Date: <div id="startDate"></div>
+	End Date: <div id="endDate"></div>
 </div>
 </body>
 </html>
