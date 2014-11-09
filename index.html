@@ -40,10 +40,13 @@
 	  	});	
   	});
   	
-  	$("#circuitSelector input").puicheckbox();
+  	$(document).ready( function(){
+  		$("#circuitSelector input").puicheckbox();
+  		$("#startDate").datepicker();
+  	  	$("#endDate").datepicker();
+  	});
   	
-  	$("#startDate").datepicker();
-  	$("#endDate").datepicker();
+  	
   	
   	/*	.attr("x", function(d){
   			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
