@@ -27,6 +27,7 @@
 	  	{
   			powerEvents = events;
   			drawOverview(events);
+  			drawZoomView(events, new Date(events[0].start), new Date(events[events.length - 1].end));
 	  	});	
   	});
   	
