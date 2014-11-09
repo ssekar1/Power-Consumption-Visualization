@@ -143,7 +143,7 @@ var SampleApp = function() {
 		var queryString = "SELECT start, end, circuit, avgKW FROM powerEvents WHERE circuit IN(";
 		
 		selectedCircuits.forEach(function(c){
-			queryString += "'" + c + "', ";
+			queryString += "'" + circuits[c] + "', ";
 		});
 		
 		queryString = queryString.substring(0, queryString.length - 2);
@@ -183,7 +183,7 @@ var SampleApp = function() {
 		var queryString = "SELECT start, end, circuit, avgKW FROM powerEvents WHERE circuit IN(";
 		
 		selectedCircuits.forEach(function(c){
-			queryString += "'" + c + "', ";
+			queryString += "'" + circuits[c] + "', ";
 		});
 		
 		queryString = queryString.substring(0, queryString.length - 2);
