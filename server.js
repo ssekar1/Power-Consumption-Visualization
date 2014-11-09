@@ -48,8 +48,8 @@ var SampleApp = function() {
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
         self.zcache['index.css'] = fs.readFileSync('./index.css');
-        self.zcache['prime-ui.css'] = fs.readFileSync('./prime-ui-1.1-min.css');
-        self.zcache['prime-ui.js'] = fs.readFileSync('./prime-ui-1.1-min.js');
+        self.zcache['prime-ui.css'] = fs.readFileSync('./primeui-1.1-min.css');
+        self.zcache['prime-ui.js'] = fs.readFileSync('./primeui-1.1-min.js');
     };
 
 
