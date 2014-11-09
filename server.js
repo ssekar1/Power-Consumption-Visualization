@@ -196,7 +196,6 @@ var SampleApp = function() {
 			res.send(rows);
 		});
 	};
-	}
 	
 	self.routes['/data/circuitsByMinute'] = function(req, res) {
 		var circuits = req.params.circuits;
@@ -274,6 +273,8 @@ var SampleApp = function() {
 			res.send("DONE indexing");
 		});	
 	};
+	
+    };
 
 
     /**
