@@ -42,12 +42,14 @@ var SampleApp = function() {
      */
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '', 'index.css': '' };
+            self.zcache = { 'index.html': '', 'index.css': '', 'prime-ui.css': '', 'prime-ui.js': '' };
         }
 
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
         self.zcache['index.css'] = fs.readFileSync('./index.css');
+        self.zcache['prime-ui.css'] = fs.readFileSync('./prime-ui-1.1-min.css');
+        self.zcache['prime-ui.js'] = fs.readFileSync('./prime-ui-1.1-min.js');
     };
 
 
@@ -113,13 +115,13 @@ var SampleApp = function() {
 	self.routes['/css/prime-ui'] = function(req, res)
 	{
 		res.setHeader('Content-Type', 'text/css');
-		res.send(self.cache_get('prime-ui-1.1-min.css'));
+		res.send(self.cache_get('prime-ui.css'));
 	};
 	
 	self.routes['/js/prime-ui'] = function(req, res)
 	{
 		res.setHeader('Content-Type', 'application/js');
-		res.send(self.cache_get('prime-ui-1.1-min.js'));
+		res.send(self.cache_get('prime-ui.js'));
 	};
 	
 	self.routes['/data/circuitMax'] = function(req, res) {
