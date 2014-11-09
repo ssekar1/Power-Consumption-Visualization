@@ -274,8 +274,6 @@ var SampleApp = function() {
 			res.send("DONE indexing");
 		});	
 	};
-	
-    };
 
 
     /**
