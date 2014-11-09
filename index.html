@@ -53,7 +53,7 @@
   	    //value from 0 to 1
   	    if(value < 0.01)
   	    {
-  	    	return "#FFF";
+  	    	return "#000";
   	    }
   	    var hue=((1-value)*120).toString(10);
   	    return ["hsl(",hue,",100%,50%)"].join("");
@@ -62,7 +62,7 @@
   	function drawZoomView(events, start, end)
   	{
   		var rangeInMilliseconds = end.getTime() - start.getTime();
-  		var svgBox = svg.getBoundingClientRect();
+  		var svgBox = document.getElementById("zoomView").getBoundingClientRect();
   		var svg = d3.select("#zoomView");
   		var totalWidth = svg.width;
   		var totalHeight = svg.height;
