@@ -113,13 +113,13 @@ var SampleApp = function() {
 	self.routes['/css/prime-ui'] = function(req, res)
 	{
 		res.setHeader('Content-Type', 'text/css');
-		res.send(self.cache_get('prime-ui.css'));
+		res.send(self.cache_get('prime-ui-1.1-min.css'));
 	};
 	
 	self.routes['/js/prime-ui'] = function(req, res)
 	{
 		res.setHeader('Content-Type', 'application/js');
-		res.send(self.cache_get('prime-ui.js'));
+		res.send(self.cache_get('prime-ui-1.1-min.js'));
 	};
 	
 	self.routes['/data/circuitMax'] = function(req, res) {
