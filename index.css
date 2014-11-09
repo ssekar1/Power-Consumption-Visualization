@@ -1,15 +1,98 @@
-#overviewContainer
+#visualizationContainer
 {
-	width: 100%;
-	height: 105px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right:0;
+    background-color: black;
 }
 
-#overviewScrollbar, #overviewBackground
+#visTopContainer
 {
-	width: 100%;
-	height: 105px;
-	position: absolute;
-	top: 0px;
+    padding: 2px;
+    width: 100%;
+    height: 50%;
+    background-color: green;
+}
+
+#visBottomContainer
+{
+    padding: 2px;
+    width: 100%;
+    height: 50%;
+    background-color: red;
+}
+
+#circuitGraph
+{
+    display:inline-block;
+    height: 100%;
+    width: 49%;
+    background-color: yellow;
+}
+
+#circuitLevels
+{
+    display:inline-block;
+    height: 100%;
+    width:24%;
+    background-color: blue;
+}
+
+#circuitQuery
+{
+    display: inline-block;
+    height: 100%;
+    width: 24%;
+    background-color: orange;
+}
+
+
+#overviewContainer
+{
+    height: 10%;
+    width: 100%;
+    background-color: gray;
+}
+
+#options
+{
+    display: inline-block;
+    height: 100%;
+    width: 20%;
+    background-color: pink;
+}
+
+#overview
+{
+    display:inline-block;
+    width: 79%;
+    height: 100%;
+    background-color: green;
+}
+
+#zoomContainer
+{
+    height: 90%;
+    width: 100%;
+    background-color: brown;
+}
+
+#labels
+{
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    background-color:purple;
+}
+
+#zoomView
+{
+    display: inline-block;
+    width: 79%;
+    height: 100%;
+    background-color: black;
 }
 
 .left-handle, .right-handle

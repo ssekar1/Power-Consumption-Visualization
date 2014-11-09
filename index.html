@@ -60,22 +60,33 @@
   </script>
 </head>
 <body>
-<div id="overviewContainer">
-<canvas id="overviewBackground"></canvas>
 
-<svg id="overviewScrollbar">
-	<g class="scroll">
-		<rect class="scrollbar" x="0" y="0" width="100%" height="100%"></rect>
-		<g class="left-handle" transform="translate(0,0)">
-		<polygon points="0,0 0,50 10,50 10,45 5,45 5,5 10,5 10,0"></polygon>
-		</g>
-		<g class="right-handle" transform="translate(990, 0)">
-		<polygon points="0,0 10,0 10,50 0,50 0,45 5,45 5,5 0,5"></polygon>
-		</g>
-	</g>
-</svg>
-</div>
-<div id="zoomContainer">
+<div id="visualizationContainer">
+    <div id="visTopContainer">
+        <div id="circuitGraph">
+            
+        </div>
+        <div id="circuitLevels">
+            
+        </div>
+        <div id="circuitQuery">
+        </div>
+    </div>
+    <div id="visBottomContainer">
+        <div id="overviewContainer">
+            <div id="options">
+            </div>
+            <div id="overview">
+            	<canvas id="overviewBackground"></canvas>
+            </div>
+        </div>
+        <div id="zoomContainer">
+            <div id="labels">
+            </div>
+            <div id="zoomView">
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="circuitSelector">
