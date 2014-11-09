@@ -93,6 +93,7 @@
 
 #zoomContainer
 {
+	border-top: 2px solid white;
     position: absolute;
     top: 10%;
     bottom: 0;
