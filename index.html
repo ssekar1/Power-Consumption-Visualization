@@ -72,8 +72,10 @@
   		.attr("h", function(d){ return svgBox.height / selectedCircuits.length;})
   		.attr("data-start", function(d){ return d.start;})
   		.attr("data-end", function(d){ return d.end;})
-  		.attr("avgKW", function(d){ return d.avgKW})
-  		.attr("fill", function(d) {return getColor(return d.avgKW / maxCircuitValue);});
+  		.attr("avgKW", function(d){ return d.avgKW;})
+  		.attr("fill", function(d){
+  			return getColor(d.avgKW / maxCircuitValue);
+  		);
   		
   	}
   	
