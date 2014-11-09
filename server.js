@@ -233,7 +233,7 @@ var SampleApp = function() {
 		});
 		
 		queryString = queryString.substring(0, queryString.length - 2);
-		queryString += " FROM powerreadings order by unixTimestamp limit 50";
+		queryString += " FROM powerreadings order by unixTimestamp";
 				
 		console.log(queryString);
 		
@@ -246,8 +246,6 @@ var SampleApp = function() {
 			
 			var events = [], sum, count, start, end, ts = fields[0].name, cir = fields[1].name, firstRow = true;
 			rows.forEach(function(d){
-				console.log(d[cir]);
-				console.log(d[ts]);
 				if(firstRow)
 			    {
 						console.log("in first row");
@@ -258,7 +256,6 @@ var SampleApp = function() {
 			    }
 			    else if( Math.abs((sum / count - d[cir])) < 0.01)
 			    {
-			    		console.log("same bin");
 			            sum += d[cir];
 			            count++;
 			            end = new Date(d[ts]);
@@ -271,7 +268,6 @@ var SampleApp = function() {
 			            sum = d[cir];
 			            count = 1;       
 			    }
-				console.log (sum / count);
 			});
 			
 			events.forEach(function(event){
