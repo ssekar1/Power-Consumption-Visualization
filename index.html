@@ -30,7 +30,7 @@
   			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
   			var h = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
   			
-  			context.fillStyle = "rgba(0,0,0," + d[circuits[j]] / c1Max + ")";
+  			context.fillStyle = "rgba(0,0,0," + d.avgKW / c1Max + ")";
   	  		context.fillRect(x,y,w,h);  			
   		});
   	});
