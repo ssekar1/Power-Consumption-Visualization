@@ -56,6 +56,12 @@
     background-color: gray;
 }
 
+#overviewBackground
+{
+	height: 100%;
+	width: 100%;
+}
+
 #options
 {
     display: inline-block;
@@ -69,7 +75,7 @@
     display:inline-block;
     width: 79%;
     height: 100%;
-    background-color: green;
+    background-color: white;
 }
 
 #zoomContainer
