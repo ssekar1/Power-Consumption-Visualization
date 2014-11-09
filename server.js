@@ -109,6 +109,22 @@ var SampleApp = function() {
 		res.setHeader('Content-Type', 'text/css');
 		res.send(self.cache_get('index.css'));
 	}
+	
+	self.routes['/data/circuitMax'] = function(req, res) {
+		self.pool.query('SELECT max(circuit1kw) as maxc1, max(circuit2kw) as maxc2, max(circuit3kw) as maxc3, max(circuit4kw) as maxc4, ' +
+				'max(circuit5kw) as maxc5, max(circuit6kw) as maxc6, max(circuit7akw) as maxc7a, ' +
+				'max(circuit7bkw) as maxc7b, max(circuit8kw) as maxc8, max(circuit9kw) as maxc9, max(circuit10kw) as maxc10, ' + 
+				'max(circuit11kw) as maxc11, max(circuit12kw) as maxc12, max(circuit13kw) as maxc13, max(circuit14kw) as maxc14, ' +
+				'max(circuit15kw) as maxc15, max(circuit16kw) as maxc16, max(circuit17kw) as maxc17, max(circuit18kw) as maxc18, ' +
+				'max(circuit19kw) as maxc19, max(circuit20kw) as maxc20 from powerreadings', function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+			}
+			
+			res.send(rows);
+		});
+	};
 
 	self.routes['/data/powerEvents'] = function(req, res) {
 		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents', function(err, rows, fields){
