@@ -116,7 +116,7 @@ var SampleApp = function() {
 		res.send(self.cache_get('prime-ui.css'));
 	};
 	
-	self.routes['/css/prime-ui'] = function(req, res)
+	self.routes['/js/prime-ui'] = function(req, res)
 	{
 		res.setHeader('Content-Type', 'application/js');
 		res.send(self.cache_get('prime-ui.js'));
