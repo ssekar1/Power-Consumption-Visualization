@@ -161,7 +161,8 @@
   	  			scroll.attr("x", leftX)
   	  			.attr("width", scrollWidth);
   	  			
-  	  			transformZoomView(maxWidth / scrollWidth, leftX);
+  	  			if(scrollWidth !== 0)
+  	  				transformZoomView(maxWidth / scrollWidth, leftX);
   	  		}	
   	  	}
   	  	
@@ -175,7 +176,8 @@
   	  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
   	  			scroll.attr("width", scrollWidth);
   	  			
-  	  			transformZoomView(maxWidth / scrollWidth, leftX);
+  	  			if(scrollWidth !== 0)
+  	  				transformZoomView(maxWidth / scrollWidth, leftX);
   	  		}
   	  	}
   	  	
@@ -190,7 +192,8 @@
 	  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
 	  			scroll.attr("x", leftX);
 	  			
-	  			transformZoomView(maxWidth / scrollWidth, leftX);
+	  			if(scrollWidth !== 0)
+	  				transformZoomView(maxWidth / scrollWidth, leftX);
 	  		}
   	  	}
   	  	
@@ -199,7 +202,7 @@
   	
   	function transformZoomView(scaleFactor, translate)
   	{
-  		$("#zoomView g").attr("transform","translate( " + translate + ", 0) scale(" + scaleFactor + ",1)");
+  		$("#zoomView g").attr("transform","translate( " + -translate + ", 0) scale(" + scaleFactor + ",1)");
   	}
   	
   	$(document).ready( function(){
