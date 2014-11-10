@@ -67,7 +67,9 @@
   		var svgBox = document.getElementById("zoomView").getBoundingClientRect();
   		var svg = d3.select("#zoomView");
   		
-  		svg.selectAll(".event").data(events).enter()
+  		svg.append(g)
+  		.attr("class", "eventContainer")
+  		.selectAll(".event").data(events).enter()
   		.append("rect")
   		.attr("class", "event")
   		.attr("x", function(d){ return (new Date(d.start).getTime() - start.getTime()) / rangeInMilliseconds * svgBox.width;})
