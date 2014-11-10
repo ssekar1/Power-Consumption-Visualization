@@ -151,7 +151,7 @@
   			
   			scroll.attr("x", d3.event.x)
   			.attr("width", function(d) { 
-  				scroll.attr("width") + d3.event.x;
+  				document.querySelector(".scroll rect").height.baseVal.value + d3.event.x;
   			});
   		}
   			
@@ -165,7 +165,7 @@
   			
   			scroll.attr("x", d3.event.x)
   			.attr("width", function(d) {
-  				scroll.attr("width") + d3.event.dx;
+  				document.querySelector(".scroll rect").height.baseVal.value + d3.event.dx;
   			});
   		}
   	}
