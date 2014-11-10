@@ -39,15 +39,13 @@
   		
   		var canvas = document.getElementById("overviewBackground");
   		var canvasBox = canvas.getBoundingClientRect();
-  		canvas.width = canvasBox.width;
-  		canvas.height = canvasBox.height;
   		var context = canvas.getContext("2d");
 
   		$.each(events, function(i, d){
-  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvasBox.width;
-  			var y = circuitNameToIndex[d.circuit] * (canvasBox.height / selectedCircuits.length);
-  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvasBox.width;
-  			var h = (canvasBox.height / selectedCircuits.length);
+  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
+  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
+  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
+  			var h = (canvas.height / selectedCircuits.length);
   			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
   	  		context.fillRect(x,y,w,h);
   		});
@@ -55,7 +53,6 @@
   		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
   		scrollbar.append("rect")
-  		.style("fill", "white")
   		.attr("x", "0")
   		.attr("y", "0")
   		.attr("width", canvasBox.width)
