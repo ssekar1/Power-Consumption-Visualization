@@ -58,8 +58,8 @@
   		scrollbar.append("rect")
   		.attr("x", "0")
   		.attr("y", "0")
-  		.attr("width", canvasBox.width)
-  		.attr("height", canvasBox.height);
+  		.attr("width", canvas.width)
+  		.attr("height", canvas.height);
   		
   		scrollbar.append("g")
   		.attr("class", "left-handle")
@@ -69,7 +69,7 @@
   		
   		scrollbar.append("g")
   		.attr("class", "right-handle")
-  		.attr("transform", "translate(" + canvasBox.width + ",0)")
+  		.attr("transform", "translate(" + canvas.width + ",0)")
   		.append("polygon")
   		.attr("points", "-10,0 0,0 0,50 -10,50 -10,45 -5,45 -5,5 -10,5");
   	}
