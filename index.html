@@ -67,7 +67,7 @@
   		var svgBox = document.getElementById("zoomView").getBoundingClientRect();
   		var svg = d3.select("#zoomView");
   		
-  		svg.append(g)
+  		svg.append("g")
   		.attr("class", "eventContainer")
   		.selectAll(".event").data(events).enter()
   		.append("rect")
