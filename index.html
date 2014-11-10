@@ -68,9 +68,9 @@
   		var svg = d3.select("#zoomView");
   		
   		svg.append("g")
-  		.select("g")
   		.attr("class", "eventContainer")
-  		.selectAll(".event").data(events).enter()
+  		.selectAll("rect.event")
+  		.data(events).enter()
   		.append("rect")
   		.attr("class", "event")
   		.attr("x", function(d){ return (new Date(d.start).getTime() - start.getTime()) / rangeInMilliseconds * svgBox.width;})
@@ -89,7 +89,6 @@
   		.attr("height", document.getElementById("labels").clientHeight)
   		.selectAll("text")
   		.data(selectedCircuits).enter()
-  		.append("text")
   		.attr("x", function (d){ return document.getElementById("labels").clientWidth;})
   		.attr("y", function (d){ return ((d + 1) * svgBox.height / selectedCircuits.length);})  		
   		.attr("text-anchor", "end")
