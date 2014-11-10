@@ -151,7 +151,7 @@
   			
   			scroll.attr("x", d3.event.x)
   			.attr("width", function(d) { 
-  				this.getAttribute("width") + d3.event.x;
+  				scroll.attr("width") + d3.event.x;
   			});
   		}
   			
@@ -165,7 +165,7 @@
   			
   			scroll.attr("x", d3.event.x)
   			.attr("width", function(d) {
-  				this.getAttribute("width") + d3.event.dx;
+  				scroll.attr("width") + d3.event.dx;
   			});
   		}
   	}
