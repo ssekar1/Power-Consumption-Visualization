@@ -22,10 +22,8 @@
   var leftHandle, rightHandle, scroll;
   
   var leftHandleDrag = d3.behavior.drag()
-  	.origin(function(d) { return d; })
   	.on("drag", dragLeftHandle);
   var rightHandleDrag = d3.behavior.drag()
-  	.origin(function(d) { return d; })
   	.on("drag", dragRightHandle);
   var scrollDrag = d3.behavior.drag()
   .origin(function(d) { return d; })
@@ -119,7 +117,7 @@
   	{
   		var svgElement = document.getElementById("overviewScrollbar");
   		svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
-  		svgElement.setAttribute("preserveAspectRatio", "xminymin meet")
+  		svgElement.setAttribute("preserveAspectRatio", "xminymin")
   		
 		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
