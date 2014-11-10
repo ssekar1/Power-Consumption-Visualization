@@ -52,26 +52,31 @@
   			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
   	  		context.fillRect(x,y,w,h);
   		});
-  		
-  		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
+  		  		
+  		drawScrollbar(canvas.width, canvas.height);
+  	}
+  	
+  	function drawScrollbar(width, height)
+  	{
+		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
   		scrollbar.append("rect")
   		.attr("x", "0")
   		.attr("y", "0")
-  		.attr("width", canvas.width)
-  		.attr("height", canvas.height);
+  		.attr("width", width)
+  		.attr("height", height);
   		
   		scrollbar.append("g")
   		.attr("class", "left-handle")
   		.attr("transform", "translate(0,0)")
   		.append("polygon")
-  		.attr("points", "0,0 0,50 10,50 10,45 5,45 5,5 10,5 10,0");
+  		.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0");
   		
   		scrollbar.append("g")
   		.attr("class", "right-handle")
-  		.attr("transform", "translate(" + canvas.width + ",0)")
+  		.attr("transform", "translate(" + width + ",0)")
   		.append("polygon")
-  		.attr("points", "-10,0 0,0 0,50 -10,50 -10,45 -5,45 -5,5 -10,5");
+  		.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
   	}
   	
   	function getColor(value){
