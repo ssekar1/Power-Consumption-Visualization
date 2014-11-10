@@ -129,19 +129,16 @@
   		.attr("height", height)
   		.call(scrollDrag);
   		
-  		leftHandle = scrollbar.append("g")
+  		leftHandle = scrollbar
+  		.append("polygon")
   		.attr("class", "left-handle")
   		.attr("transform", "translate(0,0)");
-  		
-  		leftHandle.append("polygon")
   		.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0")
   		.call(leftHandleDrag);
   		
-  		rightHandle = scrollbar.append("g")
+  		rightHandle = scrollbar.append("polygon")
   		.attr("class", "right-handle")
   		.attr("transform", "translate(" + width + ",0)");
-  		
-  		rightHandle.append("polygon")
   		.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5")
   		.call(rightHandleDrag);
   	}
@@ -181,7 +178,6 @@
   	  	
   	  	function dragScroll(d)
   	  	{
-  	  		console.log(d3.event.x + " " + d3.event.dx);
   	  		if(leftX + d3.event.dx >= 0 && rightX + d3.event.dx <= maxWidth)
 	  		{
 	  			leftX = d3.event.x;
