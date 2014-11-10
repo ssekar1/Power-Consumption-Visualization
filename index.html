@@ -20,7 +20,6 @@
   var powerEvents;
   	$.getJSON("/data/circuitMax").done(function(data){
   		$.each(data[0], function (i, d){
-  			console.log(d);
   			maxCircuitValue = Math.max(d, maxCircuitValue);
   		});
   	}).then(function(data){
@@ -50,7 +49,7 @@
   	  		context.fillRect(x,y,w,h);
   		});
   		
-  		var scrollbar = d3.select("#overviewScroll .scroll");
+  		var scrollbar = d3.select("overviewScrollbar").append("g").attr("class", "scroll");
   		
   		scrollbar.append("rect")
   		.attr("x", "0")
@@ -152,11 +151,7 @@
             </div>
             <div id="overview">
             	<canvas id="overviewBackground"></canvas>
-            	<svg id="overviewScrollbar">
-            		<g class="scroll">
-						
-					</g>
-            	</svg>
+            	<svg id="overviewScrollbar"></svg>
             </div>
         </div>
         <div id="zoomContainer">
