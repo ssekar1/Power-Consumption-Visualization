@@ -117,7 +117,7 @@
   	{
   		var svgElement = document.getElementById("overviewScrollbar");
   		svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
-  		svgElement.setAttribute("preserveAspectRatio", "xminymin")
+  		svgElement.setAttribute("preserveAspectRatio", "xMinYMin")
   		
 		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
@@ -151,7 +151,7 @@
   			
   			scroll.attr("x", d3.event.x)
   			.attr("width", function(d) { 
-  				this.attr("width") + d3.event.x;
+  				this.getAttribute("width") + d3.event.x;
   			});
   		}
   			
@@ -165,8 +165,7 @@
   			
   			scroll.attr("x", d3.event.x)
   			.attr("width", function(d) {
-  				console.log(this);
-  				this.attr("width") + d3.event.dx;
+  				this.getAttribute("width") + d3.event.dx;
   			});
   		}
   	}
