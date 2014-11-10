@@ -137,15 +137,15 @@
 	z-index: 1;
 }
 
-.left-handle, .right-handle
+.scroll rect
 {
 	fill: white;
+	opacity: .15;
 	stroke: #088;
 }
 
-.scrollbar
+.left-handle, .right-handle
 {
 	fill: white;
-	opacity: .1;
 	stroke: #088;
 }
