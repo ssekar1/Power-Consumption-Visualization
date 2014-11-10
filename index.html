@@ -20,14 +20,15 @@
   var powerEvents;
   
   var leftHandle, rightHandle, scroll;
+  var dHandlers = dragHandlers();
   
   var leftHandleDrag = d3.behavior.drag()
-  	.on("drag", dragLeftHandle);
+  	.on("drag", dHandlers.dragLeftHandle);
   var rightHandleDrag = d3.behavior.drag()
-  	.on("drag", dragRightHandle);
+  	.on("drag", dHandlers.dragRightHandle);
   var scrollDrag = d3.behavior.drag()
   .origin(function(d) { return d; })
-	.on("drag", dragScroll);
+	.on("drag", dHandlers.dragScroll);
   
   	$.getJSON("/data/circuitMax").done(function(data){
   		$.each(data[0], function (i, d){
@@ -143,38 +144,53 @@
   		.call(rightHandleDrag);
   	}
   	
-  	function dragLeftHandle(d)
+  	function dragHandlers()
   	{
-  		if(d3.event.x >= 0 && d3.event.x <= document.getElementById("overviewBackground").width)
-  		{
-  			leftHandle.attr("transform", "translate(" + d3.event.x + ", 0)");
-  			
-  			scroll.attr("x", d3.event.x)
-  			.attr("width", function(d) { 
-  				document.querySelector(".scroll rect").width.baseVal.value + d3.event.x;
-  			});
-  		}
-  			
-  	}
-  	
-  	function dragRightHandle(d)
-  	{
-  		if(d3.event.x >= 0 && d3.event.x <= document.getElementById("overviewBackground").width)
-  		{
-  			rightHandle.attr("transform", "translate(" + d3.event.x + ", 0)");
-  			
-  			scroll.attr("x", d3.event.x)
-  			.attr("width", function(d) {
-  				document.querySelector(".scroll rect").width.baseVal.value + d3.event.dx;
-  			});
-  		}
-  	}
-  	
-  	function dragScroll(d)
-  	{
-  		/*d3.select(this)
-        .attr("cx", d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
-        .attr("cy", d.y = Math.max(radius, Math.min(height - radius, d3.event.y)));*/
+  		var maxWidth = document.getElementById("overviewBackground").width,
+  			rightX = maxWidth, 
+  			scrollWidth = maxWidth, 
+  			leftX = 0;
+  		
+  		function dragLeftHandle(d)
+  	  	{
+  	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
+  	  		{
+  	  			leftX = d3.event.x;
+  	  			scrollWidth += d3.event.dx;
+  	  			
+  	  			leftHandle.attr("transform", "translate(" + leftX + ", 0)");
+  	  			scroll.attr("x", leftX)
+  	  			.attr("width", scrollWidth);
+  	  		}
+  	  			
+  	  	}
+  	  	
+  	  	function dragRightHandle(d)
+  	  	{
+  	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
+  	  		{
+  	  			rightX = d3.event.x;
+  	  			scrollWidth += d3.event.dx;
+  	  			
+  	  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
+  	  			scroll.attr("width", scrollWidth);
+  	  		}
+  	  	}
+  	  	
+  	  	function dragScroll(d)
+  	  	{
+  	  		if(d3.event.x >= 0 && scrollWidth + d3.event.x <= maxWidth)
+	  		{
+	  			rightX += d3.event.dx;
+	  			leftX += d3.event.dx;
+	  			
+	  			leftHandle.attr("transform", "translate(" + leftX + ", 0)");
+	  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
+	  			scroll.attr("x", leftX);
+	  		}
+  	  	}
+  	  	
+  	  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll};
   	}
   	
   	function transformZoomView(scaleFactor, translate)
