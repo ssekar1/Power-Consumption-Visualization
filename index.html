@@ -38,13 +38,14 @@
   		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
   		
   		var canvas = document.getElementById("overviewBackground");
+  		var canvasBox = canvas.getBoundingClientRect();
   		var context = canvas.getContext("2d");
 
   		$.each(events, function(i, d){
-  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
+  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvasBox.width;
   			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
-  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
-  			var h = (canvas.height / selectedCircuits.length);
+  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvasBox.width;
+  			var h = (canvasBox.height / selectedCircuits.length);
   			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
   	  		context.fillRect(x,y,w,h);
   		});
@@ -52,10 +53,11 @@
   		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
   		scrollbar.append("rect")
+  		.style("fill", "white")
   		.attr("x", "0")
   		.attr("y", "0")
-  		.attr("width", canvas.width)
-  		.attr("height", canvas.height);
+  		.attr("width", canvasBox.width)
+  		.attr("height", canvasBox.height);
   		
   		scrollbar.append("g")
   		.attr("class", "left-handle")
@@ -65,7 +67,7 @@
   		
   		scrollbar.append("g")
   		.attr("class", "right-handle")
-  		.attr("transform", "translate(" + canvas.width + ",0)")
+  		.attr("transform", "translate(" + canvasBox.width + ",0)")
   		.append("polygon")
   		.attr("points", "-10,0 0,0 0,50 -10,50 -10,45 -5,45 -5,5 -10,5");
   	}
