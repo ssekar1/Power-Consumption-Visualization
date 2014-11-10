@@ -85,8 +85,12 @@
 
 #overviewBackground
 {
-	height: 100%;
-	width: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 0;
 }
 
 
@@ -123,18 +127,27 @@
 	height: 100%;
 }
 
+#overviewScrollbar
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	
+}
+
 .left-handle, .right-handle
 {
 	fill: white;
-	opacity: .3;
+	opacity: .5;
 	stroke: #088;
-	display: none;
 }
 
 .scrollbar
 {
 	fill: white;
-	opacity: .3;
+	opacity: .1;
 	stroke: #088;
-	display:none;
 }

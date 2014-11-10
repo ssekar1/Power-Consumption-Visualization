@@ -49,6 +49,27 @@
   			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
   	  		context.fillRect(x,y,w,h);
   		});
+  		
+  		var scrollbar = d3.select("#overviewScroll .scroll");
+  		
+  		scrollbar
+  		.append("rect")
+  		.attr("x", "0")
+  		.attr("y", "0")
+  		.attr("width", canvas.width)
+  		.attr("height", canvas.height);
+  		
+  		scrollbar.append("g")
+  		.attr("class", "left-handle")
+  		.attr("transform", "translate(0,0)")
+  		.append("polygon")
+  		.attr("points", "0,0 0,50 10,50 10,45 5,45 5,5 10,5 10,0");
+  		
+  		scrollbar.append("g")
+  		.attr("class", "right-handle")
+  		.attr("transform", "translate(" + canvas.width + ",0)")
+  		.append("polygon")
+  		.attr("points", "-10,0 0,0 0,50 -10,50 -10,45 -5,45 -5,5 -10,5");
   	}
   	
   	function getColor(value){
@@ -96,26 +117,17 @@
   		.text(function(d) {return indexToName[d]});
   	}
   	
+  	function transformZoomView(scaleFactor, translate)
+  	{
+  		$("#zoomView g").attr("transform","scale(" + scaleFactor + ",1) translate( " + translate + ", 0)");
+  	}
+  	
   	$(document).ready( function(){
   		$("#circuitSelector").puidialog();
   		$("#circuitSelector input").puicheckbox();
   		$("#startDate").datepicker();
   	  	$("#endDate").datepicker();
   	});
-  	
-  	
-  	
-  	/*	.attr("x", function(d){
-  			console.log(((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth);
-  			return ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * ovWidth;
-  		})
-  		.attr("y", 0)
-  		.attr("width", function(d){
-  			return ((new Date(d.end).getTime() - new Date(d.end).getTime()) / rangeInMilliseconds) * ovWidth;
-  		})
-  		.attr("height", 5)
-  		.attr("style", function(d) {"fill: " + d3.hsl(30, 1, d.c1)});
-  	});*/
   	
   </script>
 </head>
@@ -140,6 +152,11 @@
             </div>
             <div id="overview">
             	<canvas id="overviewBackground"></canvas>
+            	<svg id="overviewScrollbar">
+            		<g class="scroll">
+						
+					</g>
+            	</svg>
             </div>
         </div>
         <div id="zoomContainer">
