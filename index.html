@@ -27,7 +27,7 @@
   var rightHandleDrag = d3.behavior.drag()
   	.origin(function(d) { return d; })
   	.on("drag", dragRightHandle);
-  var scrollDrag = d3.behavior.drag();
+  var scrollDrag = d3.behavior.drag()
   .origin(function(d) { return d; })
 	.on("drag", dragScroll);
   
