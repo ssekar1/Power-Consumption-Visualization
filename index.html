@@ -19,6 +19,8 @@
   var maxCircuitValue = 0;
   var powerEvents;
   
+  var overviewStartDate, overviewEndDate, zoomStartDate, zoomEndDate;
+  
   var leftHandle, rightHandle, scroll;
     
   $.getJSON("/data/circuitMax").done(function(data){
@@ -29,8 +31,10 @@
   		$.getJSON("/data/powerEvents").done(function(events)
 	  	{
   			powerEvents = events;
+  			overviewStartDate = zoomStartDate = new Date(events[0].start);
+  			overviewEndDate = zoomEndDate = new Date(events[events.length - 1].end);
   			drawOverview(events);
-  			drawZoomView(events, new Date(events[0].start), new Date(events[events.length - 1].end));
+  			drawZoomView(events, zoomStartDate, zoomEndDate);
 	  	});	
   	});
   	
@@ -162,7 +166,9 @@
   	  			.attr("width", scrollWidth);
   	  			
   	  			if(scrollWidth !== 0)
-  	  				transformZoomView(maxWidth / scrollWidth, leftX);
+  	  			{
+  	  				transformZoomView(maxWidth, scrollWidth, leftX, rightX);
+  	  			}
   	  		}	
   	  	}
   	  	
@@ -177,7 +183,9 @@
   	  			scroll.attr("width", scrollWidth);
   	  			
   	  			if(scrollWidth !== 0)
-  	  				transformZoomView(maxWidth / scrollWidth, leftX);
+ 	  			{
+ 	  				transformZoomView(maxWidth, scrollWidth, leftX, rightX);
+ 	  			}
   	  		}
   	  	}
   	  	
@@ -193,16 +201,23 @@
 	  			scroll.attr("x", leftX);
 	  			
 	  			if(scrollWidth !== 0)
-	  				transformZoomView(maxWidth / scrollWidth, leftX);
+	  			{
+	  				transformZoomView(maxWidth, scrollWidth, leftX, rightX);
+	  			}
 	  		}
   	  	}
   	  	
   	  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll};
   	}
   	
-  	function transformZoomView(scaleFactor, translate)
+  	function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundary)
   	{
-  		$("#zoomView g").attr("transform","translate( " + -translate * scaleFactor + ", 0) scale(" + scaleFactor + ",1)");
+  		var scaleFactor = overviewWidth / viewWidth;
+  		
+  		$("#zoomView g").attr("transform","translate( " + (-leftBoundary * scaleFactor) + ", 0) scale(" + scaleFactor + ",1)");
+  		
+  		zoomStartDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (leftBoundary / overviewWidth)));
+  		zoomEndDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
   	}
   	
   	$(document).ready( function(){
