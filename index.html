@@ -132,13 +132,13 @@
   		leftHandle = scrollbar
   		.append("polygon")
   		.attr("class", "left-handle")
-  		.attr("transform", "translate(0,0)");
+  		.attr("transform", "translate(0,0)")
   		.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0")
   		.call(leftHandleDrag);
   		
   		rightHandle = scrollbar.append("polygon")
   		.attr("class", "right-handle")
-  		.attr("transform", "translate(" + width + ",0)");
+  		.attr("transform", "translate(" + width + ",0)")
   		.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5")
   		.call(rightHandleDrag);
   	}
