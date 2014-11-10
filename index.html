@@ -20,17 +20,8 @@
   var powerEvents;
   
   var leftHandle, rightHandle, scroll;
-  var dHandlers = dragHandlers();
-  
-  var leftHandleDrag = d3.behavior.drag()
-  	.on("drag", dHandlers.dragLeftHandle);
-  var rightHandleDrag = d3.behavior.drag()
-  	.on("drag", dHandlers.dragRightHandle);
-  var scrollDrag = d3.behavior.drag()
-  .origin(function(d) { return d; })
-	.on("drag", dHandlers.dragScroll);
-  
-  	$.getJSON("/data/circuitMax").done(function(data){
+    
+  $.getJSON("/data/circuitMax").done(function(data){
   		$.each(data[0], function (i, d){
   			maxCircuitValue = Math.max(d, maxCircuitValue);
   		});
@@ -119,6 +110,15 @@
   		var svgElement = document.getElementById("overviewScrollbar");
   		svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
   		svgElement.setAttribute("preserveAspectRatio", "xMinYMin")
+  		
+  		var dHandlers = dragHandlers();
+  
+		var leftHandleDrag = d3.behavior.drag()
+			.on("drag", dHandlers.dragLeftHandle);
+		var rightHandleDrag = d3.behavior.drag()
+		  	.on("drag", dHandlers.dragRightHandle);
+		var scrollDrag = d3.behavior.drag()
+			.on("drag", dHandlers.dragScroll);
   		
 		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
