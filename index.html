@@ -157,7 +157,7 @@
   	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
   	  		{
   	  			leftX = d3.event.x;
-  	  			scrollWidth += d3.event.dx;
+  	  			scrollWidth -= d3.event.dx;
   	  			
   	  			leftHandle.attr("transform", "translate(" + leftX + ", 0)");
   	  			scroll.attr("x", leftX)
