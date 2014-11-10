@@ -43,7 +43,7 @@
 
   		$.each(events, function(i, d){
   			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvasBox.width;
-  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
+  			var y = circuitNameToIndex[d.circuit] * (canvasBox.height / selectedCircuits.length);
   			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvasBox.width;
   			var h = (canvasBox.height / selectedCircuits.length);
   			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
