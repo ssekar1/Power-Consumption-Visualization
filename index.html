@@ -145,7 +145,8 @@
   	
   	function dragLeftHandle(d)
   	{
-  		console.log(d3.event.dx);
+  		console.log( d3.event.x  + " " + d3.event.dx);
+  		leftHandle.attr("transform", "translate(" + d3.event.x + ", 0)");
   	}
   	
   	function dragRightHandle(d)
