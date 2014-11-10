@@ -67,8 +67,9 @@
   		var svgBox = document.getElementById("zoomView").getBoundingClientRect();
   		var svg = d3.select("#zoomView");
   		
-  		svg.selectAll(".events").data(events).enter()
+  		svg.selectAll(".event").data(events).enter()
   		.append("rect")
+  		.attr("class", "event")
   		.attr("x", function(d){ return (new Date(d.start).getTime() - start.getTime()) / rangeInMilliseconds * svgBox.width;})
   		.attr("y", function(d){ return circuitNameToIndex[d.circuit] * (svgBox.height / selectedCircuits.length);})
   		.attr("width", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds * svgBox.width})
@@ -87,7 +88,7 @@
   		.data(selectedCircuits).enter()
   		.append("text")
   		.attr("x", function (d){ return document.getElementById("labels").clientWidth;})
-  		.attr("y", function (d){ return (d * svgBox.height / selectedCircuits.length);})  		
+  		.attr("y", function (d){ return ((d + 1) * svgBox.height / selectedCircuits.length);})  		
   		.attr("text-anchor", "end")
   		.attr("font-size", function(d) {return (svgBox.height / selectedCircuits.length) + "px"; })
   		.text(function(d) {return indexToName[d]});
