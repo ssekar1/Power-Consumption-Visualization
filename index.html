@@ -153,6 +153,7 @@
   		
   		function dragLeftHandle(d)
   	  	{
+  			console.log(d3.event.x + " " d3.event.dx);
   	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
   	  		{
   	  			leftX = d3.event.x;
@@ -167,10 +168,10 @@
   	  	
   	  	function dragRightHandle(d)
   	  	{
-  	  		console.log(d3.event.x);
-  	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
+  	  		console.log(d3.event.x + " " d3.event.dx);
+  	  		if(d3.event.x + rightX >= 0 && d3.event.x + rightX <= maxWidth)
   	  		{
-  	  			rightX = d3.event.x;
+  	  			rightX += d3.event.x;
   	  			scrollWidth += d3.event.dx;
   	  			
   	  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
@@ -180,6 +181,7 @@
   	  	
   	  	function dragScroll(d)
   	  	{
+  	  		console.log(d3.event.x + " " d3.event.dx);
   	  		if(d3.event.x >= 0 && scrollWidth + d3.event.x <= maxWidth)
 	  		{
 	  			rightX += d3.event.dx;
