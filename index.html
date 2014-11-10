@@ -109,6 +109,7 @@
   		.attr("height", document.getElementById("labels").clientHeight)
   		.selectAll("text")
   		.data(selectedCircuits).enter()
+  		.append("text")
   		.attr("x", function (d){ return document.getElementById("labels").clientWidth;})
   		.attr("y", function (d){ return ((d + 1) * svgBox.height / selectedCircuits.length);})  		
   		.attr("text-anchor", "end")
