@@ -167,6 +167,7 @@
   	  	
   	  	function dragRightHandle(d)
   	  	{
+  	  		console.log(d3.event.x);
   	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
   	  		{
   	  			rightX = d3.event.x;
