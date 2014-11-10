@@ -40,8 +40,8 @@
   		var canvas = document.getElementById("overviewBackground");
   		var container = canvas.parentNode.getBoundingClientRect();
   		
-  		canvas.width = box.width;
-  		canvas.height = box.height; 
+  		canvas.width = container.width;
+  		canvas.height = container.height; 
   		var context = canvas.getContext("2d");
 
   		$.each(events, function(i, d){
