@@ -18,6 +18,19 @@
   var indexToName = ["c1", "c2", "c3", "c4", "c5", "c6", "c7a", "c7b", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20"];
   var maxCircuitValue = 0;
   var powerEvents;
+  
+  var leftHandle, rightHandle, scroll;
+  
+  var leftHandleDrag = d3.behavior.drag()
+  	.origin(function(d) { return d; })
+  	.on("drag", dragLeftHandle);
+  var rightHandleDrag = d3.behavior.drag()
+  	.origin(function(d) { return d; })
+  	.on("drag", dragRightHandle);
+  var scrollDrag = d3.behavior.drag();
+  .origin(function(d) { return d; })
+	.on("drag", dragScroll);
+  
   	$.getJSON("/data/circuitMax").done(function(data){
   		$.each(data[0], function (i, d){
   			maxCircuitValue = Math.max(d, maxCircuitValue);
@@ -30,58 +43,6 @@
   			drawZoomView(events, new Date(events[0].start), new Date(events[events.length - 1].end));
 	  	});	
   	});
-  	
-  	function drawOverview(events)
-  	{
-  		var startTimeRange = new Date(events[0].start);
-  		var endTimeRange = new Date(events[events.length - 1].end);
-  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
-  		
-  		var canvas = document.getElementById("overviewBackground");
-  		var container = canvas.parentNode.getBoundingClientRect();
-  		
-  		canvas.width = container.width;
-  		canvas.height = container.height; 
-  		var context = canvas.getContext("2d");
-
-  		$.each(events, function(i, d){
-  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
-  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
-  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
-  			var h = (canvas.height / selectedCircuits.length);
-  			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
-  	  		context.fillRect(x,y,w,h);
-  		});
-  		  		
-  		drawScrollbar(canvas.width, canvas.height);
-  	}
-  	
-  	function drawScrollbar(width, height)
-  	{
-  		var svgElement = document.getElementById("overviewScrollbar");
-  		svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
-  		svgElement.setAttribute("preserveAspectRatio", "xminymin meet")
-  		
-		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
-  		
-  		scrollbar.append("rect")
-  		.attr("x", "0")
-  		.attr("y", "0")
-  		.attr("width", width)
-  		.attr("height", height);
-  		
-  		scrollbar.append("g")
-  		.attr("class", "left-handle")
-  		.attr("transform", "translate(0,0)")
-  		.append("polygon")
-  		.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0");
-  		
-  		scrollbar.append("g")
-  		.attr("class", "right-handle")
-  		.attr("transform", "translate(" + width + ",0)")
-  		.append("polygon")
-  		.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
-  	}
   	
   	function getColor(value){
   	    //value from 0 to 1
@@ -127,6 +88,80 @@
   		.attr("text-anchor", "end")
   		.attr("font-size", function(d) {return (svgBox.height / selectedCircuits.length) + "px"; })
   		.text(function(d) {return indexToName[d]});
+  	}
+  	
+  	function drawOverview(events)
+  	{
+  		var startTimeRange = new Date(events[0].start);
+  		var endTimeRange = new Date(events[events.length - 1].end);
+  		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
+  		
+  		var canvas = document.getElementById("overviewBackground");
+  		var container = canvas.parentNode.getBoundingClientRect();
+  		
+  		canvas.width = container.width;
+  		canvas.height = container.height; 
+  		var context = canvas.getContext("2d");
+
+  		$.each(events, function(i, d){
+  			var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
+  			var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
+  			var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
+  			var h = (canvas.height / selectedCircuits.length);
+  			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
+  	  		context.fillRect(x,y,w,h);
+  		});
+  		  		
+  		drawScrollbar(canvas.width, canvas.height);
+  	}
+  	
+  	function drawScrollbar(width, height)
+  	{
+  		var svgElement = document.getElementById("overviewScrollbar");
+  		svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
+  		svgElement.setAttribute("preserveAspectRatio", "xminymin meet")
+  		
+		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
+  		
+  		scroll = scrollbar.append("rect")
+  		.attr("x", "0")
+  		.attr("y", "0")
+  		.attr("width", width)
+  		.attr("height", height)
+  		.call(scrollDrag);
+  		
+  		leftHandle = scrollbar.append("g")
+  		.attr("class", "left-handle")
+  		.attr("transform", "translate(0,0)")
+  		.append("polygon")
+  		.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0")
+  		.call(leftHandleDrag);
+  		
+  		rightHandle = scrollbar.append("g")
+  		.attr("class", "right-handle")
+  		.attr("transform", "translate(" + width + ",0)")
+  		.append("polygon")
+  		.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5")
+  		.call(rightHandleDrag);
+  	}
+  	
+  	function dragLeftHandle(d)
+  	{
+  		console.log(d3.event.dx);
+  	}
+  	
+  	function dragRightHandle(d)
+  	{
+  		/*d3.select(this)
+        .attr("cx", d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
+        .attr("cy", d.y = Math.max(radius, Math.min(height - radius, d3.event.y)));*/
+  	}
+  	
+  	function dragScroll(d)
+  	{
+  		/*d3.select(this)
+        .attr("cx", d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
+        .attr("cy", d.y = Math.max(radius, Math.min(height - radius, d3.event.y)));*/
   	}
   	
   	function transformZoomView(scaleFactor, translate)
