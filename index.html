@@ -145,8 +145,16 @@
   	
   	function dragLeftHandle(d)
   	{
-  		console.log( d3.event.x  + " " + d3.event.dx);
-  		leftHandle.attr("transform", "translate(" + d3.event.x + ", 0)");
+  		if(d3.event.x >= 0 && d3.event.x <= document.getElementById("overviewBackground").width)
+  		{
+  			leftHandle.attr("transform", "translate(" + d3.event.x + ", 0)");
+  			
+  			scroll.attr("x", d3.event.x)
+  			.attr("width", function(d) { 
+  				this.attr("width") + d3.event.x;
+  			});
+  		}
+  			
   	}
   	
   	function dragRightHandle(d)
