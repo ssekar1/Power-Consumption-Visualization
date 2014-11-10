@@ -151,7 +151,7 @@
   			
   			scroll.attr("x", d3.event.x)
   			.attr("width", function(d) { 
-  				this.width + d3.event.x;
+  				this.attr("width") + d3.event.x;
   			});
   		}
   			
@@ -159,9 +159,16 @@
   	
   	function dragRightHandle(d)
   	{
-  		/*d3.select(this)
-        .attr("cx", d.x = Math.max(radius, Math.min(width - radius, d3.event.x)))
-        .attr("cy", d.y = Math.max(radius, Math.min(height - radius, d3.event.y)));*/
+  		if(d3.event.x >= 0 && d3.event.x <= document.getElementById("overviewBackground").width)
+  		{
+  			rightHandle.attr("transform", "translate(" + d3.event.x + ", 0)");
+  			
+  			scroll.attr("x", d3.event.x)
+  			.attr("width", function(d) {
+  				console.log(this);
+  				this.attr("width") + d3.event.dx;
+  			});
+  		}
   	}
   	
   	function dragScroll(d)
