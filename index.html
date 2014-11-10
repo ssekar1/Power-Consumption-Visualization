@@ -152,7 +152,7 @@
   		
   		function dragLeftHandle(d)
   	  	{
-  	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
+  	  		if(d3.event.x >= 0 && d3.event.x <= rightX)
   	  		{
   	  			leftX = d3.event.x;
   	  			scrollWidth = rightX - leftX;
@@ -160,19 +160,22 @@
   	  			leftHandle.attr("transform", "translate(" + leftX + ", 0)");
   	  			scroll.attr("x", leftX)
   	  			.attr("width", scrollWidth);
-  	  		}
   	  			
+  	  			transformZoomView(maxWidth / scrollWidth, leftX);
+  	  		}	
   	  	}
   	  	
   	  	function dragRightHandle(d)
   	  	{
-  	  		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
+  	  		if(d3.event.x >= leftX && d3.event.x <= maxWidth)
   	  		{
   	  			rightX = d3.event.x;
   	  			scrollWidth = rightX - leftX;
   	  			
   	  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
   	  			scroll.attr("width", scrollWidth);
+  	  			
+  	  			transformZoomView(maxWidth / scrollWidth, leftX);
   	  		}
   	  	}
   	  	
@@ -186,6 +189,8 @@
 	  			leftHandle.attr("transform", "translate(" + leftX + ", 0)");
 	  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
 	  			scroll.attr("x", leftX);
+	  			
+	  			transformZoomView(maxWidth / scrollWidth, leftX);
 	  		}
   	  	}
   	  	
@@ -194,7 +199,7 @@
   	
   	function transformZoomView(scaleFactor, translate)
   	{
-  		$("#zoomView g").attr("transform","scale(" + scaleFactor + ",1) translate( " + translate + ", 0)");
+  		$("#zoomView g").attr("transform","translate( " + translate + ", 0) scale(" + scaleFactor + ",1)");
   	}
   	
   	$(document).ready( function(){
