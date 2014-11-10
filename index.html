@@ -38,7 +38,10 @@
   		var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
   		
   		var canvas = document.getElementById("overviewBackground");
-  		var canvasBox = canvas.getBoundingClientRect();
+  		var container = canvas.parentNode.getBoundingClientRect();
+  		
+  		canvas.width = box.width;
+  		canvas.height = box.height; 
   		var context = canvas.getContext("2d");
 
   		$.each(events, function(i, d){
