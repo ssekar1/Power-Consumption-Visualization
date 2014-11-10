@@ -59,9 +59,8 @@
   	function drawScrollbar(width, height)
   	{
   		var svgElement = document.getElementById("overviewScrollbar");
-  		var container = svgElement.parentNode.getBoundingClientRect();
-  		svgElement.width = container.width;
-  		svgElement.height = container.height;
+  		svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
+  		svgElement.setAttribute("preserveAspectRatio", "xminymin meet")
   		
 		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
