@@ -135,10 +135,39 @@ var SampleApp = function() {
 			{
 				console.log(err);
 			}
-			
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
+	
+	self.routes['/data/raw/:circuits/:start/:end'] = function(req, res) {
+		var start = new Date(parseInt(req.params.start, 10));
+		var end = new Date(parseInt(req.params.end, 10));
+		var circuits = ["circuit1kw as c1", "circuit2kw as c2", "circuit3kw as c3", 
+		                "circuit4kw as c4", " circuit5kw as c5", "circuit6kw as c6", 
+		                "circuit7akw as c7a", "circuit7bkw as c7b", "circuit8kw as c8", 
+		                "circuit9kw as c9", "  circuit10kw as c10", "circuit11kw as c11", 
+		                "circuit12kw as c12", "circuit13kw as c13", " circuit14kw as c14", 
+		                "circuit15kw as c15", "circuit16kw as c16", "circuit17kw as c17", 
+		                "circuit18kw as c18", "circuit19kw as c19", "circuit20kw as c20"];
+		var selectedCircuits = req.params.circuits.split(",");
+		var queryString = "SELECT unixTimestamp, "; 
+		selectedCircuits.forEach(function(c){
+			queryString += circuits[c] + ", ";
+		});
+		
+		queryString = queryString.substring(0, queryString.length - 2);
+		queryString += "FROM powerEvents WHERE " 
+		queryString += "? <= unixTimestamp AND unixTimestamp <= ?";
+		self.pool.query(queryString, [start, end], function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+			}
+			
+			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.send(rows);
+		});
 
 	self.routes['/data/powerEvents'] = function(req, res) {
 		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents where start != end', function(err, rows, fields){
@@ -147,6 +176,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -171,6 +201,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -185,6 +216,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -209,6 +241,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -228,6 +261,8 @@ var SampleApp = function() {
 				console.log(err);
 				res.send(err);
 			}
+			
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
     };
