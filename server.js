@@ -148,7 +148,7 @@ var SampleApp = function() {
 			}
 			
 			res.setHeader("Access-Control-Allow-Origin", "*");
-			res.send(rows);
+			res.send(rows[0]);
 		});
 	};
 	
@@ -276,7 +276,7 @@ var SampleApp = function() {
 			}
 			
 			res.setHeader("Access-Control-Allow-Origin", "*");
-			res.send(rows[0]);
+			res.send(rows);
 		});
     };
 	
