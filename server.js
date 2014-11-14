@@ -140,6 +140,18 @@ var SampleApp = function() {
 		});
 	};
 	
+	self.routes['/data/dateBounds'] = function(req,res) {
+		self.pool.query("SELECT MIN(unixTimestamp) as start, MAX(unixTimestamp) as end from powerreadings", function(err, rows, fields){
+			if(err)
+			{
+				console.log(err);
+			}
+			
+			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.send(rows);
+		});
+	};
+	
 	self.routes['/data/raw/:circuits/:start/:end'] = function(req, res) {
 		var start = new Date(parseInt(req.params.start, 10));
 		var end = new Date(parseInt(req.params.end, 10));
@@ -169,6 +181,7 @@ var SampleApp = function() {
 			res.send(rows);
 		});
 	};
+	
 	self.routes['/data/powerEvents'] = function(req, res) {
 		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents where start != end', function(err, rows, fields){
 			if(err)
