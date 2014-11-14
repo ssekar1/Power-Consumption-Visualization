@@ -168,7 +168,7 @@ var SampleApp = function() {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
-	});
+	};
 	self.routes['/data/powerEvents'] = function(req, res) {
 		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents where start != end', function(err, rows, fields){
 			if(err)
