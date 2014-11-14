@@ -135,7 +135,7 @@ var SampleApp = function() {
 			{
 				console.log(err);
 			}
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -147,7 +147,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -177,7 +177,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -189,7 +189,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -214,7 +214,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -229,7 +229,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -254,7 +254,7 @@ var SampleApp = function() {
 				console.log(err);
 			}
 			
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
 	};
@@ -275,7 +275,7 @@ var SampleApp = function() {
 				res.send(err);
 			}
 			
-			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			res.send(rows);
 		});
     };
