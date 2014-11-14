@@ -155,6 +155,10 @@ var SampleApp = function() {
 	self.routes['/data/raw/:circuits/:start/:end'] = function(req, res) {
 		var start = new Date(parseInt(req.params.start, 10));
 		var end = new Date(parseInt(req.params.end, 10));
+		
+		console.log("start" + start);
+		console.log("end" + end);
+		
 		var circuits = ["circuit1kw as c1", "circuit2kw as c2", "circuit3kw as c3", 
 		                "circuit4kw as c4", " circuit5kw as c5", "circuit6kw as c6", 
 		                "circuit7akw as c7a", "circuit7bkw as c7b", "circuit8kw as c8", 
@@ -174,6 +178,7 @@ var SampleApp = function() {
 		self.pool.query(queryString, [start, end], function(err, rows, fields){
 			if(err)
 			{
+				console.log(queryString);
 				console.log(err);
 			}
 			
