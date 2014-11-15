@@ -173,8 +173,7 @@ var SampleApp = function() {
 		});
 		
 		queryString = queryString.substring(0, queryString.length - 2);
-		queryString += "FROM powerreadings WHERE " 
-		queryString += "? <= unixTimestamp AND unixTimestamp <= ?";
+		queryString += " FROM powerreadings WHERE ? <= unixTimestamp AND unixTimestamp <= ?";
 		self.pool.query(queryString, [start, end], function(err, rows, fields){
 			if(err)
 			{
