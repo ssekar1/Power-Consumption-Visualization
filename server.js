@@ -182,7 +182,7 @@ var SampleApp = function() {
 			}
 			
 			res.setHeader("Access-Control-Allow-Origin", "*");
-			res.send(rows);
+			res.send({"fieldNames": fields, "data": rows});
 		});
 	};
 	
