@@ -41,6 +41,7 @@
   					maxDate: dateRange.end,
   					onClose: function( selectedDate ) {
   						$( "#endDate" ).datepicker( "option", "minDate", selectedDate !== "" ? selectedDate : dateRange.start);
+  						overviewStartDate = new Date(selectedDate);
   					}
   				});
   		  	  	$("#endDate").datepicker({
@@ -48,21 +49,25 @@
 					maxDate: dateRange.end,
 					onClose: function( selectedDate ) {
   						$( "#startDate" ).datepicker( "option", "maxDate", selectedDate !== "" ? selectedDate : dateRange.end);
+  						overviewEndDate = new Date(selectedDate);
   					}
   		  	  	});
   			});
   	  	});
-  	})
-  	.then(function(data){
-  		$.getJSON("/data/powerEvents").done(function(events)
+  	});
+  	
+  
+  	function loadEvents(start, end, selectedCircuits)
+  	{
+  		$.getJSON("/data/powerEvents/" + selectedCircuits.join(",") + "/" + start.getTime() + "/" + end.getTime() ).done(function(events)
 	  	{
   			powerEvents = events;
-  			overviewStartDate = zoomStartDate = new Date(events[0].start);
-  			overviewEndDate = zoomEndDate = new Date(events[events.length - 1].end);
+  			zoomStartDate = overviewStartDate;
+  			zoomEndDate = overviewEndDate;
   			drawOverview(events);
   			drawZoomView(events, zoomStartDate, zoomEndDate);
 	  	});	
-  	});
+  	}
   	
   	function getColor(value){
   	    //value from 0 to 1
@@ -154,6 +159,7 @@
 		var scrollDrag = d3.behavior.drag()
 			.on("drag", dHandlers.dragScroll);
   		
+		d3.select("#overviewScrollbar *").remove();
 		var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
   		
   		scroll = scrollbar.append("rect")
@@ -253,6 +259,15 @@
   	$(document).ready( function(){
   		$("#circuitSelector").puidialog();
   		$("#circuitSelector input").puicheckbox();
+  		$("#load").button().click(function(){
+  			if(overviewStartDate !== "" && overviewEndDate !== "" && selectedCircuits.length > 0)
+  			{
+  				loadEvents(overviewStartDate, overviewEndDate, selectedCircuits);
+  			}
+  		});
+  		$("#selectCircuits").button().click(function(){
+  			$("circuitSelector").puidialog("show");
+  		});
   	});
   	
   </script>
@@ -283,6 +298,9 @@
         </div>
         <div id="zoomContainer">
             <div id="labels">
+            	<button id="load">Load</button>
+            	<br/>
+            	<button id="selectCircuits">Show/Hide Circuits</button>
             </div>
             <div id="zoomViewContainer">
             	<svg id="zoomView"></svg>
@@ -292,27 +310,27 @@
 </div>
 
 <div id="circuitSelector">
-	<input type="checkbox" value="0" /> Circuit 1
-	<input type="checkbox" value="1" /> Circuit 2
-	<input type="checkbox" value="2" /> Circuit 3
-	<input type="checkbox" value="3" /> Circuit 4
-	<input type="checkbox" value="4" /> Circuit 5
-	<input type="checkbox" value="5" /> Circuit 6
-	<input type="checkbox" value="6" /> Circuit 7A
-	<input type="checkbox" value="7" /> Circuit 7B
-	<input type="checkbox" value="8" /> Circuit 8
-	<input type="checkbox" value="9" /> Circuit 9
-	<input type="checkbox" value="10" /> Circuit 10
-	<input type="checkbox" value="11" /> Circuit 11
-	<input type="checkbox" value="12" /> Circuit 12
-	<input type="checkbox" value="13" /> Circuit 13
-	<input type="checkbox" value="14" /> Circuit 14
-	<input type="checkbox" value="15" /> Circuit 15
-	<input type="checkbox" value="16" /> Circuit 16
-	<input type="checkbox" value="17" /> Circuit 17
-	<input type="checkbox" value="18" /> Circuit 18
-	<input type="checkbox" value="19" /> Circuit 19
-	<input type="checkbox" value="20" /> Circuit 20
+	<input type="checkbox" value="0" checked="checked" /> Circuit 1
+	<input type="checkbox" value="1" checked="checked" /> Circuit 2
+	<input type="checkbox" value="2" checked="checked" /> Circuit 3
+	<input type="checkbox" value="3" checked="checked" /> Circuit 4
+	<input type="checkbox" value="4" checked="checked" /> Circuit 5
+	<input type="checkbox" value="5" checked="checked" /> Circuit 6
+	<input type="checkbox" value="6" checked="checked" /> Circuit 7A
+	<input type="checkbox" value="7" checked="checked" /> Circuit 7B
+	<input type="checkbox" value="8" checked="checked" /> Circuit 8
+	<input type="checkbox" value="9" checked="checked" /> Circuit 9
+	<input type="checkbox" value="10" checked="checked" /> Circuit 10
+	<input type="checkbox" value="11" checked="checked" /> Circuit 11
+	<input type="checkbox" value="12" checked="checked" /> Circuit 12
+	<input type="checkbox" value="13" checked="checked" /> Circuit 13
+	<input type="checkbox" value="14" checked="checked" /> Circuit 14
+	<input type="checkbox" value="15" checked="checked" /> Circuit 15
+	<input type="checkbox" value="16" checked="checked" /> Circuit 16
+	<input type="checkbox" value="17" checked="checked" /> Circuit 17
+	<input type="checkbox" value="18" checked="checked" /> Circuit 18
+	<input type="checkbox" value="19" checked="checked" /> Circuit 19
+	<input type="checkbox" value="20" checked="checked" /> Circuit 20
 </div>
 
 </body>
