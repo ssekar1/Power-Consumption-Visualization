@@ -112,6 +112,11 @@
     right: 80%;
 }
 
+#labels .ui-button
+{
+	z-index: 1;
+}
+
 #load
 {
 	position: absolute;
