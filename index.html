@@ -29,7 +29,8 @@
   			maxCircuitValue = Math.max(d, maxCircuitValue);
   		});
   		$.getJSON("/data/dateBounds").done(function(dateData){
-  			dateRange = dateData;
+  			dateRange = {start: new Date(dateData.start),
+  						end : new Date(dateData.end)};
   	  	});
   	})
   	.then(function(data){
