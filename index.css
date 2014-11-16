@@ -124,6 +124,12 @@
 	top: 40px;
 }
 
+#labels svg
+{
+	position: absolute;
+	top: 0;
+}
+
 #zoomViewContainer
 {
     position: absolute;
