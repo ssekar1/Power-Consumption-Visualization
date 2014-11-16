@@ -47,11 +47,9 @@ function drawZoomView(events, start, end)
 	.text(function(d) {return indexToName[d]});
 }
   	
-function drawOverview(events)
+function drawOverview(events, startTime, endTime)
 {
-	var startTimeRange = overviewStartDate;
-	var endTimeRange = overviewEndDate;
-	var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
+	var rangeInMilliseconds = endTime.getTime() - startTime.getTime();
 	
 	var events = events.filter(filterNearZeroEvents);
 	
@@ -62,7 +60,7 @@ function drawOverview(events)
 	canvas.height = container.height; 
 	var context = canvas.getContext("2d");
 	$.each(events, function(i, d){
-		var x = ((new Date(d.start).getTime() - startTimeRange.getTime()) / rangeInMilliseconds) * canvas.width;
+		var x = ((new Date(d.start).getTime() - startTime.getTime()) / rangeInMilliseconds) * canvas.width;
 		var y = circuitNameToIndex[d.circuit] * (canvas.height / selectedCircuits.length);
 		var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
 		var h = (canvas.height / selectedCircuits.length);
