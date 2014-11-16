@@ -2,7 +2,7 @@ var leftHandle, rightHandle, scroll;
 
 function filterNearZeroEvents(event)
 {
-	return event.avgKW > 0.01;
+	return event.avgKW >= 0.01;
 }
 
 function drawZoomView(events, start, end)
@@ -189,3 +189,10 @@ function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundar
 	zoomEndDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
 }
 
+function drawZoomTimeView()
+{
+	var timeCanvas = document.getElementById("zoomTimeView");
+	var context = timeCanvas.getContext("2d");
+	
+	
+}

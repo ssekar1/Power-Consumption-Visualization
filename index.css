@@ -135,6 +135,15 @@
 	top: 0;
 }
 
+#zoomTimeLabel
+{
+	position: absolute;
+	top: 0px;
+	left: 20%;
+	right: 0;
+	height: 30px;
+}
+
 #zoomViewContainer
 {
     position: absolute;
