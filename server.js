@@ -227,7 +227,7 @@ var SampleApp = function() {
 		var start = new Date(parseInt(req.params.start, 10));
 		var end = new Date(parseInt(req.params.end, 10));
 		
-		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents WHERE start >= ? AND end <= ?', [start, end], function(err, rows, fields){
+		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents WHERE end >= ? AND start <= ?', [start, end], function(err, rows, fields){
 			if(err)
 			{
 				console.log(err);
@@ -251,7 +251,7 @@ var SampleApp = function() {
 		
 		queryString = queryString.substring(0, queryString.length - 2);
 		queryString += ")";
-		queryString += " AND start >= ? AND end <= ?";
+		queryString += " AND end >= ? AND start <= ?";
 		self.pool.query(queryString, [start, end], function(err, rows, fields){
 			if(err)
 			{
