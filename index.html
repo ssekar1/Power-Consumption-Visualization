@@ -28,8 +28,9 @@
   		$.each(data[0], function (i, d){
   			maxCircuitValue = Math.max(d, maxCircuitValue);
   		});
-  	}).then("/data/dateBounds").done(function(data){
-  		dateRange = data;
+  		$.getJSON("/data/dateBounds").done(function(dateData){
+  			dateRange = dateData;
+  	  	});
   	})
   	.then(function(data){
   		$.getJSON("/data/powerEvents").done(function(events)
