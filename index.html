@@ -17,6 +17,7 @@
   var selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   var indexToName = ["c1", "c2", "c3", "c4", "c5", "c6", "c7a", "c7b", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20"];
   var maxCircuitValue = 0;
+  var dateRange;
   var powerEvents;
   
   var overviewStartDate, overviewEndDate, zoomStartDate, zoomEndDate;
@@ -27,7 +28,10 @@
   		$.each(data[0], function (i, d){
   			maxCircuitValue = Math.max(d, maxCircuitValue);
   		});
-  	}).then(function(data){
+  	}).then("/data/dateBounds").done(function(data){
+  		dateRange = data;
+  	})
+  	.then(function(data){
   		$.getJSON("/data/powerEvents").done(function(events)
 	  	{
   			powerEvents = events;
@@ -69,6 +73,10 @@
   		.attr("avgKW", function(d){ return d.avgKW;})
   		.attr("fill", function(d){
   			return getColor(d.avgKW / maxCircuitValue);
+  		})
+  		.on("click", function(d, i){
+  			console.log("click");
+  			//drawRawDataGraph(d.start, d.end, d.circuit);
   		});
   		
   		var labels = d3.select("#labels").append("svg")
