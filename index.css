@@ -112,6 +112,18 @@
     right: 80%;
 }
 
+#load
+{
+	position: absolute;
+	top: 0;
+}
+
+#selectCircuits
+{
+	position: absolute;
+	top 40px;
+}
+
 #zoomViewContainer
 {
     position: absolute;
