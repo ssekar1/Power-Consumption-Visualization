@@ -29,8 +29,28 @@
   			maxCircuitValue = Math.max(d, maxCircuitValue);
   		});
   		$.getJSON("/data/dateBounds").done(function(dateData){
-  			dateRange = {start: new Date(dateData.start),
-  						end : new Date(dateData.end)};
+  			dateRange = {
+  				start: new Date(dateData.start),
+  				end : new Date(dateData.end)
+  			};
+  			
+  			//initialize date range widgets
+  			$(document).ready( function(){  				
+  				$("#startDate").datepicker({
+  					minDate: dateRange.start,
+  					maxDate: dateRange.end,
+  					onClose: function( selectedDate ) {
+  						$( "#endDate" ).datepicker( "option", "minDate", selectedDate !== "" ? selectedDate : dateRange.start);
+  					}
+  				});
+  		  	  	$("#endDate").datepicker({
+  		  	  		minDate: dateRange.start,
+					maxDate: dateRange.end,
+					onClose: function( selectedDate ) {
+  						$( "#startDate" ).datepicker( "option", "maxDate", selectedDate !== "" ? selectedDate : dateRange.end);
+  					}
+  		  	  	});
+  			});
   	  	});
   	})
   	.then(function(data){
@@ -233,8 +253,6 @@
   	$(document).ready( function(){
   		$("#circuitSelector").puidialog();
   		$("#circuitSelector input").puicheckbox();
-  		$("#startDate").datepicker();
-  	  	$("#endDate").datepicker();
   	});
   	
   </script>
