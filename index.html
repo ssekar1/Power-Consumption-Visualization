@@ -66,6 +66,7 @@
   			zoomEndDate = overviewEndDate;
   			drawOverview(events);
   			drawZoomView(events, zoomStartDate, zoomEndDate);
+  			$("#loading").puidialog("hide");
 	  	});	
   	}
   	
@@ -82,10 +83,12 @@
   	
   	$(document).ready( function(){
   		$("#circuitSelector").puidialog();
+  		$("#loading").puidialog({modal: true});
   		$("#circuitSelector input").puicheckbox();
   		$("#load").button().click(function(){
   			if(overviewStartDate && overviewEndDate && selectedCircuits.length > 0)
   			{
+  				$("#loading").puidialog("show");
   				loadEvents(overviewStartDate, overviewEndDate, selectedCircuits);
   			}
   		});
@@ -155,6 +158,10 @@
 	<input type="checkbox" value="18" checked="checked" /> Circuit 18
 	<input type="checkbox" value="19" checked="checked" /> Circuit 19 <br/>
 	<input type="checkbox" value="20" checked="checked" /> Circuit 20
+</div>
+
+<div id="loading">
+	Loading...
 </div>
 
 </body>
