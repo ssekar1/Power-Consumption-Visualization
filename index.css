@@ -172,3 +172,10 @@
 	fill: white;
 	stroke: #088;
 }
+
+#circuitSelector
+{
+	-moz-columns: 2;
+	-webkit-columns: 2;
+	columns: 2;
+}
