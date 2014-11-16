@@ -52,6 +52,8 @@
   						overviewEndDate = new Date(selectedDate);
   					}
   		  	  	});
+  		  	  	overviewStartDate = $("#startDate").datepicker("getDate");
+  		  		overviewEndDate = $("#endDate").datepicker("getDate");
   			});
   	  	});
   	});
@@ -266,7 +268,7 @@
   			}
   		});
   		$("#selectCircuits").button().click(function(){
-  			$("circuitSelector").puidialog("show");
+  			$("#circuitSelector").puidialog("show");
   		});
   	});
   	
