@@ -10,6 +10,8 @@ function drawZoomView(events, start, end)
 	var rangeInMilliseconds = end.getTime() - start.getTime();
 	var svgBox = document.getElementById("zoomView").getBoundingClientRect();
 	var svg = d3.select("#zoomView");
+	
+	var events = events.filter(filterNearZeroEvents);
   		
 	svg.selectAll("g").remove();
 	
