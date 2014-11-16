@@ -173,7 +173,7 @@
 	stroke: #088;
 }
 
-#circuitSelector
+#circuitSelector .pui-dialog-content
 {
 	-moz-columns: 2;
 	-webkit-columns: 2;
