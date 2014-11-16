@@ -1,5 +1,10 @@
 var leftHandle, rightHandle, scroll;
-  	
+
+function filterNearZeroEvents(event)
+{
+	return event.avgKW > 0.01;
+}
+
 function drawZoomView(events, start, end)
 {
 	var rangeInMilliseconds = end.getTime() - start.getTime();
@@ -44,10 +49,12 @@ function drawZoomView(events, start, end)
   	
 function drawOverview(events)
 {
-	var startTimeRange = new Date(events[0].start);
-	var endTimeRange = new Date(events[events.length - 1].end);
+	var startTimeRange = overviewStartDate;
+	var endTimeRange = overviewEndDate;
 	var rangeInMilliseconds = endTimeRange.getTime() - startTimeRange.getTime();
-		
+	
+	var events = events.filter(filterNearZeroEvents);
+	
 	var canvas = document.getElementById("overviewBackground");
 	var container = canvas.parentNode.getBoundingClientRect();
 		
