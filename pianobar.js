@@ -64,7 +64,7 @@ function drawOverview(events, startTime, endTime)
 	var context = canvas.getContext("2d");
 	$.each(events, function(i, d){
 		var x = ((new Date(d.start).getTime() - startTime.getTime()) / rangeInMilliseconds) * canvas.width;
-		var y = return selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / selectedCircuits.length);
+		var y = selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / selectedCircuits.length);
 		var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
 		var h = (canvas.height / selectedCircuits.length);
   			
