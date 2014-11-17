@@ -216,9 +216,12 @@ function drawZoomTimeView(startDate, endDate)
 	$.each(labels, function(i, data){
 		var labelText = data.label, time = data.v;
 		var x = ((data.v - startDate.getTime()) / range) * timeCanvas.width;
-		var y = timeCanvas.height;
+		var y = 10;
+		context.font = "10px Georgia";
 		context.textAlign = "start";
 		context.fillStyle = "black";
 		context.fillText(labelText, x, y);
+		context.moveTo(x,y);
+		context.lineTo(x,timeCanvas.height);
 	});
 }
