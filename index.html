@@ -95,10 +95,10 @@
   			change: function(event, checked){
   				var circuit = $(this).val();
   				
-  				if(checked)
+  				if(checked && selectedCircuits.indexOf(parseInt(circuit, 10)) < 0)
   				{
   					selectedCircuits.push(parseInt(circuit, 10));
-  					selectedCircuits.sort();
+  					selectedCircuits.sort(function (a,b){ if (a===b) {return 0} else if (a < b){ return -1;} else {return 1;} });
   				}
   				else
   				{
