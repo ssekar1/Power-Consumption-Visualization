@@ -221,7 +221,9 @@ function drawZoomTimeView(startDate, endDate)
 		context.textAlign = "start";
 		context.fillStyle = "black";
 		context.fillText(labelText, x, y);
+		context.beginPath();
 		context.moveTo(x,y);
 		context.lineTo(x,timeCanvas.height);
+		context.stroke();
 	});
 }
