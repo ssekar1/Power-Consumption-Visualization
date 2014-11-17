@@ -44,7 +44,7 @@ function drawZoomView(events, start, end)
 	.data(selectedCircuits).enter()
 	.append("text")
 	.attr("x", function (d){ return document.getElementById("labels").clientWidth;})
-	.attr("y", function (d){ return ((d + 1) * svgBox.height / selectedCircuits.length);})  		
+	.attr("y", function (d){ return ((selectedCircuits.indexOf(d) + 1) * svgBox.height / selectedCircuits.length);})  		
 	.attr("text-anchor", "end")
 	.attr("font-size", function(d) {return (svgBox.height / selectedCircuits.length) + "px"; })
 	.text(function(d) {return indexToName[d]});
