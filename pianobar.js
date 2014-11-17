@@ -192,7 +192,13 @@ function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundar
 function drawZoomTimeView()
 {
 	var timeCanvas = document.getElementById("zoomTimeView");
+	var container = timeCanvas.parentNode;
+	timeCanvas.width = container.width;
+	timeCanvas.height = container.height;
+	
 	var context = timeCanvas.getContext("2d");
+	//zoomStartDate
+	//zoomEndDate
 	
 	
 }

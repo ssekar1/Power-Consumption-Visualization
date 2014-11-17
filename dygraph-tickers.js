@@ -60,6 +60,7 @@
 
 /*jshint globalstrict:true, sub:true */
 /*global Dygraph:false */
+Dygraph = {};
 "use strict";
 
 /** @typedef {Array.<{v:number, label:string, label_v:(string|undefined)}>} */
