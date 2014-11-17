@@ -95,6 +95,53 @@ Dygraph.DateAccessorsUTC = {
 	}
 };
 
+/**
+* Convert a JS date to a string appropriate to display on an axis that
+* is displaying values at the stated granularity. This respects the
+* labelsUTC option.
+* @param {Date} date The date to format
+* @param {number} granularity One of the Dygraph granularity constants
+* @param {Dygraph} opts An options view
+* @return {string} The date formatted as local time
+* @private
+*/
+Dygraph.dateAxisLabelFormatter = function(date, granularity, opts) {
+	var utc = opts('labelsUTC');
+	var accessors = utc ? Dygraph.DateAccessorsUTC : Dygraph.DateAccessorsLocal;
+	var year = accessors.getFullYear(date),
+	month = accessors.getMonth(date),
+	day = accessors.getDate(date),
+	hours = accessors.getHours(date),
+	mins = accessors.getMinutes(date),
+	secs = accessors.getSeconds(date),
+	millis = accessors.getSeconds(date);
+	if (granularity >= Dygraph.DECADAL) {
+		return '' + year;
+	} else if (granularity >= Dygraph.MONTHLY) {
+		return Dygraph.SHORT_MONTH_NAMES_[month] + ' ' + year;
+	} else {
+		var frac = hours * 3600 + mins * 60 + secs + 1e-3 * millis;
+		if (frac === 0 || granularity >= Dygraph.DAILY) {
+			// e.g. '21Jan' (%d%b)
+			return Dygraph.zeropad(day) + Dygraph.SHORT_MONTH_NAMES_[month];
+		} else {
+			return Dygraph.hmsString_(hours, mins, secs);
+		}
+	}
+};
+// alias in case anyone is referencing the old method.
+Dygraph.dateAxisFormatter = Dygraph.dateAxisLabelFormatter;
+/**
+* Return a string version of a JS date for a value label. This respects the
+* labelsUTC option.
+* @param {Date} date The date to be formatted
+* @param {Dygraph} opts An options view
+* @private
+*/
+Dygraph.dateValueFormatter = function(d, opts) {
+	return Dygraph.dateString_(d, opts('labelsUTC'));
+};
+
 /** @typedef {Array.<{v:number, label:string, label_v:(string|undefined)}>} */
 Dygraph.TickList = undefined;  // the ' = undefined' keeps jshint happy.
 
