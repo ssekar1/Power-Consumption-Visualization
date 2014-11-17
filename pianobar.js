@@ -189,16 +189,33 @@ function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundar
 	zoomEndDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
 }
 
-function drawZoomTimeView()
+function drawZoomTimeView(startDate, endDate)
 {
 	var timeCanvas = document.getElementById("zoomTimeView");
 	var container = timeCanvas.parentNode;
-	timeCanvas.width = container.width;
-	timeCanvas.height = container.height;
+	timeCanvas.width = container.getBoundingClientRect().width;
+	timeCanvas.height = container.getBoundingClientRect().height;
+	
+	var range = endDate.getTime() - startDate.getTime();
+	
+	var labels = Dygraph.dateTicker(
+		startDate.getTime(), 
+		endDate.getTime(), 
+		document.getElementById("zoomTimeLabel").getBoundingClientRect().width, 
+		function(val){
+			if(val == "pixelsPerLabel") 
+				return 50; 
+			if(val == "axisLabelFormatter") 
+				return Dygraph.dateAxisLabelFormatter;
+		}, null, null);
 	
 	var context = timeCanvas.getContext("2d");
-	//zoomStartDate
-	//zoomEndDate
-	
-	
+	context.clearRect(0,0,timeCanvas.width, timeCanvas.height);
+	$.each(labels, function(data){
+		var labelText = data.label, time = data.v;
+		var x = ((data.v - startDate.getTime()) / range) * timeCanvas.width;
+		var y = timeCanvas.height;
+		context.textAlign = "center";
+		context.fillText(labelText, x, y);
+	});	
 }
