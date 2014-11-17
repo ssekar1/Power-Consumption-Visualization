@@ -60,39 +60,39 @@
 
 /*jshint globalstrict:true, sub:true */
 /*global Dygraph:false */
-"use strict";
+
 Dygraph = {};
 
 Dygraph.DateAccessorsLocal = {
-		getFullYear: function(d) {return d.getFullYear();},
-		getMonth: function(d) {return d.getMonth();},
-		getDate: function(d) {return d.getDate();},
-		getHours: function(d) {return d.getHours();},
-		getMinutes: function(d) {return d.getMinutes();},
-		getSeconds: function(d) {return d.getSeconds();},
-		getMilliseconds: function(d) {return d.getMilliseconds();},
-		getDay: function(d) {return d.getDay();},
-		makeDate: function(y, m, d, hh, mm, ss, ms) {
+	getFullYear: function(d) {return d.getFullYear();},
+	getMonth: function(d) {return d.getMonth();},
+	getDate: function(d) {return d.getDate();},
+	getHours: function(d) {return d.getHours();},
+	getMinutes: function(d) {return d.getMinutes();},
+	getSeconds: function(d) {return d.getSeconds();},
+	getMilliseconds: function(d) {return d.getMilliseconds();},
+	getDay: function(d) {return d.getDay();},
+	makeDate: function(y, m, d, hh, mm, ss, ms) {
 		return new Date(y, m, d, hh, mm, ss, ms);
-		}
+	}
 };
 		/**
 		* Date accessors to get the parts of a calendar date (year, month,
 		* day of month, hour, minute, second and millisecond) according to UTC time,
 		* and factory method to call the Date constructor with an array of arguments.
 		*/
-		Dygraph.DateAccessorsUTC = {
-		getFullYear: function(d) {return d.getUTCFullYear();},
-		getMonth: function(d) {return d.getUTCMonth();},
-		getDate: function(d) {return d.getUTCDate();},
-		getHours: function(d) {return d.getUTCHours();},
-		getMinutes: function(d) {return d.getUTCMinutes();},
-		getSeconds: function(d) {return d.getUTCSeconds();},
-		getMilliseconds: function(d) {return d.getUTCMilliseconds();},
-		getDay: function(d) {return d.getUTCDay();},
-		makeDate: function(y, m, d, hh, mm, ss, ms) {
+Dygraph.DateAccessorsUTC = {
+	getFullYear: function(d) {return d.getUTCFullYear();},
+	getMonth: function(d) {return d.getUTCMonth();},
+	getDate: function(d) {return d.getUTCDate();},
+	getHours: function(d) {return d.getUTCHours();},
+	getMinutes: function(d) {return d.getUTCMinutes();},
+	getSeconds: function(d) {return d.getUTCSeconds();},
+	getMilliseconds: function(d) {return d.getUTCMilliseconds();},
+	getDay: function(d) {return d.getUTCDay();},
+	makeDate: function(y, m, d, hh, mm, ss, ms) {
 		return new Date(Date.UTC(y, m, d, hh, mm, ss, ms));
-		}
+	}
 };
 
 /** @typedef {Array.<{v:number, label:string, label_v:(string|undefined)}>} */
