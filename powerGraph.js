@@ -1,4 +1,4 @@
-var PowerGraph = function() {
+var PowerGraph = (function() {
 	var canvas = document.getElementById("rawDataCanvas");
 	var context = canvas.getContext("2d");
 	canvas.width = canvas.parentNode.getBoundingClientRect().width;
@@ -105,5 +105,5 @@ var PowerGraph = function() {
 	};
 	
 	return this;
-};
+})();
 
