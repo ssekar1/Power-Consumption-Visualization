@@ -211,11 +211,13 @@ function drawZoomTimeView(startDate, endDate)
 	
 	var context = timeCanvas.getContext("2d");
 	context.clearRect(0,0,timeCanvas.width, timeCanvas.height);
+	
 	$.each(labels, function(data){
 		var labelText = data.label, time = data.v;
 		var x = ((data.v - startDate.getTime()) / range) * timeCanvas.width;
 		var y = timeCanvas.height;
 		context.textAlign = "center";
+		context.fillStyle = "black";
 		context.fillText(labelText, x, y);
 	});	
 }
