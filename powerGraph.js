@@ -1,10 +1,6 @@
 var PowerGraph = (function() {
-	var canvas, context;
+	var canvas, context, originX, originY;
 	
-	// origin of coordination
-	var originX = 30;
-	var originY = canvas.height - 30;
-
 	// get checkboxes
 	//var circuits = document.getElementsByName("circuits");
 
@@ -100,6 +96,10 @@ var PowerGraph = (function() {
 		context = canvas.getContext("2d");
 		canvas.width = canvas.parentNode.getBoundingClientRect().width;
 		canvas.height = canvas.parentNode.getBoundingClientRect().height;
+
+		// origin of coordination
+		originX = 30;
+		originY = canvas.height - 30;
 		
 	    context.clearRect(0, 0, canvas.width, canvas.height);
 	    drawAxes();
