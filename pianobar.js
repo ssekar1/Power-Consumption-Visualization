@@ -36,7 +36,7 @@ function drawZoomView(events, start, end)
 		//drawRawDataGraph(d.start, d.end, d.circuit);
 	});
 	
-	d3.selectAll("#labels *").remove();
+	d3.selectAll("#labels svg").remove();
 	var labels = d3.select("#labels").append("svg")
 	.attr("width", document.getElementById("labels").clientWidth)
 	.attr("height", document.getElementById("labels").clientHeight)
