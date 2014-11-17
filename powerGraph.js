@@ -1,8 +1,5 @@
 var PowerGraph = (function() {
-	var canvas = document.getElementById("rawDataCanvas");
-	var context = canvas.getContext("2d");
-	canvas.width = canvas.parentNode.getBoundingClientRect().width;
-	canvas.height = canvas.parentNode.getBoundingClientRect().height;
+	var canvas, context;
 	
 	// origin of coordination
 	var originX = 30;
@@ -99,6 +96,11 @@ var PowerGraph = (function() {
 	
 	this.render = function(circuits, startTime, endTime) {
 
+		canvas = document.getElementById("rawDataCanvas");
+		context = canvas.getContext("2d");
+		canvas.width = canvas.parentNode.getBoundingClientRect().width;
+		canvas.height = canvas.parentNode.getBoundingClientRect().height;
+		
 	    context.clearRect(0, 0, canvas.width, canvas.height);
 	    drawAxes();
         drawCircuit(circuits, startTime, endTime);
