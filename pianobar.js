@@ -218,7 +218,7 @@ function drawZoomTimeView(startDate, endDate)
 		var x = ((data.v - startDate.getTime()) / range) * timeCanvas.width;
 		var y = 10;
 		context.font = "10px Georgia";
-		context.textAlign = "start";
+		context.textAlign = "center";
 		context.fillStyle = "black";
 		context.fillText(labelText, x, y);
 		context.beginPath();
