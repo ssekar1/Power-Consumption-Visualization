@@ -187,6 +187,7 @@ function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundar
 	
 	zoomStartDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (leftBoundary / overviewWidth)));
 	zoomEndDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
+	drawZoomTimeView(zoomStartDate, zoomEndDate);
 }
 
 function drawZoomTimeView(startDate, endDate)
@@ -216,8 +217,8 @@ function drawZoomTimeView(startDate, endDate)
 		var labelText = data.label, time = data.v;
 		var x = ((data.v - startDate.getTime()) / range) * timeCanvas.width;
 		var y = timeCanvas.height;
-		context.textAlign = "center";
+		context.textAlign = "start";
 		context.fillStyle = "black";
 		context.fillText(labelText, x, y);
-	});	
+	});
 }
