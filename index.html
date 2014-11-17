@@ -60,33 +60,59 @@
   
   	function loadEvents(start, end, selectedCircuits)
   	{
-  		$.getJSON("/data/powerEvents/" + selectedCircuits.join(",") + "/" + start.getTime() + "/" + end.getTime() ).done(function(events)
+  		$.getJSON("/data/powerEvents/" + start.getTime() + "/" + end.getTime() ).done(function(events)
 	  	{
   			powerEvents = events;
   			zoomStartDate = overviewStartDate;
   			zoomEndDate = overviewEndDate;
-  			drawOverview(events, overviewStartDate, overviewEndDate);
-  			drawZoomView(events, zoomStartDate, zoomEndDate);
-  			drawZoomTimeView(zoomStartDate, zoomEndDate);
+  			drawEvents();
   			$("#loading").puidialog("hide");
 	  	});	
   	}
   	
+  	function drawEvents()
+  	{
+  		drawOverview(powerEvents, overviewStartDate, overviewEndDate);
+		drawZoomView(powerEvents, zoomStartDate, zoomEndDate);
+		drawZoomTimeView(zoomStartDate, zoomEndDate);
+  	}
+  	
   	function getColor(value){
   	    //value from 0 to 1
-  	    if(value < 0.01)
-  	    {
-  	    	return "#000";
-  	    }
   	    var hue=((1-value)*120).toString(10);
   	    return ["hsl(",hue,",100%,50%)"].join("");
   	}
   	
   	
   	$(document).ready( function(){
-  		$("#circuitSelector").puidialog();
+  		$("#circuitSelector").puidialog({
+  			afterHide:function(){
+  				drawEvents();
+  			};
+  		});
   		$("#loading").puidialog({modal: true});
-  		$("#circuitSelector input").puicheckbox();
+  		$("#circuitSelector input").puicheckbox({
+  			change: function(event, checked){
+  				var circuit = $(this).val();
+  				
+  				if(checked)
+  				{
+  					selectedCircuits.push(parseInt(circuit, 10));
+  					selectedCircuits.sort();
+  				}
+  				else
+  				{
+  					for(var i = 0; i < selectedCircuits.length; i++)
+  	  				{
+  	  					if(circuit === selectedCircuits[i])
+  	  					{
+  	  						selectedCircuits.splice(i,1);
+  	  					}	
+  	  				}
+  				}
+  			}
+  		});
+  		
   		$("#load").button().click(function(){
   			if(overviewStartDate && overviewEndDate && selectedCircuits.length > 0)
   			{
