@@ -32,8 +32,7 @@ function drawZoomView(events, start, end)
 		return getColor(d.avgKW / maxCircuitValue);
 	})
 	.on("click", function(d, i){
-		console.log("click");
-		//drawRawDataGraph(d.start, d.end, d.circuit);
+		PowerGraph.render([circuitNameToIndex[d.circuit]], d.start, d.end);
 	});
 	
 	d3.selectAll("#labels svg").remove();

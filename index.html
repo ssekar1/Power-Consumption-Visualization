@@ -13,6 +13,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
   <script src="/js/prime-ui"></script>
   <script src="/js/pianobar"></script>
+  <script src="/js/powerGraph"></script>
   <script src="/js/dygraph-tickers"></script>
   <script>
   var circuitNameToIndex = {"c1":0, "c2":1, "c3":2, "c4":3, "c5":4, "c6":5, "c7a":6, "c7b":7, "c8":8, "c9":9, "c10":10, "c11":11, "c12":12, "c13":13, "c14":14, "c15":15, "c16":16, "c17":17, "c18":18, "c19":19, "c20": 20};	
@@ -85,12 +86,21 @@
   	
   	
   	$(document).ready( function(){
+  		$("#loading").puidialog({modal: true});
+  		
   		$("#circuitSelector").puidialog({
   			afterHide:function(){
   				drawEvents();
   			}
   		});
-  		$("#loading").puidialog({modal: true});
+  		
+  		$("#rawCircuitSelector").puidialog({
+  			afterHide:function(){
+  				if(rawStart && rawEnd && rawSelectedCircuits.length > 0)
+  					PowerGraph.render(rawSelectedCircuits, rawStart, rawEnd);
+  			}
+  		});
+  		  		
   		$("#circuitSelector input").puicheckbox({
   			change: function(event, checked){
   				var circuit = parseInt($(this).val(), 10);
@@ -107,6 +117,28 @@
   	  					if(circuit === selectedCircuits[i])
   	  					{
   	  						selectedCircuits.splice(i,1);
+  	  					}	
+  	  				}
+  				}
+  			}
+  		});
+  		
+  		$("#rawCircuitSelector input").puicheckbox({
+  			change: function(event, checked){
+  				var circuit = parseInt($(this).val(), 10);
+  				
+  				if(checked && rawSelectedCircuits.indexOf(circuit) < 0)
+  				{
+  					rawSelectedCircuits.push(circuit);
+  					rawSelectedCircuits.sort(function (a,b){ if (a===b) {return 0} else if (a < b){ return -1;} else {return 1;} });
+  				}
+  				else
+  				{
+  					for(var i = 0; i < rawSelectedCircuits.length; i++)
+  	  				{
+  	  					if(circuit === rawSelectedCircuits[i])
+  	  					{
+  	  						rawSelectedCircuits.splice(i,1);
   	  					}	
   	  				}
   				}
@@ -168,6 +200,30 @@
 </div>
 
 <div id="circuitSelector">
+	<input type="checkbox" value="0" checked="checked" /> Circuit 1 <br/>
+	<input type="checkbox" value="1" checked="checked" /> Circuit 2 <br/>
+	<input type="checkbox" value="2" checked="checked" /> Circuit 3 <br/>
+	<input type="checkbox" value="3" checked="checked" /> Circuit 4 <br/>
+	<input type="checkbox" value="4" checked="checked" /> Circuit 5 <br/>
+	<input type="checkbox" value="5" checked="checked" /> Circuit 6 <br/>
+	<input type="checkbox" value="6" checked="checked" /> Circuit 7A <br/>
+	<input type="checkbox" value="7" checked="checked" /> Circuit 7B <br/>
+	<input type="checkbox" value="8" checked="checked" /> Circuit 8 <br/>
+	<input type="checkbox" value="9" checked="checked" /> Circuit 9 <br/>
+	<input type="checkbox" value="10" checked="checked" /> Circuit 10 <br/>
+	<input type="checkbox" value="11" checked="checked" /> Circuit 11 <br/>
+	<input type="checkbox" value="12" checked="checked" /> Circuit 12 <br/>
+	<input type="checkbox" value="13" checked="checked" /> Circuit 13 <br/>
+	<input type="checkbox" value="14" checked="checked" /> Circuit 14 <br/>
+	<input type="checkbox" value="15" checked="checked" /> Circuit 15 <br/>
+	<input type="checkbox" value="16" checked="checked" /> Circuit 16 <br/>
+	<input type="checkbox" value="17" checked="checked" /> Circuit 17 <br/>
+	<input type="checkbox" value="18" checked="checked" /> Circuit 18 <br/>
+	<input type="checkbox" value="19" checked="checked" /> Circuit 19 <br/>
+	<input type="checkbox" value="20" checked="checked" /> Circuit 20
+</div>
+
+<div id="rawCircuitSelector">
 	<input type="checkbox" value="0" checked="checked" /> Circuit 1 <br/>
 	<input type="checkbox" value="1" checked="checked" /> Circuit 2 <br/>
 	<input type="checkbox" value="2" checked="checked" /> Circuit 3 <br/>
