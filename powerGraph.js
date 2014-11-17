@@ -97,12 +97,12 @@ var PowerGraph = function() {
 	    return colors[circuitNameToIndex[circuitName]];
 	}
 	
-	this.render(circuits, startTime, endTime) {
+	this.render = function(circuits, startTime, endTime) {
 
 	    context.clearRect(0, 0, canvas.width, canvas.height);
 	    drawAxes();
         drawCircuit(circuits, startTime, endTime);
-	}
+	};
 	
 	return this;
 };
