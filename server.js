@@ -51,7 +51,7 @@ var SampleApp = function() {
         self.zcache['prime-ui.css'] = fs.readFileSync('./primeui-1.1-min.css');
         self.zcache['prime-ui.js'] = fs.readFileSync('./primeui-1.1-min.js');
         self.zcache['pianobar.js'] = fs.readFileSync('./pianobar.js');
-        self.zcache['dygraph.js'] = fs.readFileSync('./dygraph.js');
+        self.zcache['powerGraph.js'] = fs.readFileSync('./powerGraph.js');
         self.zcache['dygraph-tickers.js'] = fs.readFileSync('./dygraph-tickers.js');
     };
 
@@ -133,10 +133,10 @@ var SampleApp = function() {
 		res.send(self.cache_get('pianobar.js'));
 	};
 	
-	self.routes['/js/dygraph'] = function(req, res)
+	self.routes['/js/powerGraph'] = function(req, res)
 	{
 		res.setHeader('Content-Type', 'application/js');
-		res.send(self.cache_get('dygraph.js'));
+		res.send(self.cache_get('powerGraph.js'));
 	};
 	
 	self.routes['/js/dygraph-tickers'] = function(req, res)
