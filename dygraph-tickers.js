@@ -63,6 +63,8 @@
 
 Dygraph = {};
 
+Dygraph.SHORT_MONTH_NAMES_ = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 Dygraph.DateAccessorsLocal = {
 	getFullYear: function(d) {return d.getFullYear();},
 	getMonth: function(d) {return d.getMonth();},
