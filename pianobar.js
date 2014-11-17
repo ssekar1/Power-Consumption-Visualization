@@ -212,7 +212,7 @@ function drawZoomTimeView(startDate, endDate)
 	var context = timeCanvas.getContext("2d");
 	context.clearRect(0,0,timeCanvas.width, timeCanvas.height);
 	
-	$.each(labels, function(data){
+	$.each(labels, function(i, data){
 		var labelText = data.label, time = data.v;
 		var x = ((data.v - startDate.getTime()) / range) * timeCanvas.width;
 		var y = timeCanvas.height;
