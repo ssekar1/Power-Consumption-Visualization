@@ -4,8 +4,6 @@ var PowerGraph = (function() {
 	// get checkboxes
 	//var circuits = document.getElementsByName("circuits");
 
-	var startTime, endTime, queryEndTime;
-
 	//MaximumValue = 1.8 (10), 2.4 (5), 3.6 (4), 6 (2)
 	var maximumValueY = 6.0;
 
@@ -31,12 +29,12 @@ var PowerGraph = (function() {
 
 	function drawCircuit(circuits, startTime, endTime) {
 	    
-	    $.getJSON("http://nodejs-gressc.rhcloud.com/data/raw/" + circuits.join(",") + "/" + startTime.getTime() + "/" + queryEndTime.getTime())
+	    $.getJSON("http://nodejs-gressc.rhcloud.com/data/raw/" + circuits.join(",") + "/" + startTime.getTime() + "/" + endTime.getTime())
 	        .done(function (data) {
 
 	        var numItems = data.data.length;
 	        var numCircuits = data.fieldNames.length - 1;
-	        var rangeInMilliseconds = queryEndTime.getTime() - startTime.getTime();
+	        var rangeInMilliseconds = endTime.getTime() - startTime.getTime();
 	        var graphWidth = canvas.width - originX;
 	        var graphHeight = originY;
 
