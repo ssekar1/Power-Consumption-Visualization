@@ -95,6 +95,27 @@ Dygraph.DateAccessorsUTC = {
 	}
 };
 
+Dygraph.zeropad = function(x) {
+	if (x < 10) return "0" + x; else return "" + x;
+	};
+
+	/**
+	* Return a string version of the hours, minutes and seconds portion of a date.
+	* @param {number} hh The hours (from 0-23)
+	* @param {number} mm The minutes (from 0-59)
+	* @param {number} ss The seconds (from 0-59)
+	* @return {string} A time of the form "HH:MM" or "HH:MM:SS"
+	* @private
+	*/
+	Dygraph.hmsString_ = function(hh, mm, ss) {
+	var zeropad = Dygraph.zeropad;
+	var ret = zeropad(hh) + ":" + zeropad(mm);
+	if (ss) {
+	ret += ":" + zeropad(ss);
+	}
+	return ret;
+	};
+	
 /**
 * Convert a JS date to a string appropriate to display on an axis that
 * is displaying values at the stated granularity. This respects the
