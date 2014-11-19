@@ -1,15 +1,18 @@
-var leftHandle, rightHandle, scroll;
 
 function filterNearZeroEvents(event)
 {
 	return event.avgKW >= 0.01;
 }
 
-function drawZoomView(events, start, end)
+function drawZoomView(events, start, end, options)
 {
+	options = options || {
+			zoomViewId: "zoomView",
+			labelId: "labels"
+	};
 	var rangeInMilliseconds = end.getTime() - start.getTime();
-	var svgBox = document.getElementById("zoomView").getBoundingClientRect();
-	var svg = d3.select("#zoomView");
+	var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
+	var svg = d3.select("#" + options.zoomViewId);
 	
 	var events = events.filter(filterNearZeroEvents);
   		
@@ -35,27 +38,31 @@ function drawZoomView(events, start, end)
 		PowerGraph.render([circuitNameToIndex[d.circuit]], new Date(d.start), new Date(d.end));
 	});
 	
-	d3.selectAll("#labels svg").remove();
-	var labels = d3.select("#labels").append("svg")
-	.attr("width", document.getElementById("labels").clientWidth)
-	.attr("height", document.getElementById("labels").clientHeight)
+	d3.selectAll("#" + options.labelsId + " svg").remove();
+	var labels = d3.select("#" + options.labelsId).append("svg")
+	.attr("width", document.getElementById(options.labelsId).clientWidth)
+	.attr("height", document.getElementById(options.labelsId).clientHeight)
 	.selectAll("text")
 	.data(selectedCircuits).enter()
 	.append("text")
-	.attr("x", function (d){ return document.getElementById("labels").clientWidth;})
+	.attr("x", function (d){ return document.getElementById(options.labelsId).clientWidth;})
 	.attr("y", function (d){ return ((selectedCircuits.indexOf(d) + 1) * svgBox.height / selectedCircuits.length);})  		
 	.attr("text-anchor", "end")
 	.attr("font-size", function(d) {return (svgBox.height / selectedCircuits.length) + "px"; })
 	.text(function(d) {return indexToName[d]});
 }
   	
-function drawOverview(events, startTime, endTime)
+function drawOverview(events, startTime, endTime, options)
 {
+	var options = options || {
+		overviewId: "overviewBackground",
+		scrollbarId: "overviewScrollbar"
+	};
 	var rangeInMilliseconds = endTime.getTime() - startTime.getTime();
 	
 	var events = events.filter(filterNearZeroEvents);
 	
-	var canvas = document.getElementById("overviewBackground");
+	var canvas = document.getElementById(options.overviewId);
 	var container = canvas.parentNode.getBoundingClientRect();
 		
 	canvas.width = container.width;
@@ -74,51 +81,54 @@ function drawOverview(events, startTime, endTime)
   		context.fillRect(x,y,w,h);
 	});
   		  		
-	drawScrollbar(canvas.width, canvas.height);
+	drawScrollbar(canvas.width, canvas.height, options);
 }
   	
-function drawScrollbar(width, height)
+function drawScrollbar(width, height, options)
 {
-	var svgElement = document.getElementById("overviewScrollbar");
+	var svgElement = document.getElementById(options.scrollbarId);
 	svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
 	svgElement.setAttribute("preserveAspectRatio", "xMinYMin")
-  		
-	var dHandlers = dragHandlers();
+  	
+	d3.select("#" + options.scrollbarId + " *").remove();
+	var scrollbar = d3.select("#" + options.scrollbarId).append("g").attr("class", "scroll");
+ 		
+	var scroll = scrollbar.append("rect")
+	.attr("x", "0")
+	.attr("y", "0")
+	.attr("width", width)
+	.attr("height", height);
+	
+	var leftHandle = scrollbar
+	.append("polygon")
+	.attr("class", "left-handle")
+	.attr("transform", "translate(0,0)")
+	.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0");
+	
+	var rightHandle = scrollbar.append("polygon")
+	.attr("class", "right-handle")
+	.attr("transform", "translate(" + width + ",0)")
+	.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
+	
+	var dHandlers = dragHandlers(options, scroll, leftHandle, rightHandle);
   
 	var leftHandleDrag = d3.behavior.drag()
 		.on("drag", dHandlers.dragLeftHandle);
 	var rightHandleDrag = d3.behavior.drag()
 	  	.on("drag", dHandlers.dragRightHandle);
 	var scrollDrag = d3.behavior.drag()
-		.on("drag", dHandlers.dragScroll);
+		.on("drag", dHandlers.dragScroll);	
+	
+	scroll.call(scrollDrag);
   		
-	d3.select("#overviewScrollbar *").remove();
-	var scrollbar = d3.select("#overviewScrollbar").append("g").attr("class", "scroll");
- 		
-	scroll = scrollbar.append("rect")
-	.attr("x", "0")
-	.attr("y", "0")
-	.attr("width", width)
-	.attr("height", height)
-	.call(scrollDrag);
+	leftHandle.call(leftHandleDrag);
   		
-	leftHandle = scrollbar
-	.append("polygon")
-	.attr("class", "left-handle")
-	.attr("transform", "translate(0,0)")
-	.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0")
-	.call(leftHandleDrag);
-  		
-	rightHandle = scrollbar.append("polygon")
-	.attr("class", "right-handle")
-	.attr("transform", "translate(" + width + ",0)")
-	.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5")
-	.call(rightHandleDrag);
+	rightHandle.call(rightHandleDrag);
 }
   	
-function dragHandlers()
+function dragHandlers(options, scroll, leftHandle, rightHandle)
 {
-	var maxWidth = document.getElementById("overviewBackground").width,
+	var maxWidth = document.getElementById(options.overviewId).width,
 		rightX = maxWidth, 
 		scrollWidth = maxWidth, 
 		leftX = 0;
@@ -190,9 +200,13 @@ function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundar
 	drawZoomTimeView(zoomStartDate, zoomEndDate);
 }
 
-function drawZoomTimeView(startDate, endDate)
+function drawZoomTimeView(startDate, endDate, options)
 {
-	var timeCanvas = document.getElementById("zoomTimeView");
+	var options = options || {
+		timeViewId: "zoomTimeView",
+		timeContainerId: "zoomTimeLabel"
+	};
+	var timeCanvas = document.getElementById(options.timeViewId);
 	var container = timeCanvas.parentNode;
 	timeCanvas.width = container.getBoundingClientRect().width;
 	timeCanvas.height = container.getBoundingClientRect().height;
@@ -202,7 +216,7 @@ function drawZoomTimeView(startDate, endDate)
 	var labels = Dygraph.dateTicker(
 		startDate.getTime(), 
 		endDate.getTime(), 
-		document.getElementById("zoomTimeLabel").getBoundingClientRect().width, 
+		document.getElementById(options.timeContainerId).getBoundingClientRect().width, 
 		function(val){
 			if(val == "pixelsPerLabel") 
 				return 50; 

@@ -15,15 +15,20 @@
   <script src="/js/pianobar"></script>
   <script src="/js/powerGraph"></script>
   <script src="/js/dygraph-tickers"></script>
+  <script src="/js/initUI"></script>
   <script>
   var circuitNameToIndex = {"c1":0, "c2":1, "c3":2, "c4":3, "c5":4, "c6":5, "c7a":6, "c7b":7, "c8":8, "c9":9, "c10":10, "c11":11, "c12":12, "c13":13, "c14":14, "c15":15, "c16":16, "c17":17, "c18":18, "c19":19, "c20": 20};	
   var selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   var indexToName = ["c1", "c2", "c3", "c4", "c5", "c6", "c7a", "c7b", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20"];
   var maxCircuitValue = 0;
   var dateRange;
+  
   var powerEvents;
   var overviewStartDate, overviewEndDate, zoomStartDate, zoomEndDate;
-      
+  
+  var powerEvents2;
+  var overviewStartDate2, overviewEndDate2, zoomStartDate2, zoomEndDate2;
+  
   $.getJSON("/data/circuitMax").done(function(data){
   		$.each(data[0], function (i, d){
   			maxCircuitValue = Math.max(d, maxCircuitValue);
@@ -34,48 +39,27 @@
   				end : new Date(dateData.end)
   			};
   			
-  			//initialize date range widgets
-  			$(document).ready( function(){  				
-  				$("#startDate").datepicker({
-  					minDate: dateRange.start,
-  					maxDate: dateRange.end,
-  					onClose: function( selectedDate ) {
-  						$( "#endDate" ).datepicker( "option", "minDate", selectedDate !== "" ? selectedDate : dateRange.start);
-  						overviewStartDate = new Date(selectedDate);
-  					}
-  				});
-  		  	  	$("#endDate").datepicker({
-  		  	  		minDate: dateRange.start,
-					maxDate: dateRange.end,
-					onClose: function( selectedDate ) {
-  						$( "#startDate" ).datepicker( "option", "maxDate", selectedDate !== "" ? selectedDate : dateRange.end);
-  						overviewEndDate = new Date(selectedDate);
-  					}
-  		  	  	});
-  		  	  	overviewStartDate = $("#startDate").datepicker("getDate");
-  		  		overviewEndDate = $("#endDate").datepicker("getDate");
-  			});
+  			initDateFields(dateRange);
   	  	});
   	});
-  	
-  
-  	function loadEvents(start, end, selectedCircuits)
+  	  
+  	function loadEvents(start, end, selectedCircuits, options)
   	{
   		$.getJSON("/data/powerEvents/" + start.getTime() + "/" + end.getTime() ).done(function(events)
 	  	{
   			powerEvents = events;
-  			zoomStartDate = overviewStartDate;
-  			zoomEndDate = overviewEndDate;
-  			drawEvents();
+  			zoomStartDate = start;
+  			zoomEndDate = end;
+  			drawEvents(events, start, end, start, end, options);
   			$("#loading").puidialog("hide");
 	  	});	
   	}
   	
-  	function drawEvents()
+  	function drawEvents(events, overviewStart, overviewEnd, zoomStart, zoomEnd, options)
   	{
-  		drawOverview(powerEvents, overviewStartDate, overviewEndDate);
-		drawZoomView(powerEvents, zoomStartDate, zoomEndDate);
-		drawZoomTimeView(zoomStartDate, zoomEndDate);
+  		drawOverview(events, overviewStart, overviewEnd, options);
+		drawZoomView(events, zoomStart, zoomEnd, options);
+		drawZoomTimeView(zoomStartDate, zoomEndDate, options);
   	}
   	
   	function getColor(value){
@@ -85,77 +69,7 @@
   	}
   	
   	
-  	$(document).ready( function(){
-  		$("#loading").puidialog({modal: true});
-  		
-  		$("#circuitSelector").puidialog({
-  			afterHide:function(){
-  				drawEvents();
-  			}
-  		});
-  		
-  		$("#rawCircuitSelector").puidialog({
-  			afterHide:function(){
-  				if(rawStart && rawEnd && rawSelectedCircuits.length > 0)
-  					PowerGraph.render(rawSelectedCircuits, rawStart, rawEnd);
-  			}
-  		});
-  		  		
-  		$("#circuitSelector input").puicheckbox({
-  			change: function(event, checked){
-  				var circuit = parseInt($(this).val(), 10);
-  				
-  				if(checked && selectedCircuits.indexOf(circuit) < 0)
-  				{
-  					selectedCircuits.push(circuit);
-  					selectedCircuits.sort(function (a,b){ if (a===b) {return 0} else if (a < b){ return -1;} else {return 1;} });
-  				}
-  				else
-  				{
-  					for(var i = 0; i < selectedCircuits.length; i++)
-  	  				{
-  	  					if(circuit === selectedCircuits[i])
-  	  					{
-  	  						selectedCircuits.splice(i,1);
-  	  					}	
-  	  				}
-  				}
-  			}
-  		});
-  		
-  		$("#rawCircuitSelector input").puicheckbox({
-  			change: function(event, checked){
-  				var circuit = parseInt($(this).val(), 10);
-  				
-  				if(checked && rawSelectedCircuits.indexOf(circuit) < 0)
-  				{
-  					rawSelectedCircuits.push(circuit);
-  					rawSelectedCircuits.sort(function (a,b){ if (a===b) {return 0} else if (a < b){ return -1;} else {return 1;} });
-  				}
-  				else
-  				{
-  					for(var i = 0; i < rawSelectedCircuits.length; i++)
-  	  				{
-  	  					if(circuit === rawSelectedCircuits[i])
-  	  					{
-  	  						rawSelectedCircuits.splice(i,1);
-  	  					}	
-  	  				}
-  				}
-  			}
-  		});
-  		
-  		$("#load").button().click(function(){
-  			if(overviewStartDate && overviewEndDate && selectedCircuits.length > 0)
-  			{
-  				$("#loading").puidialog("show");
-  				loadEvents(overviewStartDate, overviewEndDate, selectedCircuits);
-  			}
-  		});
-  		$("#selectCircuits").button().click(function(){
-  			$("#circuitSelector").puidialog("show");
-  		});
-  	});
+  	$(document).ready( initUI);
   	
   </script>
 </head>
@@ -194,6 +108,29 @@
             </div>
             <div id="zoomViewContainer">
             	<svg id="zoomView"></svg>
+            </div>
+        </div>
+        <div id="overviewContainer2">
+            <div id="options2">
+				Start Date: <input type="text" id="startDate2" /><br/>
+				End Date: <input type="text" id="endDate2" />
+            </div>
+            <div id="overview2">
+            	<canvas id="overviewBackground2"></canvas>
+            	<svg id="overviewScrollbar2"></svg>
+            </div>
+        </div>
+        <div id="zoomContainer2">
+            <div id="labels2">
+            	<button id="load2">Load</button>
+            	<br/>
+            	<button id="selectCircuits2">Show/Hide Circuits</button>
+            </div>
+            <div id="zoomTimeLabel2">
+            	<canvas id="zoomTimeView2"></canvas>
+            </div>
+            <div id="zoomViewContainer2">
+            	<svg id="zoomView2"></svg>
             </div>
         </div>
     </div>

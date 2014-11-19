@@ -53,6 +53,7 @@ var SampleApp = function() {
         self.zcache['pianobar.js'] = fs.readFileSync('./pianobar.js');
         self.zcache['powerGraph.js'] = fs.readFileSync('./powerGraph.js');
         self.zcache['dygraph-tickers.js'] = fs.readFileSync('./dygraph-tickers.js');
+        self.zcache['initUI.js'] = fs.readFileSync('./initUI.js');
     };
 
 
@@ -143,6 +144,12 @@ var SampleApp = function() {
 	{
 		res.setHeader('Content-Type', 'application/js');
 		res.send(self.cache_get('dygraph-tickers.js'));
+	};
+	
+	self.routes['/js/initui'] = function(req, res)
+	{
+		res.setHeader('Content-Type', 'application/js');
+		res.send(self.cache_get('initUI.js'));
 	};
 	
 	self.routes['/data/circuitMax'] = function(req, res) {
