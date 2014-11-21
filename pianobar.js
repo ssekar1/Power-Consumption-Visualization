@@ -27,9 +27,9 @@ function drawZoomView(options)
 	.append("rect")
 	.attr("class", "event")
 	.attr("x", function(d){ return (new Date(d.start).getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds * svgBox.width;})
-	.attr("y", function(d){ return selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (svgBox.height / selectedCircuits.length);})
+	.attr("y", function(d){ return options.selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (svgBox.height / options.selectedCircuits.length);})
 	.attr("width", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds * svgBox.width})
-	.attr("height", function(d){ return svgBox.height / selectedCircuits.length;})
+	.attr("height", function(d){ return svgBox.height / options.selectedCircuits.length;})
 	.attr("data-start", function(d){ return d.start;})
 	.attr("data-end", function(d){ return d.end;})
 	.attr("avgKW", function(d){ return d.avgKW;})
@@ -45,12 +45,12 @@ function drawZoomView(options)
 	.attr("width", document.getElementById(options.labelId).clientWidth)
 	.attr("height", document.getElementById(options.labelId).clientHeight)
 	.selectAll("text")
-	.data(selectedCircuits).enter()
+	.data(options.selectedCircuits).enter()
 	.append("text")
 	.attr("x", function (d){ return document.getElementById(options.labelId).clientWidth;})
-	.attr("y", function (d){ return ((selectedCircuits.indexOf(d) + 1) * svgBox.height / selectedCircuits.length);})  		
+	.attr("y", function (d){ return ((options.selectedCircuits.indexOf(d) + 1) * svgBox.height / options.selectedCircuits.length);})  		
 	.attr("text-anchor", "end")
-	.attr("font-size", function(d) {return (svgBox.height / selectedCircuits.length) + "px"; })
+	.attr("font-size", function(d) {return (svgBox.height / options.selectedCircuits.length) + "px"; })
 	.text(function(d) {return indexToName[d]});
 }
   	
@@ -68,9 +68,9 @@ function drawOverview(options)
 	var context = canvas.getContext("2d");
 	$.each(events, function(i, d){
 		var x = ((new Date(d.start).getTime() - options.overviewStartDate.getTime()) / rangeInMilliseconds) * canvas.width;
-		var y = selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / selectedCircuits.length);
+		var y = options.selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / options.selectedCircuits.length);
 		var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
-		var h = (canvas.height / selectedCircuits.length);
+		var h = (canvas.height / options.selectedCircuits.length);
   			
 		if(x < 0)
 		{
