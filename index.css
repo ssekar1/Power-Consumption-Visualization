@@ -72,6 +72,7 @@
     bottom: 0;
     left: 0;
     right: 80%;
+    z-index: 2;
 }
 
 #overview
@@ -120,13 +121,13 @@
 #load
 {
 	position: absolute;
-	top: 0;
+	top: 10px;
 }
 
 #selectCircuits
 {
 	position: absolute;
-	top: 40px;
+	top: 50px;
 }
 
 #labels svg
@@ -207,6 +208,7 @@
     bottom: 0;
     left: 0;
     right: 80%;
+    z-index: 2;
 }
 
 #overview2
@@ -255,13 +257,13 @@
 #load2
 {
 	position: absolute;
-	top: 0;
+	top: 10px;
 }
 
 #selectCircuits2
 {
 	position: absolute;
-	top: 40px;
+	top: 50px;
 }
 
 #labels2 svg
