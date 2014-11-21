@@ -89,7 +89,7 @@ function initUI()
 	  				timeViewId: "zoomTimeView2",
 	  				timeContainerId: "zoomTimeLabel2"	
 			};
-			loadEvents(overviewStartDate, overviewEndDate, selectedCircuits2, options);
+			loadEvents(overviewStartDate, overviewEndDate, selectedCircuits, options);
 		}
 	});
 	
