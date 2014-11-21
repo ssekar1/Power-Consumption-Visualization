@@ -83,6 +83,10 @@ function initUI()
 		}
 	});
 	
+	$("#selectCircuits").button().click(function(){
+		$("#circuitSelector").puidialog("show");
+	});
+	
 	$("#selectCircuits2").button().click(function(){
 		$("#circuitSelector2").puidialog("show");
 	});
