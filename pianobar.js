@@ -38,14 +38,14 @@ function drawZoomView(events, start, end, options)
 		PowerGraph.render([circuitNameToIndex[d.circuit]], new Date(d.start), new Date(d.end));
 	});
 	
-	d3.selectAll("#" + options.labelsId + " svg").remove();
-	var labels = d3.select("#" + options.labelsId).append("svg")
-	.attr("width", document.getElementById(options.labelsId).clientWidth)
-	.attr("height", document.getElementById(options.labelsId).clientHeight)
+	d3.selectAll("#" + options.labelId + " svg").remove();
+	var labels = d3.select("#" + options.labelId).append("svg")
+	.attr("width", document.getElementById(options.labelId).clientWidth)
+	.attr("height", document.getElementById(options.labelId).clientHeight)
 	.selectAll("text")
 	.data(selectedCircuits).enter()
 	.append("text")
-	.attr("x", function (d){ return document.getElementById(options.labelsId).clientWidth;})
+	.attr("x", function (d){ return document.getElementById(options.labelId).clientWidth;})
 	.attr("y", function (d){ return ((selectedCircuits.indexOf(d) + 1) * svgBox.height / selectedCircuits.length);})  		
 	.attr("text-anchor", "end")
 	.attr("font-size", function(d) {return (svgBox.height / selectedCircuits.length) + "px"; })
