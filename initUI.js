@@ -78,7 +78,7 @@ function initUI()
 	});
 	
 	$("#load2").button().click(function(){
-		if(overviewStartDate && overviewEndDate && selectedCircuits2.length > 0)
+		if(overviewStartDate && overviewEndDate && selectedCircuits.length > 0)
 		{
 			$("#loading").puidialog("show");
 			var options = {
