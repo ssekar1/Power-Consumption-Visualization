@@ -113,7 +113,7 @@ function initDateFields(dateRange)
 				}
 	  	  	});
 	  	  	options1.overviewStartDate = $("#startDate").datepicker("getDate");
-	  		options2.overviewEndDate = $("#endDate").datepicker("getDate");
+	  		options1.overviewEndDate = $("#endDate").datepicker("getDate");
 	  		
 	  		$("#startDate2").datepicker({
 			minDate: dateRange.start,
