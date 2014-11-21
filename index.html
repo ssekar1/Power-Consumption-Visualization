@@ -18,17 +18,39 @@
   <script src="/js/initUI"></script>
   <script>
   var circuitNameToIndex = {"c1":0, "c2":1, "c3":2, "c4":3, "c5":4, "c6":5, "c7a":6, "c7b":7, "c8":8, "c9":9, "c10":10, "c11":11, "c12":12, "c13":13, "c14":14, "c15":15, "c16":16, "c17":17, "c18":18, "c19":19, "c20": 20};	
-  var selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-  var selectedCircuits2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   var indexToName = ["c1", "c2", "c3", "c4", "c5", "c6", "c7a", "c7b", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20"];
   var maxCircuitValue = 0;
   var dateRange;
   
-  var powerEvents;
-  var overviewStartDate, overviewEndDate, zoomStartDate, zoomEndDate;
+  var options1 = {
+	selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+	events: [],
+	zoomStartDate: null,
+	zoomEndDate: null,
+	overviewStartDate: null,
+	overviewEndDate: null,
+	overviewId: "overviewBackground",
+ 	scrollbarId: "overviewScrollbar",
+ 	zoomViewId: "zoomView",
+	labelId: "labels",
+	timeViewId: "zoomTimeView",
+	timeContainerId: "zoomTimeLabel"
+  };
   
-  var powerEvents2;
-  var overviewStartDate2, overviewEndDate2, zoomStartDate2, zoomEndDate2;
+  var options2 = {
+	selectedCircuits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+	events: [],
+	zoomStartDate: null,
+	zoomEndDate: null,
+	overviewStartDate: null,
+	overviewEndDate: null,
+	overviewId: "overviewBackground2",
+	scrollbarId: "overviewScrollbar2",
+	zoomViewId: "zoomView2",
+	labelId: "labels2",
+	timeViewId: "zoomTimeView2",
+	timeContainerId: "zoomTimeLabel2"
+  };
   
   $.getJSON("/data/circuitMax").done(function(data){
   		$.each(data[0], function (i, d){
@@ -44,23 +66,16 @@
   	  	});
   	});
   	  
-  	function loadEvents(start, end, selectedCircuits, options)
+  	function loadEvents(options)
   	{
-  		$.getJSON("/data/powerEvents/" + start.getTime() + "/" + end.getTime() ).done(function(events)
+  		$.getJSON("/data/powerEvents/" + options.overviewStartDate.getTime() + "/" + options.overviewEndDate.getTime() ).done(function(events)
 	  	{
-  			powerEvents = events;
-  			zoomStartDate = start;
-  			zoomEndDate = end;
-  			drawEvents(events, start, end, start, end, options);
+  			options.events = events;
+  			options.zoomStartDate = options.overviewStartDate;
+  			options.zoomEndDate = options.overviewEndDate;
+  			drawEvents(options);
   			$("#loading").puidialog("hide");
 	  	});	
-  	}
-  	
-  	function drawEvents(events, overviewStart, overviewEnd, zoomStart, zoomEnd, options)
-  	{
-  		drawOverview(events, overviewStart, overviewEnd, options);
-		drawZoomView(events, zoomStart, zoomEnd, options);
-		drawZoomTimeView(zoomStartDate, zoomEndDate, options);
   	}
   	
   	function getColor(value){

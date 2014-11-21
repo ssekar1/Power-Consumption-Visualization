@@ -1,20 +1,22 @@
-
 function filterNearZeroEvents(event)
 {
 	return event.avgKW >= 0.01;
 }
 
-function drawZoomView(events, start, end, options)
+function drawEvents(options)
 {
-	options = options || {
-			zoomViewId: "zoomView",
-			labelId: "labels"
-	};
-	var rangeInMilliseconds = end.getTime() - start.getTime();
+	drawOverview(options);
+	drawZoomView(options);
+	drawZoomTimeView(options);
+}
+
+function drawZoomView(options)
+{
+	var rangeInMilliseconds = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
 	var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
 	var svg = d3.select("#" + options.zoomViewId);
 	
-	var events = events.filter(filterNearZeroEvents);
+	var events = options.events.filter(filterNearZeroEvents);
   		
 	svg.selectAll("g").remove();
 	
@@ -24,7 +26,7 @@ function drawZoomView(events, start, end, options)
 	.data(events).enter()
 	.append("rect")
 	.attr("class", "event")
-	.attr("x", function(d){ return (new Date(d.start).getTime() - start.getTime()) / rangeInMilliseconds * svgBox.width;})
+	.attr("x", function(d){ return (new Date(d.start).getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds * svgBox.width;})
 	.attr("y", function(d){ return selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (svgBox.height / selectedCircuits.length);})
 	.attr("width", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds * svgBox.width})
 	.attr("height", function(d){ return svgBox.height / selectedCircuits.length;})
@@ -52,15 +54,11 @@ function drawZoomView(events, start, end, options)
 	.text(function(d) {return indexToName[d]});
 }
   	
-function drawOverview(events, startTime, endTime, options)
+function drawOverview(options)
 {
-	var options = options || {
-		overviewId: "overviewBackground",
-		scrollbarId: "overviewScrollbar"
-	};
-	var rangeInMilliseconds = endTime.getTime() - startTime.getTime();
+	var rangeInMilliseconds = options.overviewEndDate.getTime() - options.overviewStartDate.getTime();
 	
-	var events = events.filter(filterNearZeroEvents);
+	var events = options.events.filter(filterNearZeroEvents);
 	
 	var canvas = document.getElementById(options.overviewId);
 	var container = canvas.parentNode.getBoundingClientRect();
@@ -69,13 +67,16 @@ function drawOverview(events, startTime, endTime, options)
 	canvas.height = container.height; 
 	var context = canvas.getContext("2d");
 	$.each(events, function(i, d){
-		var x = ((new Date(d.start).getTime() - startTime.getTime()) / rangeInMilliseconds) * canvas.width;
+		var x = ((new Date(d.start).getTime() - options.overviewStartDate.getTime()) / rangeInMilliseconds) * canvas.width;
 		var y = selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / selectedCircuits.length);
 		var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
 		var h = (canvas.height / selectedCircuits.length);
   			
-		if(x < 0) 
-  			x = 0;
+		if(x < 0)
+		{
+			w += x;
+			x = 0;
+		}
   			
 		context.fillStyle = getColor(d.avgKW / maxCircuitValue);
   		context.fillRect(x,y,w,h);
@@ -146,7 +147,7 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
   			
   			if(scrollWidth !== 0)
   			{
-  				transformZoomView(maxWidth, scrollWidth, leftX, rightX);
+  				transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
   			}
   		}	
   	}
@@ -163,7 +164,7 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
   			
   			if(scrollWidth !== 0)
  			{
- 				transformZoomView(maxWidth, scrollWidth, leftX, rightX);
+ 				transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
  			}
   		}
   	}
@@ -181,7 +182,7 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
 			
 			if(scrollWidth !== 0)
 			{
-				transformZoomView(maxWidth, scrollWidth, leftX, rightX);
+				transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
 	  		}
 	  	}
   	}
@@ -189,33 +190,29 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
   	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll};
 }
   	
-function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundary)
+function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundary, options)
 {
 	var scaleFactor = overviewWidth / viewWidth;
 	
 	$("#zoomView g").attr("transform","translate( " + (-leftBoundary * scaleFactor) + ", 0) scale(" + scaleFactor + ",1)");
 	
-	zoomStartDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (leftBoundary / overviewWidth)));
-	zoomEndDate = new Date(overviewStartDate.getTime() + ((overviewEndDate.getTime() - overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
-	drawZoomTimeView(zoomStartDate, zoomEndDate);
+	options.zoomStartDate = new Date(options.overviewStartDate.getTime() + ((options.overviewEndDate.getTime() - options.overviewStartDate.getTime()) * (leftBoundary / overviewWidth)));
+	options.zoomEndDate = new Date(options.overviewStartDate.getTime() + ((options.overviewEndDate.getTime() - options.overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
+	drawZoomTimeView(options);
 }
 
-function drawZoomTimeView(startDate, endDate, options)
+function drawZoomTimeView(options)
 {
-	var options = options || {
-		timeViewId: "zoomTimeView",
-		timeContainerId: "zoomTimeLabel"
-	};
 	var timeCanvas = document.getElementById(options.timeViewId);
 	var container = timeCanvas.parentNode;
 	timeCanvas.width = container.getBoundingClientRect().width;
 	timeCanvas.height = container.getBoundingClientRect().height;
 	
-	var range = endDate.getTime() - startDate.getTime();
+	var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
 	
 	var labels = Dygraph.dateTicker(
-		startDate.getTime(), 
-		endDate.getTime(), 
+		options.zoomStartDate.getTime(), 
+		options.zoomEndDate.getTime(), 
 		document.getElementById(options.timeContainerId).getBoundingClientRect().width, 
 		function(val){
 			if(val == "pixelsPerLabel") 
@@ -229,7 +226,7 @@ function drawZoomTimeView(startDate, endDate, options)
 	
 	$.each(labels, function(i, data){
 		var labelText = data.label, time = data.v;
-		var x = ((data.v - startDate.getTime()) / range) * timeCanvas.width;
+		var x = ((data.v - options.zoomStartDate.getTime()) / range) * timeCanvas.width;
 		var y = 10;
 		context.font = "10px Georgia";
 		context.textAlign = "center";

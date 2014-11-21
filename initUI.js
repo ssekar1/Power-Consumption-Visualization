@@ -4,7 +4,13 @@ function initUI()
   		
 	$("#circuitSelector").puidialog({
 		afterHide:function(){
-			drawEvents();
+			drawEvents(options1);
+		}
+	});
+	
+	$("#circuitSelector2").puidialog({
+		afterHide:function(){
+			drawEvents(options2);
 		}
 	});
 	
@@ -60,41 +66,25 @@ function initUI()
 	});
 	
 	$("#load").button().click(function(){
-		if(overviewStartDate && overviewEndDate && selectedCircuits.length > 0)
+		if(options1.overviewStartDate && options1.overviewEndDate && options1.selectedCircuits.length > 0)
 		{
 			$("#loading").puidialog("show");
-			var options = {
-  	  				overviewId: "overviewBackground",
-  	  		  		scrollbarId: "overviewScrollbar",
-  	  		  		zoomViewId: "zoomView",
-  	  				labelId: "labels",
-  	  				timeViewId: "zoomTimeView",
-  	  				timeContainerId: "zoomTimeLabel"
-  	  		};
-			zoomStartDate = overviewStartDate;
-			zoomEndDate = overviewEndDate;
-			loadEvents(overviewStartDate, overviewEndDate, selectedCircuits, options);
+			
+			loadEvents(options1);
 		}
 	});
 	
 	$("#load2").button().click(function(){
-		if(overviewStartDate && overviewEndDate && selectedCircuits.length > 0)
+		if(options2.overviewStartDate && options2.overviewEndDate && options2.selectedCircuits.length > 0)
 		{
 			$("#loading").puidialog("show");
-			var options = {
-					overviewId: "overviewBackground2",
-	  		  		scrollbarId: "overviewScrollbar2",
-	  		  		zoomViewId: "zoomView2",
-	  				labelId: "labels2",
-	  				timeViewId: "zoomTimeView2",
-	  				timeContainerId: "zoomTimeLabel2"	
-			};
-			loadEvents(overviewStartDate, overviewEndDate, selectedCircuits, options);
+			
+			loadEvents(options2);
 		}
 	});
 	
-	$("#selectCircuits").button().click(function(){
-		$("#circuitSelector").puidialog("show");
+	$("#selectCircuits2").button().click(function(){
+		$("#circuitSelector2").puidialog("show");
 	});
 }
 
@@ -107,7 +97,7 @@ function initDateFields(dateRange)
 				maxDate: dateRange.end,
 				onClose: function( selectedDate ) {
 					$( "#endDate" ).datepicker( "option", "minDate", selectedDate !== "" ? selectedDate : dateRange.start);
-					overviewStartDate = new Date(selectedDate);
+					options1.overviewStartDate = new Date(selectedDate);
 				}
 			});
 	  	  	$("#endDate").datepicker({
@@ -115,18 +105,18 @@ function initDateFields(dateRange)
 			maxDate: dateRange.end,
 			onClose: function( selectedDate ) {
 					$( "#startDate" ).datepicker( "option", "maxDate", selectedDate !== "" ? selectedDate : dateRange.end);
-					overviewEndDate = new Date(selectedDate);
+					options1.overviewEndDate = new Date(selectedDate);
 				}
 	  	  	});
-	  	  	overviewStartDate = $("#startDate").datepicker("getDate");
-	  		overviewEndDate = $("#endDate").datepicker("getDate");
+	  	  	options1.overviewStartDate = $("#startDate").datepicker("getDate");
+	  		options2.overviewEndDate = $("#endDate").datepicker("getDate");
 	  		
 	  		$("#startDate2").datepicker({
 			minDate: dateRange.start,
 			maxDate: dateRange.end,
 			onClose: function( selectedDate ) {
 				$( "#endDate2" ).datepicker( "option", "minDate", selectedDate !== "" ? selectedDate : dateRange.start);
-				overviewStartDate = new Date(selectedDate);
+				options2.overviewStartDate = new Date(selectedDate);
 			}
 		});
   	  	$("#endDate2").datepicker({
@@ -134,10 +124,10 @@ function initDateFields(dateRange)
 		maxDate: dateRange.end,
 		onClose: function( selectedDate ) {
 				$( "#startDate2" ).datepicker( "option", "maxDate", selectedDate !== "" ? selectedDate : dateRange.end);
-				overviewEndDate = new Date(selectedDate);
+				options2.overviewEndDate = new Date(selectedDate);
 			}
   	  	});
-  	  	overviewStartDate2 = $("#startDate2").datepicker("getDate");
-  		overviewEndDate2 = $("#endDate2").datepicker("getDate");
+  	  	options2.overviewStartDate2 = $("#startDate2").datepicker("getDate");
+  		options2.overviewEndDate2 = $("#endDate2").datepicker("getDate");
 		});
 }
