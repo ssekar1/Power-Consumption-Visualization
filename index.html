@@ -21,8 +21,9 @@
   var indexToName = ["c1", "c2", "c3", "c4", "c5", "c6", "c7a", "c7b", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20"];
   var maxCircuitValue = 0;
   var dateRange;
+  var options1, options2;
   
-  var options1 = {
+  options1 = {
 	selectedCircuits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
 	events: [],
 	zoomStartDate: null,
@@ -32,15 +33,18 @@
 	scroll: null,
 	leftHandle: null,
 	rightHandle: null,
+	zoomBrush: null,
+	brushTime: null,
 	overviewId: "overviewBackground",
  	scrollbarId: "overviewScrollbar",
  	zoomViewId: "zoomView",
 	labelId: "labels",
 	timeViewId: "zoomTimeView",
-	timeContainerId: "zoomTimeLabel"
+	timeContainerId: "zoomTimeLabel",
+	getOtherOptions: function(){ return options2;}
   };
   
-  var options2 = {
+  options2 = {
 	selectedCircuits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
 	events: [],
 	zoomStartDate: null,
@@ -50,12 +54,15 @@
 	scroll: null,
 	leftHandle: null,
 	rightHandle: null,
+	zoomBrush: null,
+	brushTime: null,
 	overviewId: "overviewBackground2",
 	scrollbarId: "overviewScrollbar2",
 	zoomViewId: "zoomView2",
 	labelId: "labels2",
 	timeViewId: "zoomTimeView2",
-	timeContainerId: "zoomTimeLabel2"
+	timeContainerId: "zoomTimeLabel2",
+	getOtherOptions: function(){ return options1;}
   };
   
   $.getJSON("/data/circuitMax").done(function(data){
@@ -72,18 +79,6 @@
   	  	});
   	});
   	  
-  	function loadEvents(options)
-  	{
-  		$.getJSON("/data/powerEvents/" + options.overviewStartDate.getTime() + "/" + options.overviewEndDate.getTime() ).done(function(events)
-	  	{
-  			options.events = events;
-  			options.zoomStartDate = options.overviewStartDate;
-  			options.zoomEndDate = options.overviewEndDate;
-  			drawEvents(options);
-  			$("#loading").puidialog("hide");
-	  	});	
-  	}
-  	
   	function getColor(value){
   	    //value from 0 to 1
   	    var hue=((1-value)*120).toString(10);

@@ -2,6 +2,33 @@
 function filterNearZeroEvents(event)
 {
 	return event.avgKW >= 0.01;
+}
+
+function loadEvents(options)
+{
+	$.getJSON("/data/powerEvents/" + options.overviewStartDate.getTime() + "/" + options.overviewEndDate.getTime() ).done(function(events)
+  	{
+		options.events = events;
+		options.zoomStartDate = options.overviewStartDate;
+		options.zoomEndDate = options.overviewEndDate;
+		options.brushTime = options.overviewStartDate;
+		attachTimeBrushEvent(options);
+		drawEvents(options);
+		$("#loading").puidialog("hide");
+ 	});	
+}
+
+function attachTimeBrushEvent(options)
+{
+	$("#" + options.timeViewId).click(function(event){
+		var posX = $(this).offset().left;
+		var width = $(this).width();
+		var x = event.pageX - posX;
+        var zoomRange = options.zoomEndTime.getTime() - options.zoomStartTime.getTime();
+        var offsetTime = (x/width) * zoomRange;
+        options.brushTime = new Date(options.zoomStartTime.getTime() + offsetTime);
+        drawZoomTimeView(options);
+	});
 }
 function drawEvents(options)
 {
@@ -33,7 +60,7 @@ function drawZoomView(options)
 	.attr("height", function(d){ return svgBox.height / options.selectedCircuits.length;})
 	.attr("data-start", function(d){ return d.start;})
 	.attr("data-end", function(d){ return d.end;})
-	.attr("avgKW", function(d){ return d.avgKW;})
+	.attr("data-avgKW", function(d){ return d.avgKW;})
 	.attr("fill", function(d){
 		return getColor(d.avgKW / maxCircuitValue);
 	})
@@ -90,7 +117,7 @@ function drawScrollbar(width, height, options)
 {
 	var svgElement = document.getElementById(options.scrollbarId);
 	svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
-	svgElement.setAttribute("preserveAspectRatio", "xMinYMin")
+	svgElement.setAttribute("preserveAspectRatio", "xMinYMin");
   	
 	d3.select("#" + options.scrollbarId + " *").remove();
 	var scrollbar = d3.select("#" + options.scrollbarId).append("g").attr("class", "scroll");
@@ -134,7 +161,14 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
 		rightX = maxWidth, 
 		scrollWidth = maxWidth, 
 		leftX = 0;
-  		
+  	
+	// options1 has a overview and zoom date range, so does options2.
+	// zoom date range should remained synced in length
+	// zoom date range should be limited to smallest overviewDateRange
+	// only width should be synced, the offsets should be allowed to remain disjoint so we compare day 2 to day 3
+	// when the left handle is used, the other left handle should change.
+	// when the right handle is used, the other right handle should change.
+	
 	function dragLeftHandle(d)
   	{
   		if(d3.event.x >= 0 && d3.event.x <= rightX)
@@ -233,9 +267,20 @@ function drawZoomTimeView(options)
 		context.textAlign = "center";
 		context.fillStyle = "black";
 		context.fillText(labelText, x, y);
+		context.strokeStyle = "red";
 		context.beginPath();
 		context.moveTo(x,y);
 		context.lineTo(x,timeCanvas.height);
 		context.stroke();
 	});
+	
+	var x = ((options.brushTime.getTime() - options.zoomStartDate.getTime()) / range) * timeCanvas.width;
+	if(x < timeCanvas.width && x > 0)
+	{
+		context.strokeStyle = "red";
+		context.beginPath();
+		context.moveTo(x,0);
+		context.lineTo(x,timeCanvas.height);
+		context.stroke();
+	}	
 }
