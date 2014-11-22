@@ -38,6 +38,11 @@ function drawEvents(options)
 	drawZoomTimeView(options);
 }
 
+function drawBrushes(options)
+{
+	drawZoomTimeView(options);
+    drawOverviewBrush(options);
+}
 
 function drawZoomView(options)
 {
@@ -112,7 +117,7 @@ function drawOverview(options)
 	});
   	
 	drawScrollbar(canvas.width, canvas.height, options);
-	drawOverviewBrush(options);
+	drawBrushes(options);
 }
   	
 function drawOverviewBrush(options)
@@ -170,7 +175,24 @@ function drawScrollbar(width, height, options)
   		
 	options.rightHandle.call(rightHandleDrag);
 }
-  	
+
+function attachScrollbarBrushEvents(options)
+{
+	$("#" + options.scrollbarId).click(function(event){
+		var width = $(this).width();
+		var posX = $(this).offset().left;
+		var x = event.pageX - posX;
+		var range = options.overviewEndDate.getTime() - options.overviewStartDate.getTime();
+		        
+        var offsetTime = (x/width) * range;
+        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
+        drawBrushes(options);
+	});
+	$("#" + options.scrollbarId + " *").click(function(event){
+		event.stopPropogation();
+	});
+}
+
 function dragHandlers(options)
 {
 	var maxWidth = document.getElementById(options.overviewId).width,
