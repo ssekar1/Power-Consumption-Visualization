@@ -14,32 +14,54 @@ function initUI()
 		}
 	});
 	
-	$("#rawCircuitSelector").puidialog({
-		afterHide:function(){
-			if(rawStart && rawEnd && rawSelectedCircuits.length > 0)
-				PowerGraph.render(rawSelectedCircuits, rawStart, rawEnd);
-		}
-	});
-	  		
 	$("#circuitSelector input").puicheckbox({
 		change: function(event, checked){
 			var circuit = parseInt($(this).val(), 10);
 			
-			if(checked && selectedCircuits.indexOf(circuit) < 0)
+			if(checked && options1.selectedCircuits.indexOf(circuit) < 0)
 			{
-				selectedCircuits.push(circuit);
-				selectedCircuits.sort(function (a,b){ if (a===b) {return 0} else if (a < b){ return -1;} else {return 1;} });
+				options1.selectedCircuits.push(circuit);
+				options1.selectedCircuits.sort(function (a,b){ if (a===b) {return 0} else if (a < b){ return -1;} else {return 1;} });
 			}
 			else
 			{
-				for(var i = 0; i < selectedCircuits.length; i++)
+				for(var i = 0; i < options1.selectedCircuits.length; i++)
   				{
-  					if(circuit === selectedCircuits[i])
+  					if(circuit === options1.selectedCircuits[i])
   					{
-  						selectedCircuits.splice(i,1);
+  						options1.selectedCircuits.splice(i,1);
   					}	
   				}
 			}
+		}
+	});
+	  		
+	$("#circuitSelector2 input").puicheckbox({
+		change: function(event, checked){
+			var circuit = parseInt($(this).val(), 10);
+			
+			if(checked && options2.selectedCircuits.indexOf(circuit) < 0)
+			{
+				options2.selectedCircuits.push(circuit);
+				options2.selectedCircuits.sort(function (a,b){ if (a===b) {return 0} else if (a < b){ return -1;} else {return 1;} });
+			}
+			else
+			{
+				for(var i = 0; i < options2.selectedCircuits.length; i++)
+  				{
+  					if(circuit === options2.selectedCircuits[i])
+  					{
+  						options2.selectedCircuits.splice(i,1);
+  					}	
+  				}
+			}
+		}
+	});
+
+	$("#rawCircuitSelector").puidialog({
+		afterHide:function(){
+			if(rawStart && rawEnd && rawSelectedCircuits.length > 0)
+				PowerGraph.render(rawSelectedCircuits, rawStart, rawEnd);
 		}
 	});
 	
