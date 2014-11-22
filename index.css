@@ -315,7 +315,7 @@
 
 rect.brush
 {
-	stroke: "red";
+	stroke: red;
 }
 
 .left-handle, .right-handle
