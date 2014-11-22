@@ -267,7 +267,7 @@ function drawZoomTimeView(options)
 		context.textAlign = "center";
 		context.fillStyle = "black";
 		context.fillText(labelText, x, y);
-		context.strokeStyle = "red";
+		context.strokeStyle = "black";
 		context.beginPath();
 		context.moveTo(x,y);
 		context.lineTo(x,timeCanvas.height);
