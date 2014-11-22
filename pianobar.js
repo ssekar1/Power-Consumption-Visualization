@@ -191,7 +191,7 @@ function attachScrollbarBrushEvents(options)
         drawBrushes(options);
 	});
 	$("#" + options.scrollbarId + " *").click(function(event){
-		event.stopPropogation();
+		event.stopPropagation();
 	});
 }
 
