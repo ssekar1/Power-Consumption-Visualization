@@ -115,7 +115,7 @@ function dragZoomBrush(options)
 	
 	if(d3.event.x >= 10 && d3.event.x <= svgBox.width - 10)
 	{
-		var offsetTime = (d3.event.x / svgBox.width) * zoomRange;
+		var offsetTime = (d3.event.x / svgBox.width) * range;
         options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
 				
 		drawBrushes();
