@@ -231,10 +231,30 @@ function dragHandlers(options)
 	
 	function dragZoomBrush(options)
 	{
-		var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
 		var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
 		
-		if(d3.event.x >= 10 && d3.event.x <= svgBox.width - 10)
+		if(d3.event.x < 10 && leftX >= 10)
+		{
+			leftX -= 10;
+			rightX -= 10;
+			
+			options.leftHandle.attr("transform", "translate(" + leftX + ", 0)");
+			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
+			options.scroll.attr("x", leftX);
+			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
+		}
+		else if(d3.event.x > maxWidth - 10 && rightX <= maxWidth - 10)
+		{
+			leftX += 10;
+			rightX += 10;
+			
+			options.leftHandle.attr("transform", "translate(" + leftX + ", 0)");
+			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
+			options.scroll.attr("x", leftX);
+			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
+		}
+		
+		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
 		{
 			var offsetTime = (d3.event.x / svgBox.width) * range;
 	        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
