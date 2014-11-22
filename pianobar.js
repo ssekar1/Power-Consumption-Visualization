@@ -122,6 +122,7 @@ function drawOverviewBrush(options)
 	var x = ((options.brushTime.getTime() - options.overviewStartDate.getTime()) / range) * canvas.width;
 	d3.select("#" + options.scrollbarId + " .brush").remove();
 	options.overviewBrush = d3.select("#" + options.scrollbarId).append("rect")
+	.attr("class", "brush")
 	.attr("x", x)
 	.attr("y", 0)
 	.attr("width", 1)
