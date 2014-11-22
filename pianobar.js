@@ -28,6 +28,7 @@ function attachTimeBrushEvent(options)
         var offsetTime = (x/width) * zoomRange;
         options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
         drawZoomTimeView(options);
+        drawOverviewBrush(options);
 	});
 }
 function drawEvents(options)
@@ -109,10 +110,24 @@ function drawOverview(options)
 		context.fillStyle = getColor(d.avgKW / maxCircuitValue);
   		context.fillRect(x,y,w,h);
 	});
-  		  		
+  	
 	drawScrollbar(canvas.width, canvas.height, options);
+	drawOverviewBrush(options);
 }
   	
+function drawOverviewBrush(options)
+{
+	var canvas = document.getElementById(options.overviewId);
+	var range = options.overviewEndDate.getTime() - options.overviewStartDate.getTime();
+	var x = ((options.brushTime.getTime() - options.overviewStartDate.getTime()) / range) * canvas.width;
+	d3.select("#" + options.scrollbarId + " .brush").remove();
+	options.overviewBrush = d3.select("#" + options.scrollbarId).append("rect")
+	.attr("x", x)
+	.attr("y", 0)
+	.attr("width", 1)
+	.attr("height", canvas.height);
+}
+
 function drawScrollbar(width, height, options)
 {
 	var svgElement = document.getElementById(options.scrollbarId);

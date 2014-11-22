@@ -313,6 +313,11 @@
 	stroke: #088;
 }
 
+rect.brush
+{
+	stroke: "red";
+}
+
 .left-handle, .right-handle
 {
 	fill: white;
