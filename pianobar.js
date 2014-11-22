@@ -63,6 +63,7 @@ function drawZoomView(options)
 	var events = options.events.filter(filterNearZeroEvents);
 	var brushDragHandler = d3.behavior.drag()
 	.on("dragstart", function(d){ options.dragHandlers.startDragBrush(options)})
+	.on("drag", function(d){ options.dragHandlers.dragZoomBrush(options)})
 	.on("dragend", function(d){ options.dragHandlers.stopDragBrush()});
   		
 	svg.selectAll("g").remove();
@@ -233,13 +234,11 @@ function dragHandlers(options)
 	
 	function startDragBrush(options)
 	{
-		intervalId = setInterval(function(){dragZoomBrush(options);}, 500);
+		intervalId = setInterval(function(){scrollWithBrush(options);}, 500);
 	}
 	
-	function dragZoomBrush(options)
+	function scrollWithBrush(options)
 	{
-		var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
-		
 		if(d3.event.x < 10 && leftX >= 10)
 		{
 			leftX -= 10;
@@ -260,7 +259,13 @@ function dragHandlers(options)
 			options.scroll.attr("x", leftX);
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
 		}
-		
+		dragZoomBrush(options);
+	}
+	
+	function dragZoomBrush(options)
+	{
+		var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
+			
 		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
 		{
 			var offsetTime = (d3.event.x / maxWidth) * range;
@@ -328,7 +333,7 @@ function dragHandlers(options)
 	  	}
   	}
   	  	
-  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll, "startDragBrush": startDragBrush, "stopDragBrush": stopDragBrush};
+  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll, "dragZoomBrush": dragZoomBrush, "startDragBrush": startDragBrush, "stopDragBrush": stopDragBrush};
 }
   	
 function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundary, options)
