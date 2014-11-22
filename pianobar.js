@@ -62,7 +62,7 @@ function drawZoomView(options)
 	
 	var events = options.events.filter(filterNearZeroEvents);
 	var brushDragHandler = d3.behavior.drag()
-	.on("drag", function(d){ dragZoomBrush(options);});
+	.on("drag", function(d){ options.dragHandlers.dragZoomBrush});
   		
 	svg.selectAll("g").remove();
 	
@@ -106,20 +106,6 @@ function drawZoomView(options)
 	.attr("text-anchor", "end")
 	.attr("font-size", function(d) {return (svgBox.height / options.selectedCircuits.length) + "px"; })
 	.text(function(d) {return indexToName[d]});
-}
-
-function dragZoomBrush(options)
-{
-	var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
-	var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
-	
-	if(d3.event.x >= 10 && d3.event.x <= svgBox.width - 10)
-	{
-		var offsetTime = (d3.event.x / svgBox.width) * range;
-        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
-				
-		drawBrushes(options);
-	}	
 }
   	
 function drawOverview(options)
@@ -194,7 +180,7 @@ function drawScrollbar(width, height, options)
 	.attr("transform", "translate(" + width + ",0)")
 	.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
 	
-	var dHandlers = dragHandlers(options);
+	var options.dragHandlers = dragHandlers(options);
   
 	var leftHandleDrag = d3.behavior.drag()
 		.on("drag", dHandlers.dragLeftHandle);
@@ -242,6 +228,20 @@ function dragHandlers(options)
 	// only width should be synced, the offsets should be allowed to remain disjoint so we compare day 2 to day 3
 	// when the left handle is used, the other left handle should change.
 	// when the right handle is used, the other right handle should change.
+	
+	function dragZoomBrush(options)
+	{
+		var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
+		var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
+		
+		if(d3.event.x >= 10 && d3.event.x <= svgBox.width - 10)
+		{
+			var offsetTime = (d3.event.x / svgBox.width) * range;
+	        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
+					
+			drawBrushes(options);
+		}
+	}
 	
 	function dragLeftHandle(d)
   	{
@@ -296,7 +296,7 @@ function dragHandlers(options)
 	  	}
   	}
   	  	
-  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll};
+  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll, "dragZoomBrush": dragZoomBrush};
 }
   	
 function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundary, options)
