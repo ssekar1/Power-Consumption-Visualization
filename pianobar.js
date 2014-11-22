@@ -122,24 +122,24 @@ function drawScrollbar(width, height, options)
 	d3.select("#" + options.scrollbarId + " *").remove();
 	var scrollbar = d3.select("#" + options.scrollbarId).append("g").attr("class", "scroll");
  		
-var  scroll = scrollbar.append("rect")
+	options.scroll = scrollbar.append("rect")
 	.attr("x", "0")
 	.attr("y", "0")
 	.attr("width", width)
 	.attr("height", height);
 	
-var  leftHandle = scrollbar
+	options.leftHandle = scrollbar
 	.append("polygon")
 	.attr("class", "left-handle")
 	.attr("transform", "translate(0,0)")
 	.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0");
 	
-var  rightHandle = scrollbar.append("polygon")
+	options.rightHandle = scrollbar.append("polygon")
 	.attr("class", "right-handle")
 	.attr("transform", "translate(" + width + ",0)")
 	.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
 	
-	var dHandlers = dragHandlers(options, scroll, leftHandle, rightHandle);
+	var dHandlers = dragHandlers(options);
   
 	var leftHandleDrag = d3.behavior.drag()
 		.on("drag", dHandlers.dragLeftHandle);
@@ -155,7 +155,7 @@ var  rightHandle = scrollbar.append("polygon")
 	rightHandle.call(rightHandleDrag);
 }
   	
-function dragHandlers(options, scroll, leftHandle, rightHandle)
+function dragHandlers(options)
 {
 	var maxWidth = document.getElementById(options.overviewId).width,
 		rightX = maxWidth, 
@@ -176,8 +176,8 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
   			leftX = d3.event.x;
   			scrollWidth = rightX - leftX;
   	  			
-  			leftHandle.attr("transform", "translate(" + leftX + ", 0)");
-  			scroll.attr("x", leftX)
+  			options.leftHandle.attr("transform", "translate(" + leftX + ", 0)");
+  			options.scroll.attr("x", leftX)
   			.attr("width", scrollWidth);
   			
   			if(scrollWidth !== 0)
@@ -194,8 +194,8 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
   			rightX = d3.event.x;
   			scrollWidth = rightX - leftX;
   			
-  			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
-  			scroll.attr("width", scrollWidth);
+  			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
+  			options.scroll.attr("width", scrollWidth);
   			
   			if(scrollWidth !== 0)
  			{
@@ -211,9 +211,9 @@ function dragHandlers(options, scroll, leftHandle, rightHandle)
 			leftX += d3.event.dx;
 			rightX += d3.event.dx;
 			
-			leftHandle.attr("transform", "translate(" + leftX + ", 0)");
-			rightHandle.attr("transform", "translate(" + rightX + ", 0)");
-			scroll.attr("x", leftX);
+			options.leftHandle.attr("transform", "translate(" + leftX + ", 0)");
+			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
+			options.scroll.attr("x", leftX);
 			
 			if(scrollWidth !== 0)
 			{
