@@ -163,11 +163,11 @@ function drawScrollbar(width, height, options)
 	var scrollDrag = d3.behavior.drag()
 		.on("drag", dHandlers.dragScroll);	
 	
-	scroll.call(scrollDrag);
+	options.scroll.call(scrollDrag);
   		
-	leftHandle.call(leftHandleDrag);
+	options.leftHandle.call(leftHandleDrag);
   		
-	rightHandle.call(rightHandleDrag);
+	options.rightHandle.call(rightHandleDrag);
 }
   	
 function dragHandlers(options)
