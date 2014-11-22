@@ -42,6 +42,13 @@ function drawBrushes(options)
 {
 	drawZoomTimeView(options);
     drawOverviewBrush(options);
+    drawZoomBrush(options);
+}
+
+function drawZoomBrush(options)
+{
+	svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
+	options.zoomBrush.attr("x", ((options.brushTime.getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds) * svgBox.width);
 }
 
 function drawZoomView(options)
@@ -73,6 +80,13 @@ function drawZoomView(options)
 	.on("click", function(d, i){
 		PowerGraph.render([circuitNameToIndex[d.circuit]], new Date(d.start), new Date(d.end));
 	});
+	
+	options.zoomBrush = svg.append("rect")
+	.attr("class", "zoom brush")
+	.attr("x", ((options.brushTime.getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds) * svgBox.width)
+	.attr("y", 0)
+	.attr("width", 2)
+	.attr("height", svgBox.height);
 	
 	d3.selectAll("#" + options.labelId + " svg").remove();
 	var labels = d3.select("#" + options.labelId).append("svg")
