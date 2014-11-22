@@ -1,14 +1,15 @@
+
 function filterNearZeroEvents(event)
 {
 	return event.avgKW >= 0.01;
-}
-
+}
 function drawEvents(options)
 {
 	drawOverview(options);
 	drawZoomView(options);
 	drawZoomTimeView(options);
 }
+
 
 function drawZoomView(options)
 {
@@ -68,7 +69,7 @@ function drawOverview(options)
 	var context = canvas.getContext("2d");
 	$.each(events, function(i, d){
 		var x = ((new Date(d.start).getTime() - options.overviewStartDate.getTime()) / rangeInMilliseconds) * canvas.width;
-		var y = options.selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / options.selectedCircuits.length);
+		var y = (options.selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / options.selectedCircuits.length);
 		var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
 		var h = (canvas.height / options.selectedCircuits.length);
   			
@@ -94,24 +95,24 @@ function drawScrollbar(width, height, options)
 	d3.select("#" + options.scrollbarId + " *").remove();
 	var scrollbar = d3.select("#" + options.scrollbarId).append("g").attr("class", "scroll");
  		
-	var scroll = scrollbar.append("rect")
+var  scroll = scrollbar.append("rect")
 	.attr("x", "0")
 	.attr("y", "0")
 	.attr("width", width)
 	.attr("height", height);
 	
-	var leftHandle = scrollbar
+var  leftHandle = scrollbar
 	.append("polygon")
 	.attr("class", "left-handle")
 	.attr("transform", "translate(0,0)")
 	.attr("points", "0,0 0," + height + " 10," + height + " 10," + (height - 5) + " 5," + (height - 5) + " 5,5 10,5 10,0");
 	
-	var rightHandle = scrollbar.append("polygon")
+var  rightHandle = scrollbar.append("polygon")
 	.attr("class", "right-handle")
 	.attr("transform", "translate(" + width + ",0)")
 	.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
 	
-	var dHandlers = dragHandlers(options, scroll, leftHandle, rightHandle);
+	var dHandlers = dragHandlers(option, scroll, leftHandle, rightHandlee);
   
 	var leftHandleDrag = d3.behavior.drag()
 		.on("drag", dHandlers.dragLeftHandle);
@@ -194,7 +195,7 @@ function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundar
 {
 	var scaleFactor = overviewWidth / viewWidth;
 	
-	$("#zoomView g").attr("transform","translate( " + (-leftBoundary * scaleFactor) + ", 0) scale(" + scaleFactor + ",1)");
+	$("#" + options.zoomViewId + " g").attr("transform","translate( " + (-leftBoundary * scaleFactor) + ", 0) scale(" + scaleFactor + ",1)");
 	
 	options.zoomStartDate = new Date(options.overviewStartDate.getTime() + ((options.overviewEndDate.getTime() - options.overviewStartDate.getTime()) * (leftBoundary / overviewWidth)));
 	options.zoomEndDate = new Date(options.overviewStartDate.getTime() + ((options.overviewEndDate.getTime() - options.overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
