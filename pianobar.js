@@ -62,7 +62,8 @@ function drawZoomView(options)
 	
 	var events = options.events.filter(filterNearZeroEvents);
 	var brushDragHandler = d3.behavior.drag()
-	.on("drag", function(d){ options.dragHandlers.dragZoomBrush(options)});
+	.on("dragstart", function(d){ options.dragHandlers.startDragBrush(options)})
+	.on("dragend", function(d){ options.dragHandlers.stopDragBrush()});
   		
 	svg.selectAll("g").remove();
 	
@@ -220,7 +221,8 @@ function dragHandlers(options)
 	var maxWidth = document.getElementById(options.overviewId).width,
 		rightX = maxWidth, 
 		scrollWidth = maxWidth, 
-		leftX = 0;
+		leftX = 0,
+		intervalId;
   	
 	// options1 has a overview and zoom date range, so does options2.
 	// zoom date range should remained synced in length
@@ -228,6 +230,11 @@ function dragHandlers(options)
 	// only width should be synced, the offsets should be allowed to remain disjoint so we compare day 2 to day 3
 	// when the left handle is used, the other left handle should change.
 	// when the right handle is used, the other right handle should change.
+	
+	function startDragBrush(options)
+	{
+		intervalId = setInterval(function(){dragZoomBrush(options);}, 500);
+	}
 	
 	function dragZoomBrush(options)
 	{
@@ -261,6 +268,11 @@ function dragHandlers(options)
 					
 			drawBrushes(options);
 		}
+	}
+	
+	function stopDragBrush()
+	{
+		clearInterval(intervalId);
 	}
 	
 	function dragLeftHandle(d)
@@ -316,7 +328,7 @@ function dragHandlers(options)
 	  	}
   	}
   	  	
-  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll, "dragZoomBrush": dragZoomBrush};
+  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll, "startDragBrush": startDragBrush, "stopDragBrush": stopDragBrush};
 }
   	
 function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundary, options)
