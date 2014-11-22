@@ -24,9 +24,9 @@ function attachTimeBrushEvent(options)
 		var posX = $(this).offset().left;
 		var width = $(this).width();
 		var x = event.pageX - posX;
-        var zoomRange = options.zoomEndTime.getTime() - options.zoomStartTime.getTime();
+        var zoomRange = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
         var offsetTime = (x/width) * zoomRange;
-        options.brushTime = new Date(options.zoomStartTime.getTime() + offsetTime);
+        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
         drawZoomTimeView(options);
 	});
 }
