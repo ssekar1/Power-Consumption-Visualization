@@ -234,7 +234,8 @@ function dragHandlers(options)
 	
 	function startDragBrush(options)
 	{
-		intervalId = setInterval(function(){scrollWithBrush(options);}, 500);
+		if(intervalId < 0)
+			intervalId = setInterval(function(){scrollWithBrush(options);}, 500);
 	}
 	
 	function scrollWithBrush(options)
@@ -248,6 +249,7 @@ function dragHandlers(options)
 			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
 			options.scroll.attr("x", leftX);
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
+			dragZoomBrush(options);
 		}
 		else if(rightX <= maxWidth - 10)
 		{
@@ -258,8 +260,8 @@ function dragHandlers(options)
 			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
 			options.scroll.attr("x", leftX);
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
+			dragZoomBrush(options);
 		}
-		dragZoomBrush(options);
 	}
 	
 	function dragZoomBrush(options)
@@ -278,6 +280,7 @@ function dragHandlers(options)
 	function stopDragBrush()
 	{
 		clearInterval(intervalId);
+		intervalId = -1;
 	}
 	
 	function dragLeftHandle(d)
