@@ -27,8 +27,7 @@ function attachTimeBrushEvent(options)
         var zoomRange = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
         var offsetTime = (x/width) * zoomRange;
         options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
-        drawZoomTimeView(options);
-        drawOverviewBrush(options);
+        drawBrushes(options);
 	});
 }
 function drawEvents(options)
