@@ -235,7 +235,7 @@ function dragHandlers(options)
 	function startDragBrush(options)
 	{
 		if(intervalId < 0)
-			intervalId = setInterval(function(){scrollWithBrush(options);}, 500);
+			intervalId = setInterval(function(){scrollWithBrush(options);}, 300);
 	}
 	
 	function scrollWithBrush(options)
