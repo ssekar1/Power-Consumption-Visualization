@@ -187,7 +187,7 @@ function attachScrollbarBrushEvents(options)
 		var range = options.overviewEndDate.getTime() - options.overviewStartDate.getTime();
 		        
         var offsetTime = (x/width) * range;
-        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
+        options.brushTime = new Date(options.overviewStartDate.getTime() + offsetTime);
         drawBrushes(options);
 	});
 	$("#" + options.scrollbarId + " *").click(function(event){
