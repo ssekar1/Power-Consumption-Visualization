@@ -61,6 +61,8 @@ function drawZoomView(options)
 	var svg = d3.select("#" + options.zoomViewId);
 	
 	var events = options.events.filter(filterNearZeroEvents);
+	var brushDragHandler = d3.behavior.drag()
+	.on("drag", function(d){ dragZoomBrush(options)});
   		
 	svg.selectAll("g").remove();
 	
@@ -103,6 +105,20 @@ function drawZoomView(options)
 	.attr("text-anchor", "end")
 	.attr("font-size", function(d) {return (svgBox.height / options.selectedCircuits.length) + "px"; })
 	.text(function(d) {return indexToName[d]});
+}
+
+function dragZoomBrush(options)
+{
+	var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
+	var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
+	
+	if(d3.event.x >= 10 && d3.event.x <= svgBox.width - 10)
+	{
+		var offsetTime = (d3.event.x / svgBox.width) * zoomRange;
+        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
+				
+		drawBrushes();
+	}	
 }
   	
 function drawOverview(options)
