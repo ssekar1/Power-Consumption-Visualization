@@ -290,7 +290,7 @@ function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundar
 	
 	options.zoomStartDate = new Date(options.overviewStartDate.getTime() + ((options.overviewEndDate.getTime() - options.overviewStartDate.getTime()) * (leftBoundary / overviewWidth)));
 	options.zoomEndDate = new Date(options.overviewStartDate.getTime() + ((options.overviewEndDate.getTime() - options.overviewStartDate.getTime()) * (rightBoundary / overviewWidth)));
-	drawZoomTimeView(options);
+	drawBrushes(options);
 }
 
 function drawZoomTimeView(options)
