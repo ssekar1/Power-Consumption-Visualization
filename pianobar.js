@@ -234,14 +234,14 @@ function dragHandlers(options)
 	
 	function startDragBrush(options)
 	{
-		if(intervalId < 0)
-			intervalId = setInterval(function(){scrollWithBrush(options);}, 300);
+		
 	}
 	
 	function scrollWithBrush(options)
 	{
 		if(leftX >= 10)
 		{
+			console.log(leftX);
 			leftX -= 10;
 			rightX -= 10;
 			
@@ -253,6 +253,7 @@ function dragHandlers(options)
 		}
 		else if(rightX <= maxWidth - 10)
 		{
+			console.log(rightX);
 			leftX += 10;
 			rightX += 10;
 			
@@ -275,6 +276,9 @@ function dragHandlers(options)
 					
 			drawBrushes(options);
 		}
+		
+		if((leftX >= 10 || rightX <= maxWidth - 10) && intervalId < 0)
+			intervalId = setInterval(function(){scrollWithBrush(options);}, 300);
 	}
 	
 	function stopDragBrush()
