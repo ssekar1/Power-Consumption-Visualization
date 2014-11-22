@@ -46,7 +46,8 @@ function drawBrushes(options)
 
 function drawZoomBrush(options)
 {
-	svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
+	var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
+	var rangeInMilliseconds = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
 	if (options.zoomBrush)
 	{
 		options.zoomBrush.attr("x", ((options.brushTime.getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds) * svgBox.width);
