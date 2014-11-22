@@ -256,7 +256,7 @@ function dragHandlers(options)
 		
 		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
 		{
-			var offsetTime = (d3.event.x / svgBox.width) * range;
+			var offsetTime = (d3.event.x / maxWidth) * range;
 	        options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
 					
 			drawBrushes(options);
