@@ -91,7 +91,8 @@ function drawZoomView(options)
 	.attr("x", ((options.brushTime.getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds) * svgBox.width)
 	.attr("y", 0)
 	.attr("width", 2)
-	.attr("height", svgBox.height);
+	.attr("height", svgBox.height)
+	.call(brushDragHandler);
 	
 	d3.selectAll("#" + options.labelId + " svg").remove();
 	var labels = d3.select("#" + options.labelId).append("svg")
