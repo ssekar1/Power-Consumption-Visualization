@@ -131,7 +131,7 @@ function initDateFields(dateRange)
 				options2.overviewEndDate = new Date(selectedDate);
 			}
   	  	});
-  	  	options2.overviewStartDate2 = $("#startDate2").datepicker("getDate");
-  		options2.overviewEndDate2 = $("#endDate2").datepicker("getDate");
+  	  	options2.overviewStartDate = $("#startDate2").datepicker("getDate");
+  		options2.overviewEndDate = $("#endDate2").datepicker("getDate");
 		});
 }
