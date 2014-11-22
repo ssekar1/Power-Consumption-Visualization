@@ -118,7 +118,7 @@ function dragZoomBrush(options)
 		var offsetTime = (d3.event.x / svgBox.width) * range;
         options.brushTime = new Date(options.zoomStartDate.getTime() + offsetTime);
 				
-		drawBrushes();
+		drawBrushes(options);
 	}	
 }
   	
