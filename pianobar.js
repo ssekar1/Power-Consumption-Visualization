@@ -180,14 +180,14 @@ function drawScrollbar(width, height, options)
 	.attr("transform", "translate(" + width + ",0)")
 	.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
 	
-	var options.dragHandlers = dragHandlers(options);
+	options.dragHandlers = dragHandlers(options);
   
 	var leftHandleDrag = d3.behavior.drag()
-		.on("drag", dHandlers.dragLeftHandle);
+		.on("drag", options.dragHandlers.dragLeftHandle);
 	var rightHandleDrag = d3.behavior.drag()
-	  	.on("drag", dHandlers.dragRightHandle);
+	  	.on("drag", options.dragHandlers.dragRightHandle);
 	var scrollDrag = d3.behavior.drag()
-		.on("drag", dHandlers.dragScroll);	
+		.on("drag", options.dragHandlers.dragScroll);	
 	
 	attachScrollbarBrushEvents(options);
 	
