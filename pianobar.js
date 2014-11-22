@@ -239,7 +239,7 @@ function dragHandlers(options)
 	
 	function scrollWithBrush(options)
 	{
-		if(d3.event.x < 10 && leftX >= 10)
+		if(leftX >= 10)
 		{
 			leftX -= 10;
 			rightX -= 10;
@@ -249,7 +249,7 @@ function dragHandlers(options)
 			options.scroll.attr("x", leftX);
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
 		}
-		else if(d3.event.x > maxWidth - 10 && rightX <= maxWidth - 10)
+		else if(rightX <= maxWidth - 10)
 		{
 			leftX += 10;
 			rightX += 10;
