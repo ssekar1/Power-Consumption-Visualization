@@ -112,7 +112,7 @@ var  rightHandle = scrollbar.append("polygon")
 	.attr("transform", "translate(" + width + ",0)")
 	.attr("points", "-10,0 0,0 0," + height + " -10," + height + " -10," + (height - 5) + " -5," + (height - 5) + " -5,5 -10,5");
 	
-	var dHandlers = dragHandlers(options, scroll, leftHandle, rightHandlee);
+	var dHandlers = dragHandlers(options, scroll, leftHandle, rightHandle);
   
 	var leftHandleDrag = d3.behavior.drag()
 		.on("drag", dHandlers.dragLeftHandle);
