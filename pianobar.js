@@ -62,7 +62,7 @@ function drawZoomView(options)
 	
 	var events = options.events.filter(filterNearZeroEvents);
 	var brushDragHandler = d3.behavior.drag()
-	.on("drag", function(d){ dragZoomBrush(options)});
+	.on("drag", function(d){ dragZoomBrush(options);});
   		
 	svg.selectAll("g").remove();
 	
