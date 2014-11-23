@@ -252,7 +252,7 @@ function dragHandlers(options)
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
 			dragZoomBrush(options);
 		}
-		else if(currentMouseX >= (maxWidth - 10) && rightX < (mawWidth - 10))
+		else if(currentMouseX >= (maxWidth - 10) && rightX < (maxWidth - 10))
 		{
 			leftX += 10;
 			rightX += 10;
