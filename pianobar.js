@@ -55,6 +55,11 @@ function drawBrushes(options)
     drawOverviewBrush(options);
     drawZoomBrush(options);
     getSelectedEvents(options);
+    drawCircuits(options);
+}
+
+function drawCircuits(options)
+{
 }
 
 function getSelectedEvents(options)

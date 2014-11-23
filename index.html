@@ -39,6 +39,8 @@
 	zoomBrush: null,
 	overviewBrush: null,
 	brushTime: null,
+	kwHistrogramId: "kwHistogram",
+	durationHistrogramId: "durationHistogram",
 	overviewId: "overviewBackground",
  	scrollbarId: "overviewScrollbar",
  	zoomViewId: "zoomView",
@@ -64,6 +66,8 @@
 	zoomBrush: null,
 	overviewBrush: null,
 	brushTime: null,
+	kwHistrogramId: "kwHistogram2",
+	durationHistrogramId: "durationHistogram2",
 	overviewId: "overviewBackground2",
 	scrollbarId: "overviewScrollbar2",
 	zoomViewId: "zoomView2",
@@ -102,9 +106,10 @@
 
 <div id="visualizationContainer">
     <div id="visTopContainer">
-        <div id="circuitGraph">
-            <canvas id="rawDataCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
-        </div>
+    	<div id="tabs">
+    		<div class="tab">Circuits</div>
+    		<div class="tab">Histograms</div>
+    	</div>
         <div id="circuitLevels">
             
         </div>
