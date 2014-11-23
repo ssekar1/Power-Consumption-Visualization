@@ -16,9 +16,18 @@
     bottom: 65%;
 }
 
+#tabs
+{
+	position:absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
 #tabs .pui-tabview-nav
 {
-	width: 100px !important;
+	width: 125px !important;
 }
 
 
@@ -34,7 +43,7 @@
 #circuitLevels
 {
     position: absolute;
-    left: 0;
+    left: 125px;
     right: 0;
     top: 0;
     bottom: 0;
@@ -44,7 +53,7 @@
 #circuitQuery
 {
     position: absolute;
-    left: 0;
+    left: 125px;
     right: 0;
     top: 0;
     bottom: 0;
