@@ -95,6 +95,7 @@ function drawBrushes(options)
 
 function drawCircuits(options)
 {
+	Barchart.render(options);
 }
 
 function drawHistograms(options)
