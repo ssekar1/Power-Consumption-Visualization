@@ -78,9 +78,11 @@ function getSelectedEvents(options)
 function findEvent (events, target, start, end)
 {
 	index = start + Math.floor((end - start) / 2);
-	if (events[index].start.getTime() <= target.getTime() && target.getTime() < events[index].end.getTime())
+	startDate = new Date(events[index].start);
+	endDate = new Date(events[index].end);
+	if (startDate.getTime() <= target.getTime() && target.getTime() < endDate.getTime())
 		return events[index];
-	else if (events[index].start.getTime() > target.getTime())
+	else if (startDate.getTime() > target.getTime())
 	{
 		return findEvent(events, target, start, index - 1);
 	}
