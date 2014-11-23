@@ -66,11 +66,11 @@ function getSelectedEvents(options)
 	{
 		if(i < options.selectedCircuits.length - 1)
 		{
-			intersectingEvents.push(findEvent(event, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.circuitStartingEventIndex[options.selectedCircuits[i] + 1]));
+			intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.circuitStartingEventIndex[options.selectedCircuits[i] + 1]));
 		}
 		else
 		{
-			intersectingEvents.push(findEvent(options.event, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.events.length));
+			intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.events.length));
 		}
 	}
 }
