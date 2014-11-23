@@ -59,18 +59,18 @@ function drawBrushes(options)
 
 function getSelectedEvents(options)
 {
-	intersectingEvents = [];
+	options.intersectingEvents = [];
 	targetTime = options.brushTime;
 	
 	for (var i = 0; i < options.selectedCircuits.length; i++)
 	{
 		if(i < options.selectedCircuits.length - 1)
 		{
-			intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.circuitStartingEventIndex[options.selectedCircuits[i] + 1]));
+			options.intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.circuitStartingEventIndex[options.selectedCircuits[i] + 1]));
 		}
 		else
 		{
-			intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.events.length));
+			options.intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.events.length));
 		}
 	}
 }
