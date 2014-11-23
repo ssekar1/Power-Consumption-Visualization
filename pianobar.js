@@ -223,6 +223,7 @@ function dragHandlers(options)
 		rightX = maxWidth, 
 		scrollWidth = maxWidth, 
 		leftX = 0,
+		currentMouseX,
 		intervalId;
   	
 	// options1 has a overview and zoom date range, so does options2.
@@ -239,9 +240,8 @@ function dragHandlers(options)
 	
 	function scrollWithBrush(options)
 	{
-		if(leftX >= 10)
+		if(currentMouseX >= 10)
 		{
-			console.log(leftX);
 			leftX -= 10;
 			rightX -= 10;
 			
@@ -251,9 +251,8 @@ function dragHandlers(options)
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
 			dragZoomBrush(options);
 		}
-		else if(rightX <= maxWidth - 10)
+		else if(currentMouseX <= maxWidth - 10)
 		{
-			console.log(rightX);
 			leftX += 10;
 			rightX += 10;
 			
@@ -263,10 +262,15 @@ function dragHandlers(options)
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
 			dragZoomBrush(options);
 		}
+		else
+		{
+			stopDragBrush();
+		}
 	}
 	
 	function dragZoomBrush(options)
 	{
+		currentMouseX = d3.event.x;
 		var range = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
 			
 		if(d3.event.x >= 0 && d3.event.x <= maxWidth)
@@ -277,8 +281,8 @@ function dragHandlers(options)
 			drawBrushes(options);
 		}
 		
-		if((leftX >= 10 || rightX <= maxWidth - 10) && intervalId < 0)
-			intervalId = setInterval(function(){scrollWithBrush(options);}, 300);
+		if((leftX >= 10 || rightX <= maxWidth - 10) && (currentMouseX <= 10 || currentMouseX >= (maxWidth - 10)) && intervalId < 0)
+			intervalId = setInterval(function(){scrollWithBrush(options);}, 16);
 		else
 		{
 			stopDragBrush();
