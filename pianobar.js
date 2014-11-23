@@ -240,6 +240,7 @@ function dragHandlers(options)
 	
 	function scrollWithBrush(options)
 	{
+		console.log(currentMouseX + " " + leftX + " " + rightX);
 		if(currentMouseX <= 10 && leftX >= 10)
 		{
 			leftX -= 10;
