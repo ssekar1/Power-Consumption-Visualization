@@ -8,10 +8,22 @@ function loadEvents(options)
 {
 	$.getJSON("/data/powerEvents/" + options.overviewStartDate.getTime() + "/" + options.overviewEndDate.getTime() ).done(function(events)
   	{
+		var circuit = "";
 		options.events = events;
 		options.zoomStartDate = options.overviewStartDate;
 		options.zoomEndDate = options.overviewEndDate;
 		options.brushTime = options.overviewStartDate;
+		options.circuitStartingEventIndex = [];
+		
+		for(var i = 0; i < events.length; i++)
+		{
+			if(events[i].circuit !== circuit)
+			{
+				options.circuitStartingEventIndex.push(i);
+				circuit = events[i].circuit;
+			}
+		}
+		
 		attachTimeBrushEvent(options);
 		drawEvents(options);
 		$("#loading").puidialog("hide");
@@ -62,9 +74,7 @@ function drawZoomView(options)
 	
 	var events = options.events.filter(filterNearZeroEvents);
 	var brushDragHandler = d3.behavior.drag()
-	.on("dragstart", function(d){ options.dragHandlers.startDragBrush(options)})
-	.on("drag", function(d){ options.dragHandlers.dragZoomBrush(options)})
-	.on("dragend", function(d){ options.dragHandlers.stopDragBrush()});
+	.on("drag", function(d){ options.dragHandlers.dragZoomBrush(options)});
   		
 	svg.selectAll("g").remove();
 	
@@ -233,18 +243,21 @@ function dragHandlers(options)
 	// when the left handle is used, the other left handle should change.
 	// when the right handle is used, the other right handle should change.
 	
-	function startDragBrush(options)
-	{
-		
-	}
 	
 	function scrollWithBrush(options)
 	{
 		console.log(currentMouseX + " " + leftX + " " + rightX);
-		if(currentMouseX <= 10 && leftX >= 10)
+		if(currentMouseX <= 10 && leftX > 0)
 		{
-			leftX -= 10;
-			rightX -= 10;
+			if (leftX < 10)
+			{
+				rightX -= leftX;
+				leftX = 0;
+			}
+			else{	
+				leftX -= 10;
+				rightX -= 10;
+			}
 			
 			options.leftHandle.attr("transform", "translate(" + leftX + ", 0)");
 			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
@@ -252,10 +265,17 @@ function dragHandlers(options)
 			transformZoomView(maxWidth, scrollWidth, leftX, rightX, options);
 			dragZoomBrush(options);
 		}
-		else if(currentMouseX >= (maxWidth - 10) && rightX < (maxWidth - 10))
+		else if(currentMouseX >= (maxWidth - 10) && rightX < maxWidth)
 		{
-			leftX += 10;
-			rightX += 10;
+			if (leftX < 10)
+			{
+				leftX += rightX;
+				rightX = maxWidth;
+			}
+			else{	
+				leftX += 10;
+				rightX += 10;
+			}
 			
 			options.leftHandle.attr("transform", "translate(" + leftX + ", 0)");
 			options.rightHandle.attr("transform", "translate(" + rightX + ", 0)");
@@ -302,7 +322,7 @@ function dragHandlers(options)
   		{
   			leftX = d3.event.x;
   			scrollWidth = rightX - leftX;
-  	  			
+  			
   			options.leftHandle.attr("transform", "translate(" + leftX + ", 0)");
   			options.scroll.attr("x", leftX)
   			.attr("width", scrollWidth);
@@ -349,7 +369,7 @@ function dragHandlers(options)
 	  	}
   	}
   	  	
-  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll, "dragZoomBrush": dragZoomBrush, "startDragBrush": startDragBrush, "stopDragBrush": stopDragBrush};
+  	return {"dragLeftHandle": dragLeftHandle, "dragRightHandle": dragRightHandle, "dragScroll": dragScroll, "dragZoomBrush": dragZoomBrush};
 }
   	
 function transformZoomView( overviewWidth, viewWidth, leftBoundary, rightBoundary, options)
