@@ -112,6 +112,10 @@ function initUI()
 	$("#selectCircuits2").button().click(function(){
 		$("#circuitSelector2").puidialog("show");
 	});
+	
+	$("#tabs").puitabview({  
+        orientation: 'left'  
+    });
 }
 
 function initDateFields(dateRange)
