@@ -4,6 +4,40 @@ function filterNearZeroEvents(event)
 	return event.avgKW >= 0.01;
 }
 
+function filterShortEvents(event)
+{
+	return (new Date(event.end).getTime() - new Date(event.start).getTime()) >= 10000.0;
+}
+
+function filterCircuits(events, options)
+{
+	var e = [];
+	
+	for(var i = 0; i < options.selectedCircuits.length; i++)
+	{
+		for(var j = 0; j < events.length; j++)
+		{
+			if(circuitNameToIndex[events[j].circuit] === options.selectedCircuits[i])
+			{
+				e.push(events[j]);
+			}
+		}
+			
+	}
+	
+	return e;
+}
+
+function showAvg(event)
+{
+	return event.avgKW;
+}
+
+function showDuration(event)
+{
+	return (new Date(event.end).getTime() - new Date(event.start).getTime()) / 1000.0;
+}
+
 function loadEvents(options)
 {
 	$.getJSON("/data/powerEvents/" + options.overviewStartDate.getTime() + "/" + options.overviewEndDate.getTime() ).done(function(events)
@@ -46,7 +80,8 @@ function drawEvents(options)
 {
 	drawOverview(options);
 	drawZoomView(options);
-	drawZoomTimeView(options);
+	drawBrushes(options);
+	drawHistograms(options);
 }
 
 function drawBrushes(options)
@@ -60,6 +95,11 @@ function drawBrushes(options)
 
 function drawCircuits(options)
 {
+}
+
+function drawHistograms(options)
+{
+	
 }
 
 function getSelectedEvents(options)
@@ -190,7 +230,6 @@ function drawOverview(options)
 	});
   	
 	drawScrollbar(canvas.width, canvas.height, options);
-	drawBrushes(options);
 }
   	
 function drawOverviewBrush(options)

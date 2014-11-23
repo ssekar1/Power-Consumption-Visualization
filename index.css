@@ -63,6 +63,39 @@
     bottom: 0;
 }
 
+#kwHistogram, #currentLevelsPie
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 75%;
+}
+#durationHistogram, #currentLevels
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 25%;
+	right: 50%;
+}
+#kwHistogram2, #currentLevelsPie2
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	right: 25%;
+}
+#durationHistogram2, #currentLevels2
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 75%;
+	right: 0;
+}
+
 /*first piano roll section*/
 #overviewContainer
 {
