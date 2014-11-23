@@ -255,7 +255,7 @@ var SampleApp = function() {
 		var start = new Date(parseInt(req.params.start, 10));
 		var end = new Date(parseInt(req.params.end, 10));
 		
-		self.pool.query('SELECT start, end, circuit, avgKW FROM powerEvents WHERE end >= ? AND start <= ?  ORDER BY circuit, start', [start, end], function(err, rows, fields){
+		self.pool.query("SELECT start, end, circuit, avgKW FROM powerEvents WHERE end >= ? AND start <= ?  ORDER BY FIELD (circuit,'c1','c2','c3','c4','c5','c6','c7a','c7b','c8','c9','c10','c11','c12','c13','c14','c15', 'c16', 'c17', 'c18', 'c19', 'c20'), start", [start, end], function(err, rows, fields){
 			if(err)
 			{
 				console.log(err);
@@ -279,7 +279,7 @@ var SampleApp = function() {
 		
 		queryString = queryString.substring(0, queryString.length - 2);
 		queryString += ")";
-		queryString += " AND end >= ? AND start <= ? ORDER BY circuit, start";
+		queryString += " AND end >= ? AND start <= ? ORDER BY FIELD (circuit,'c1','c2','c3','c4','c5','c6','c7a','c7b','c8','c9','c10','c11','c12','c13','c14','c15', 'c16', 'c17', 'c18', 'c19', 'c20'), start";
 		self.pool.query(queryString, [start, end], function(err, rows, fields){
 			if(err)
 			{
