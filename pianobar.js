@@ -279,6 +279,10 @@ function dragHandlers(options)
 		
 		if((leftX >= 10 || rightX <= maxWidth - 10) && intervalId < 0)
 			intervalId = setInterval(function(){scrollWithBrush(options);}, 300);
+		else
+		{
+			stopDragBrush();
+		}
 	}
 	
 	function stopDragBrush()
