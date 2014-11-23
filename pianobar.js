@@ -104,7 +104,7 @@ function drawHistograms(options)
 	setHistogramNumberOfBins(49);
   	setHistogramData(evts.filter(filterNearZeroEvents).map(showAvg));
   	setHistogramRange(0, 3.5);
-  	setHistogramSelector("#" + options.kwHistrogramId);
+  	setHistogramSelector("#" + options.kwHistogramId);
   	histogram();
   	
   	setHistogramNumberOfBins(50);
