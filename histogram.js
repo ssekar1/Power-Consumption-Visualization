@@ -35,8 +35,8 @@ function histogram()
 		var formatCount = d3.format(",.0f");
 	
 		var margin = {top: 10, right: 30, bottom: 30, left: 30},
-		    width = $("#circuitQuery").width() - margin.left - margin.right,
-		    height = $("#circuitQuery").height() - margin.top - margin.bottom;
+		    width = $(histogramSelector).width() - margin.left - margin.right,
+		    height = $(histogramSelector).height() - margin.top - margin.bottom;
 		
 		var x = d3.scale.linear()
 		    .domain([histogramStartRange, histogramEndRange])
