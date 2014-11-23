@@ -9,17 +9,17 @@ function filterShortEvents(event)
 	return (new Date(event.end).getTime() - new Date(event.start).getTime()) >= 10000.0;
 }
 
-function filterCircuits(events, options)
+function filterCircuits(options)
 {
 	var e = [];
 	
 	for(var i = 0; i < options.selectedCircuits.length; i++)
 	{
-		for(var j = 0; j < events.length; j++)
+		for(var j = 0; j < options.events.length; j++)
 		{
-			if(circuitNameToIndex[events[j].circuit] === options.selectedCircuits[i])
+			if(circuitNameToIndex[options.events[j].circuit] === options.selectedCircuits[i])
 			{
-				e.push(events[j]);
+				e.push(options.events[j]);
 			}
 		}
 			
@@ -99,7 +99,19 @@ function drawCircuits(options)
 
 function drawHistograms(options)
 {
+	var evts = filterCircuits(options);
 	
+	setHistogramNumberOfBins(49);
+  	setHistogramData(evts.filter(filterNearZeroEvents).map(showAvg));
+  	setHistogramRange(0, 3.5);
+  	setHistogramSelector("#" + options.kwHistrogramId);
+  	histogram();
+  	
+  	setHistogramNumberOfBins(50);
+  	setHistogramData(evts.filter(filterNearZeroEvents).filter(filterShortEvents).map(showDuration));
+  	setHistogramRange(0, 1000);
+  	setHistogramSelector("#" + options.durationHistogramId);
+  	histogram();
 }
 
 function getSelectedEvents(options)
