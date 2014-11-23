@@ -16,7 +16,7 @@
     bottom: 65%;
 }
 
-#tabs pui-tabview-nav
+#tabs .pui-tabview-nav
 {
 	width: 100px !important;
 }
