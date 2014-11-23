@@ -2217,7 +2217,7 @@ this.fixed=false
 });$(function(){$.widget("primeui.puitabview",{options:{activeIndex:0,orientation:"top"},_create:function(){var a=this.element;
 a.addClass("pui-tabview ui-widget ui-widget-content ui-corner-all ui-hidden-container").children("ul").addClass("pui-tabview-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all").children("li").addClass("ui-state-default ui-corner-top");
 a.addClass("pui-tabview-"+this.options.orientation);
-a.children("div").addClass("pui-tabview-panels").children().addClass("pui-tabview-panel ui-widget-content ui-corner-bottom");
+a.children("> div").addClass("pui-tabview-panels").children().addClass("pui-tabview-panel ui-widget-content ui-corner-bottom");
 a.find("> ul.pui-tabview-nav > li").eq(this.options.activeIndex).addClass("pui-tabview-selected ui-state-active");
 a.find("> div.pui-tabview-panels > div.pui-tabview-panel:not(:eq("+this.options.activeIndex+"))").addClass("ui-helper-hidden");
 this.navContainer=a.children(".pui-tabview-nav");
