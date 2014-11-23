@@ -22,7 +22,7 @@ function render(options)
 	    .orient("left")
 	    .ticks(10, "%");
 	
-	var container = document.getElementById(options.currentLevelsId);
+	var container = document.getElementById(options.currentLevelsId).getBoundingClientRect();
 	width = container.width - margin.left - margin.right;
 	height = container.height - margin.top - margin.bottom;
 	
