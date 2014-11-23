@@ -54,6 +54,40 @@ function drawBrushes(options)
 	drawZoomTimeView(options);
     drawOverviewBrush(options);
     drawZoomBrush(options);
+    getSelectedEvents(options);
+}
+
+function getSelectedEvents(options)
+{
+	intersectingEvents = [];
+	targetTime = options.brushTime;
+	
+	for (var i = 0; i < selectedCircuits.length; i++)
+	{
+		if(i < selectedCircuits.length - 1)
+		{
+			intersectingEvents.push(findEvent(event, targetTime, circuitStartingEventIndex[selectedCircuits[i]], circuitStartingEventIndex[selectedCircuits[i] + 1]));
+		}
+		else
+		{
+			intersectingEvents.push(findEvent(options.event, targetTime, circuitStartingEventIndex[selectedCircuits[i]], options.events.length);
+		}
+	}
+}
+
+function findEvent (events, target, start, end)
+{
+	index = start + Math.floor((end - start) / 2);
+	if (events[index].start.getTime() <= target.getTime() && target.getTime() < events[index].end.getTime())
+		return events[index];
+	else if (events[index].start.getTime() > target.getTime())
+	{
+		return findEvent(events, target, start, index - 1);
+	}
+	else
+	{
+		return findEvent(events, target, index + 1, end);
+	}
 }
 
 function drawZoomBrush(options)
