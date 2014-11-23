@@ -36,11 +36,6 @@
 	width: auto !important;
 }
 
-#tabs > div div.ui-helper-hidden
-{
-	display: block;
-}
-
 #visBottomContainer
 {
     position: absolute;
