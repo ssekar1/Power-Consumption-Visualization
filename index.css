@@ -16,6 +16,12 @@
     bottom: 65%;
 }
 
+#tabs pui-tabview-nav
+{
+	width: 100px !important;
+}
+
+
 #visBottomContainer
 {
     position: absolute;
@@ -25,21 +31,11 @@
     bottom: 0;
 }
 
-#circuitGraph
-{
-    position: absolute;
-    left: 0;
-    right: 50%;
-    top: 0;
-    bottom: 0;
-	border: 1px solid black;
-}
-
 #circuitLevels
 {
     position: absolute;
-    left: 50%;
-    right: 25%;
+    left: 0;
+    right: 0;
     top: 0;
     bottom: 0;
     border: 1px solid black;
@@ -48,7 +44,7 @@
 #circuitQuery
 {
     position: absolute;
-    left: 75%;
+    left: 0;
     right: 0;
     top: 0;
     bottom: 0;
