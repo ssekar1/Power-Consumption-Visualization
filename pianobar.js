@@ -70,7 +70,7 @@ function getSelectedEvents(options)
 		}
 		else
 		{
-			intersectingEvents.push(findEvent(options.event, targetTime, circuitStartingEventIndex[selectedCircuits[i]], options.events.length);
+			intersectingEvents.push(findEvent(options.event, targetTime, circuitStartingEventIndex[selectedCircuits[i]], options.events.length));
 		}
 	}
 }
