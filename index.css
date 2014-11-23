@@ -31,6 +31,10 @@
 	height: 100%;
 }
 
+#tabs .pui-tabview-panels
+{
+	width: auto !important;
+}
 
 #visBottomContainer
 {
