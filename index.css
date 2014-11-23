@@ -52,6 +52,7 @@
     right: 0;
     top: 0;
     bottom: 0;
+    background-color: white;
 }
 
 #circuitQuery
@@ -63,6 +64,7 @@
     bottom: 0;
     font-size: .7em;
     font-family: 'Arial';
+    background-color: white;
 }
 
 #kwHistogram, #currentLevelsPie
