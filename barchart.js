@@ -14,7 +14,7 @@ function render(options)
     .rangeRoundBands([0, width], .1);
 
 	var y = d3.scale.linear()
-	    .range([0, height]);
+	    .range([height, 0]);
 	
 	var xAxis = d3.svg.axis()
 	    .scale(x)
@@ -23,7 +23,7 @@ function render(options)
 	var yAxis = d3.svg.axis()
 	    .scale(y)
 	    .orient("left")
-	    .ticks(0.5);
+	    .ticks(0.2);
 	
 	d3.select("#" + options.currentLevelsId).selectAll("svg").remove();
 	
