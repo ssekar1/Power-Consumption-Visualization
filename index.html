@@ -112,20 +112,20 @@
     <div id="visTopContainer">
     	<div id="tabs" class="pui-tabview ui-widget ui-widget-content ui-corner-all ui-hidden-container pui-tabview-left">
     		<ul class="pui-tabview-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-    			<li id="showLevels" class="ui-state-default ui-corner-top pui-tabview-selected ui-state-active"><a href="#circuitQuery">Histograms</a></li>
-    			<li id="showHistograms" class="ui-state-default ui-corner-top"><a href="#circuitLevels">Circuit Levels</a></li>
+    			<li id="showHistograms" class="ui-state-default ui-corner-top pui-tabview-selected ui-state-active"><a href="#circuitQuery">Histograms</a></li>
+    			<li id="showLevels" class="ui-state-default ui-corner-top"><a href="#circuitLevels">Circuit Levels</a></li>
     		</ul>
-    		<div id="circuitLevels">
-            	<section id="currentLevelsPie"></section>
-            	<section id="currentLevels"></section>
-            	<section id="currentLevelsPie2"></section>
-            	<section id="currentLevels2"></section>
-        	</div>
-        	<div id="circuitQuery">
+        	<div id="circuitQuery" style="display: block;">
         		<section id="kwHistogram"></section>
         		<section id="durationHistogram"></section>
         		<section id="kwHistogram2"></section>
         		<section id="durationHistogram2"></section>
+        	</div>
+    		<div id="circuitLevels" style="display: none;">
+            	<section id="currentLevelsPie"></section>
+            	<section id="currentLevels"></section>
+            	<section id="currentLevelsPie2"></section>
+            	<section id="currentLevels2"></section>
         	</div>
     	</div>   
     </div>
