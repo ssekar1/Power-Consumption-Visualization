@@ -98,14 +98,26 @@ function drawCircuits(options)
 	Barchart.render(options);
 }
 
-function kwOnClick(d)
+function kwOnClick(options, range)
 {
-	console.log(d);
+	var svg = d3.select("#" + options.zoomViewId)
+	.selectAll("rect.event")
+	.data(options.events)
+	.attr("fill", function(d){
+		if(range.start <= d.avgKW && d.avgKW <= range.end)
+		{
+			return "black";
+		}
+		else
+		{
+			return getColor(d.avgKW / maxCircuitValue);
+		}
+	});
 }
 
-function durationOnClick(d)
+function durationOnClick(options, d)
 {
-	console.log(d);
+	var svg = d3.select("#" + options.zoomViewId + " g");
 }
 
 function drawHistograms(options)
