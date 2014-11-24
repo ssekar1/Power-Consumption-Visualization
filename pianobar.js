@@ -101,8 +101,7 @@ function drawCircuits(options)
 function kwOnClick(options, range)
 {
 	var svgNodes = d3.select("#" + options.zoomViewId + " g")
-	.selectAll("rect.event")
-	.data(options.events);
+	.selectAll("rect.event");
 	
 	svgNodes.each(function(d,i){
 		console.log(d + " " + i);
