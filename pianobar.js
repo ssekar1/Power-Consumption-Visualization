@@ -112,7 +112,7 @@ function drawHistograms(options)
 {
 	var evts = filterCircuits(options);
 	
-	setHistogramNumberOfBins(100);
+	setHistogramNumberOfBins(35);
   	setHistogramData(evts.filter(filterNearZeroEvents).map(showAvg));
   	setHistogramRange(0, 3.5);
   	setHistogramSelector("#" + options.kwHistogramId);
