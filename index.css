@@ -126,8 +126,8 @@
   shape-rendering: crispEdges;
 }
 
-.bar, .bar rect:hover, .bar rect:hover ~ rect {
-  fill: orange;
+.bar rect:hover, .bar rect:hover ~ rect {
+  fill: orange !important;
 }
 
 .bar text {
