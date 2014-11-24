@@ -6,6 +6,7 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 function render(options)
 {
+	var container = document.getElementById(options.currentLevelsId).getBoundingClientRect();
 	width = container.width - margin.left - margin.right;
 	height = container.height - margin.top - margin.bottom;
 		
@@ -23,10 +24,7 @@ function render(options)
 	    .scale(y)
 	    .orient("left")
 	    .ticks(10, "%");
-	
-	var container = document.getElementById(options.currentLevelsId).getBoundingClientRect();
-	
-	
+		
 	var svg = d3.select("#" + options.currentLevelsId).append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
