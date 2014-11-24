@@ -115,6 +115,8 @@ function kwOnClick(options, range)
 		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
 		$(this).attr("fill", getColor(kw / maxCircuitValue));
 	});
+	
+	drawOverview(options, "avgKW", range.start, range.end);
 }
 
 function durationOnClick(options, d)
@@ -238,7 +240,7 @@ function drawZoomView(options)
 	.text(function(d) {return indexToName[d]});
 }
   	
-function drawOverview(options)
+function drawOverview(options, attribute, startRange, endRange)
 {
 	var rangeInMilliseconds = options.overviewEndDate.getTime() - options.overviewStartDate.getTime();
 	
@@ -262,7 +264,13 @@ function drawOverview(options)
 			x = 0;
 		}
   			
-		context.fillStyle = getColor(d.avgKW / maxCircuitValue);
+		if(attribute && typeof(startRange) === "number" && startRange <= d[attribute] && d[attribute] <= endRange)
+		{
+			context.fillStyle = "black";
+		}
+		else{
+			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
+		}
   		context.fillRect(x,y,w,h);
 	});
   	
