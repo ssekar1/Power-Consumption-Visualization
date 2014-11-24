@@ -68,9 +68,10 @@ function histogram(callback)
 		
 		bar.append("rect")
 			.attr("x", 1)
+			.attr("y", -height)
 			.attr("width", x(data[0].dx) - 1)
 			.attr("height", height)
-			.attr("fill", "white")
+			.attr("style", "fill:white;")
 			.on("click", function (d){callback(d);});
 		
 		bar.append("rect")
