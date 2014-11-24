@@ -14,7 +14,7 @@ function render(options)
     .rangeRoundBands([0, width], .1);
 
 	var y = d3.scale.linear()
-	    .range([height, 0]);
+	    .range([0, height]);
 	
 	var xAxis = d3.svg.axis()
 	    .scale(x)
