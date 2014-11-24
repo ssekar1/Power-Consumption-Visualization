@@ -167,11 +167,15 @@ function getSelectedEvents(options)
 	{
 		if(i < options.selectedCircuits.length - 1)
 		{
-			options.intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.circuitStartingEventIndex[options.selectedCircuits[i] + 1]));
+			var e = findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.circuitStartingEventIndex[options.selectedCircuits[i] + 1]);
+			if(e)
+				options.intersectingEvents.push(e);
 		}
 		else
 		{
-			options.intersectingEvents.push(findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.events.length));
+			var e = findEvent(options.events, targetTime, options.circuitStartingEventIndex[options.selectedCircuits[i]], options.events.length);
+			if(e)
+				options.intersectingEvents.push(e);
 		}
 	}
 }
@@ -183,6 +187,10 @@ function findEvent (events, target, start, end)
 	endDate = new Date(events[index].end);
 	if (startDate.getTime() <= target.getTime() && target.getTime() < endDate.getTime())
 		return events[index];
+	else if(start === end)
+	{
+		return null;
+	}
 	else if (startDate.getTime() > target.getTime())
 	{
 		return findEvent(events, target, start, index - 1);
