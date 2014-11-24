@@ -100,18 +100,20 @@ function drawCircuits(options)
 
 function kwOnClick(options, range)
 {
-	var svgNodes = d3.select("#" + options.zoomViewId)
-	.selectAll("rect.event")
-	.data(options.events).enter()
-	.attr("fill", function(d){
-		if(range.start <= d.avgKW && d.avgKW <= range.end)
-		{
-			return "black";
-		}
-		else
-		{
-			return getColor(d.avgKW / maxCircuitValue);
-		}
+	$("#" + options.zoomViewId + " rect.event")
+	.filter(function(){
+		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
+		return range.start <= kw && kw <= range.end;
+	})
+	.attr("fill", "black");
+	
+	$("#" + options.zoomViewId + " rect.event")
+	.filter(function(){
+		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
+		return range.start > kw || kw > range.end;
+	}).each(function(){
+		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
+		$(this).attr("fill", getColor(kw / maxCircuitValue));
 	});
 }
 
