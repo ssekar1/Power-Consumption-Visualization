@@ -70,6 +70,7 @@ function histogram(options, callback)
 		    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
 		
 		bar.append("rect")
+			.attr("class","clickTarget")
 			.attr("x", 1)
 			.attr("y", -height)
 			.attr("width", x(data[0].dx) - 1)
@@ -80,11 +81,12 @@ function histogram(options, callback)
 			});
 		
 		bar.append("rect")
-		    .attr("x", 1)
+		    .attr("class","dataBar")
+			.attr("x", 1)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
-		    	svg.selectAll(".bar rect").style("fill", "");
+		    	svg.selectAll(".bar rect.dataBar").style("fill", "");
 		    	d3.select(this).style("fill", "black");
 		    	callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
 		    });
