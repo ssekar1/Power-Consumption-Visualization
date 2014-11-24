@@ -59,6 +59,7 @@ function loadEvents(options)
 		}
 		
 		attachTimeBrushEvent(options);
+		drawScrollbar(options);
 		drawEvents(options);
 		$("#loading").puidialog("hide");
  	});	
@@ -296,8 +297,6 @@ function drawOverview(options, attribute, startRange, endRange)
 		}
   		context.fillRect(x,y,w,h);
 	});
-  	
-	drawScrollbar(canvas.width, canvas.height, options);
 }
   	
 function drawOverviewBrush(options)
@@ -314,9 +313,12 @@ function drawOverviewBrush(options)
 	.attr("height", canvas.height);
 }
 
-function drawScrollbar(width, height, options)
+function drawScrollbar(options)
 {
 	var svgElement = document.getElementById(options.scrollbarId);
+	var container = svgElement.parentNode.getBoundingClientRect();
+	var width = container.width;
+	var height = container.height;
 	svgElement.setAttribute("viewBox", "0 0 " + width + " " + height);
 	svgElement.setAttribute("preserveAspectRatio", "xMinYMin");
   	
