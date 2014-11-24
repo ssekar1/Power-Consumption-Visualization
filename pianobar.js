@@ -119,7 +119,7 @@ function kwOnClick(options, range)
 	drawOverview(options, "avgKW", range.start, range.end);
 }
 
-function durationOnClick(options, d)
+function durationOnClick(options, range)
 {
 	$("#" + options.zoomViewId + " rect.event")
 	.filter(function(){
