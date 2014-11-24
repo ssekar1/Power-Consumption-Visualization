@@ -117,12 +117,14 @@ function initUI()
 		$("#circuitLevels").css("display", "block");
 		$("#circuitQuery").css("display", "none");
 		$(this).toggleClass("pui-tabview-selected ui-state-active");
+		$("#showHistograms").toggleClass("pui-tabview-selected ui-state-active");
 	});
 	
 	$("#showHistograms").click(function(){
 		$("#circuitLevels").css("display", "none");
 		$("#circuitQuery").css("display", "block");
 		$(this).toggleClass("pui-tabview-selected ui-state-active");
+		$("#showLevels").toggleClass("pui-tabview-selected ui-state-active");
 	});
 }
 
