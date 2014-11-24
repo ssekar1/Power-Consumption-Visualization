@@ -43,10 +43,11 @@ function histogram(callback)
 		
 		var x = d3.scale.linear()
 		    .domain([histogramStartRange, histogramEndRange])
-		    .range([0, width]);
+		    .range([0, width])
+		    .ticks(histogramNumberOfBins);
 	
 		var data = d3.layout.histogram()
-		    .bins(x.ticks(histogramNumberOfBins))
+		    .bins(histogramNumberOfBins)
 		    (histogramData);
 	
 		var y = d3.scale.linear()
