@@ -25,7 +25,7 @@ function setHistogramSelector(selector)
 	histogramSelector = selector;
 }
 
-function histogram(callback)
+function histogram(options, callback)
 {
 	if(histogramData != null && histogramStartRange != null && histogramEndRange != null && histogramSelector != null)
 	{

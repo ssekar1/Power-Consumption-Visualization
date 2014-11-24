@@ -100,9 +100,19 @@ function drawCircuits(options)
 
 function kwOnClick(options, range)
 {
-	var svgNodes = $("#" + options.zoomViewId + " g rect.event").attr("fill", "black");
-	
-	
+	var svgNodes = d3.select("#" + options.zoomViewId)
+	.selectAll("rect.event")
+	.data(options.events).enter()
+	.attr("fill", function(d){
+		if(range.start <= d.avgKW && d.avgKW <= range.end)
+		{
+			return "black";
+		}
+		else
+		{
+			return getColor(d.avgKW / maxCircuitValue);
+		}
+	});
 }
 
 function durationOnClick(options, d)
@@ -118,13 +128,13 @@ function drawHistograms(options)
   	setHistogramData(evts.filter(filterNearZeroEvents).map(showAvg));
   	setHistogramRange(0, 3.5);
   	setHistogramSelector("#" + options.kwHistogramId);
-  	histogram(kwOnClick);
+  	histogram(options, kwOnClick);
   	
   	setHistogramNumberOfBins(50);
   	setHistogramData(evts.filter(filterNearZeroEvents).filter(filterShortEvents).map(showDuration));
   	setHistogramRange(0, 1000);
   	setHistogramSelector("#" + options.durationHistogramId);
-  	histogram(durationOnClick);
+  	histogram(options, durationOnClick);
 }
 
 function getSelectedEvents(options)
