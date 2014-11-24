@@ -123,9 +123,7 @@ function durationOnClick(options, range)
 {
 	$("#" + options.zoomViewId + " rect.event")
 	.filter(function(){
-		var startDate = new Date($(this).get(0).getAttribute("data-start"));
-		var endDate = new Date($(this).get(0).getAttribute("data-end"));
-		var durationInSeconds = endDate - startDate / 1000; 
+		var durationInSeconds = new Date($(this).get(0).getAttribute("data-durationInSeconds"));
 		return range.start <= durationInSeconds && durationInSeconds <= range.end;
 	})
 	.attr("fill", "black");
