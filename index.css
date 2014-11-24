@@ -418,5 +418,5 @@ rect.brush
 
 rect.event:hover
 {
-	border: 1px solid black;
+	stroke: black;
 }
