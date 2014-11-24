@@ -31,6 +31,8 @@ function render(options)
 	  .append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
+	svg.selectAll("*").remove();
+	
 	var data = options.intersectingEvents;
 	
 	x.domain(data.map(function(d) { return d.circuit; }));
