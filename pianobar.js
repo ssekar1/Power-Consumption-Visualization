@@ -100,19 +100,15 @@ function drawCircuits(options)
 
 function kwOnClick(options, range)
 {
-	var svg = d3.select("#" + options.zoomViewId)
+	var svgNodes = d3.select("#" + options.zoomViewId)
 	.selectAll("rect.event")
-	.data(options.events).enter()
-	.attr("fill", function(d){
-		if(range.start <= d.avgKW && d.avgKW <= range.end)
-		{
-			return "black";
-		}
-		else
-		{
-			return getColor(d.avgKW / maxCircuitValue);
-		}
+	.data(options.events);
+	
+	svgNodes.each(function(d,i){
+		console.log(d + " " + i);
+		
 	});
+	
 }
 
 function durationOnClick(options, d)
