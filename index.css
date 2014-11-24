@@ -121,7 +121,7 @@
 	right: 0;
 }
 
- .bar rect {
+.bar, .bar rect {
   fill: steelblue;
   shape-rendering: crispEdges;
 }
