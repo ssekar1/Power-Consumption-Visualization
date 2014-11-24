@@ -126,6 +126,10 @@
   shape-rendering: crispEdges;
 }
 
+.bar, .bar rect:hover, .bar rect:hover ~ rect {
+  fill: orange;
+}
+
 .bar text {
   fill: #fff;
 }
