@@ -106,16 +106,6 @@ function kwOnClick(options, range)
 	
 	svgNodes.each(function(d,i){
 		console.log(d + " " + i);
-		.attr("fill", function(d){
-			if(range.start <= d.avgKW && d.avgKW <= range.end)
-			{
-				return "black";
-			}
-			else
-			{
-				return getColor(d.avgKW / maxCircuitValue);
-			}
-		});
 	});
 	
 }
