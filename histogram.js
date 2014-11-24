@@ -88,16 +88,16 @@ function histogram(options, callback)
 		    .on("click", function (d){
 		    	d3.selectAll("#" + options.kwHistogramId + " .bar rect.dataBar, #"  + options.durationHistogramId + " .bar rect.dataBar").style("fill", "");
 		    	d3.select(this).style("fill", "black");
-		    	callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+		    	if((d.x + (((endRange - startRange) / bins)) === endRange)
+		    	{
+		    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});
+		    	}
+		    	else
+		    	{
+		    		callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+		    	}
 		    });
 	
-		/*bar.append("text")
-		    .attr("dy", ".75em")
-		    .attr("y", 6)
-		    .attr("x", x(data[0].dx) / 2)
-		    .attr("text-anchor", "middle")
-		    .text(function(d) { return formatCount(d.y); });
-		*/
 		svg.append("g")
 		    .attr("class", "x axis")
 		    .attr("transform", "translate(0," + height + ")")
