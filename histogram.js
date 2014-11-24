@@ -76,15 +76,15 @@ function histogram(callback)
 			.attr("height", height)
 			.attr("style", "fill:white;")
 			.on("click", function (d){
-				callback(d);
-		    );
+				callback(d.x + " " + (d.x + ((endRange - startRange) / bins)));
+			});
 		
 		bar.append("rect")
 		    .attr("x", 1)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
-		    	callback(d);
+		    	callback(d.x + " " + (d.x + ((endRange - startRange) / bins)));
 		    });
 	
 		/*bar.append("text")
