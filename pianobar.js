@@ -121,7 +121,25 @@ function kwOnClick(options, range)
 
 function durationOnClick(options, d)
 {
-	var svg = d3.select("#" + options.zoomViewId + " g");
+	$("#" + options.zoomViewId + " rect.event")
+	.filter(function(){
+		var startDate = new Date($(this).get(0).getAttribute("data-start"));
+		var endDate = new Date($(this).get(0).getAttribute("data-end"));
+		var durationInSeconds = endDate - startDate / 1000; 
+		return range.start <= durationInSeconds && durationInSeconds <= range.end;
+	})
+	.attr("fill", "black");
+	
+	$("#" + options.zoomViewId + " rect.event")
+	.filter(function(){
+		var durationInSeconds = new Date($(this).get(0).getAttribute("data-durationInSeconds"));
+		return range.start > durationInSeconds || durationInSeconds > range.end;
+	}).each(function(){
+		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
+		$(this).attr("fill", getColor(kw / maxCircuitValue));
+	});
+	
+	drawOverview(options, "duration", range.start, range.end);
 }
 
 function drawHistograms(options)
@@ -210,6 +228,7 @@ function drawZoomView(options)
 	.attr("height", function(d){ return svgBox.height / options.selectedCircuits.length;})
 	.attr("data-start", function(d){ return d.start;})
 	.attr("data-end", function(d){ return d.end;})
+	.attr("data-durationInSeconds", function(d){return (new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000})
 	.attr("data-avgKW", function(d){ return d.avgKW;})
 	.attr("fill", function(d){
 		return getColor(d.avgKW / maxCircuitValue);
@@ -264,7 +283,13 @@ function drawOverview(options, attribute, startRange, endRange)
 			x = 0;
 		}
   			
-		if(attribute && typeof(startRange) === "number" && startRange <= d[attribute] && d[attribute] <= endRange)
+		if(attribute === "avgKW" && startRange <= d[attribute] && d[attribute] <= endRange)
+		{
+			context.fillStyle = "black";
+		}
+		else if(attribute === "duration" && 
+				startRange <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
+				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000 <= endRange))
 		{
 			context.fillStyle = "black";
 		}
