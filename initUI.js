@@ -114,15 +114,15 @@ function initUI()
 	});
 	
 	$("#showLevels").click(function(){
-		$("#circuitLevels").css("display", "block");
-		$("#circuitQuery").css("display", "none");
+		$("#circuitLevels").css("z-index", "2");
+		$("#circuitQuery").css("z-index", "1");
 		$(this).toggleClass("pui-tabview-selected ui-state-active");
 		$("#showHistograms").toggleClass("pui-tabview-selected ui-state-active");
 	});
 	
 	$("#showHistograms").click(function(){
-		$("#circuitLevels").css("display", "none");
-		$("#circuitQuery").css("display", "block");
+		$("#circuitLevels").css("z-index", "1");
+		$("#circuitQuery").css("z-index", "2");
 		$(this).toggleClass("pui-tabview-selected ui-state-active");
 		$("#showLevels").toggleClass("pui-tabview-selected ui-state-active");
 	});
