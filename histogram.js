@@ -88,7 +88,7 @@ function histogram(options, callback)
 		    .on("click", function (d){
 		    	d3.selectAll("#" + options.kwHistogramId + " .bar rect.dataBar, #"  + options.durationHistogramId + " .bar rect.dataBar").style("fill", "");
 		    	d3.select(this).style("fill", "black");
-		    	if((d.x + (((endRange - startRange) / bins)) === endRange)
+		    	if((d.x + (((endRange - startRange) / bins))) === endRange)
 		    	{
 		    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});
 		    	}
