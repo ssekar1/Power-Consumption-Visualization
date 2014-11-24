@@ -415,3 +415,8 @@ rect.brush
 	-webkit-columns: 2;
 	columns: 2;
 }
+
+rect.event:hover
+{
+	border: 1px solid black;
+}
