@@ -64,7 +64,7 @@ function histogram(callback)
 		    .data(data)
 		  .enter().append("g")
 		    .attr("class", "bar")
-		    .attr("transform", function(d) { console.log( d.x, x(d.x)); return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+		    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
 		
 		bar.append("rect")
 			.attr("x", 1)
@@ -72,13 +72,13 @@ function histogram(callback)
 			.attr("width", x(data[0].dx) - 1)
 			.attr("height", height)
 			.attr("style", "fill:white;")
-			.on("click", function (d){callback(););
+			.on("click", function (d){callback(d.x);});
 		
 		bar.append("rect")
 		    .attr("x", 1)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
-		    .on("click", function (d){callback(x);});
+		    .on("click", function (d){callback(x(d.x));});
 	
 		/*bar.append("text")
 		    .attr("dy", ".75em")
