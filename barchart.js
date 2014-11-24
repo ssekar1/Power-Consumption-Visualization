@@ -24,14 +24,14 @@ function render(options)
 	    .scale(y)
 	    .orient("left")
 	    .ticks(10, "%");
-		
+	
+	d3.select("#" + options.currentLevelsId).selectAll("svg").remove();
+	
 	var svg = d3.select("#" + options.currentLevelsId).append("svg")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  .append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-	
-	svg.selectAll("*").remove();
 	
 	var data = options.intersectingEvents;
 	
