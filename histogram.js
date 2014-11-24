@@ -75,10 +75,11 @@ function histogram(callback)
 			.attr("height", height)
 			.attr("style", "fill:white;")
 			.on("click", function (d){
-		    	callback({
-		    		start:d.x, 
-		    		end: (d.x + ((endRange - startRange) / histogramNumberOfBins))
-		    	});
+		    	var range = {
+			    	start: d.x, 
+			    	end: (d.x + ((endRange - startRange) / histogramNumberOfBins))
+			    };
+				callback(range);
 		    );
 		
 		bar.append("rect")
@@ -86,10 +87,11 @@ function histogram(callback)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
-		    	callback({
-		    		start:d.x, 
-		    		end: (d.x + ((endRange - startRange) / histogramNumberOfBins))
-		    	});
+		    	var range = {
+				    	start: d.x, 
+				    	end: (d.x + ((endRange - startRange) / histogramNumberOfBins))
+				    };
+					callback(range);
 		    });
 	
 		/*bar.append("text")
