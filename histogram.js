@@ -29,6 +29,8 @@ function histogram(callback)
 {
 	if(histogramData != null && histogramStartRange != null && histogramEndRange != null && histogramSelector != null)
 	{
+		var startRange = histogramStartRange;
+		var endRange = histogramEndRange;
 		d3.select(histogramSelector).select("svg").remove();
 	
 		// A formatter for counts.
@@ -72,13 +74,23 @@ function histogram(callback)
 			.attr("width", x(data[0].dx) - 1)
 			.attr("height", height)
 			.attr("style", "fill:white;")
-			.on("click", function (d){callback(d.x);});
+			.on("click", function (d){
+		    	callback({
+		    		start:d.x, 
+		    		end: (d.x + ((endRange - startRange) / histogramNumberOfBins))
+		    	});
+		    );
 		
 		bar.append("rect")
 		    .attr("x", 1)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
-		    .on("click", function (d){callback(x(d.x));});
+		    .on("click", function (d){
+		    	callback({
+		    		start:d.x, 
+		    		end: (d.x + ((endRange - startRange) / histogramNumberOfBins))
+		    	});
+		    });
 	
 		/*bar.append("text")
 		    .attr("dy", ".75em")
