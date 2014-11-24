@@ -123,14 +123,14 @@ function durationOnClick(options, range)
 {
 	$("#" + options.zoomViewId + " rect.event")
 	.filter(function(){
-		var durationInSeconds = new Date($(this).get(0).getAttribute("data-durationInSeconds"));
+		var durationInSeconds = $(this).get(0).getAttribute("data-durationInSeconds");
 		return range.start <= durationInSeconds && durationInSeconds <= range.end;
 	})
 	.attr("fill", "black");
 	
 	$("#" + options.zoomViewId + " rect.event")
 	.filter(function(){
-		var durationInSeconds = new Date($(this).get(0).getAttribute("data-durationInSeconds"));
+		var durationInSeconds = $(this).get(0).getAttribute("data-durationInSeconds");
 		return range.start > durationInSeconds || durationInSeconds > range.end;
 	}).each(function(){
 		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
