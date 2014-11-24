@@ -23,7 +23,7 @@ function render(options)
 	var yAxis = d3.svg.axis()
 	    .scale(y)
 	    .orient("left")
-	    .ticks(10, "%");
+	    .ticks(0.5);
 	
 	d3.select("#" + options.currentLevelsId).selectAll("svg").remove();
 	
