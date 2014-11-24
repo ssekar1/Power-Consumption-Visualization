@@ -25,7 +25,7 @@ function setHistogramSelector(selector)
 	histogramSelector = selector;
 }
 
-function histogram()
+function histogram(callback)
 {
 	if(histogramData != null && histogramStartRange != null && histogramEndRange != null && histogramSelector != null)
 	{
@@ -65,11 +65,19 @@ function histogram()
 		  .enter().append("g")
 		    .attr("class", "bar")
 		    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
-	
+		
+		bar.append("rect")
+			.attr("x", 1)
+			.attr("width", x(data[0].dx) - 1)
+			.attr("height", height)
+			.attr("fill", "white")
+			.on("click", function (d){callback(d);});
+		
 		bar.append("rect")
 		    .attr("x", 1)
 		    .attr("width", x(data[0].dx) - 1)
-		    .attr("height", function(d) { return height - y(d.y); });
+		    .attr("height", function(d) { return height - y(d.y); })
+		    .on("click", function (d){callback(d);});
 	
 		/*bar.append("text")
 		    .attr("dy", ".75em")

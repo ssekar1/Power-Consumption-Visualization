@@ -98,6 +98,16 @@ function drawCircuits(options)
 	Barchart.render(options);
 }
 
+function kwOnClick(d)
+{
+	console.log(d);
+}
+
+function durationOnClick(d)
+{
+	console.log(d);
+}
+
 function drawHistograms(options)
 {
 	var evts = filterCircuits(options);
@@ -106,13 +116,13 @@ function drawHistograms(options)
   	setHistogramData(evts.filter(filterNearZeroEvents).map(showAvg));
   	setHistogramRange(0, 3.5);
   	setHistogramSelector("#" + options.kwHistogramId);
-  	histogram();
+  	histogram(kwOnClick);
   	
   	setHistogramNumberOfBins(50);
   	setHistogramData(evts.filter(filterNearZeroEvents).filter(filterShortEvents).map(showDuration));
   	setHistogramRange(0, 1000);
   	setHistogramSelector("#" + options.durationHistogramId);
-  	histogram();
+  	histogram(durationOnClick);
 }
 
 function getSelectedEvents(options)
