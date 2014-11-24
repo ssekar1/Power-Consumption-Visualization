@@ -113,9 +113,17 @@ function initUI()
 		$("#circuitSelector2").puidialog("show");
 	});
 	
-	$("#tabs").puitabview({  
-        orientation: 'left'  
-    });
+	$("#showLevels").click(function(){
+		$("#circuitLevels").css("display", "block");
+		$("#circuitQuery").css("display", "none");
+		$(this).toggleClass("pui-tabview-selected ui-state-active");
+	});
+	
+	$("#showHistograms").click(function(){
+		$("#circuitLevels").css("display", "none");
+		$("#circuitQuery").css("display", "block");
+		$(this).toggleClass("pui-tabview-selected ui-state-active");
+	});
 }
 
 function initDateFields(dateRange)
