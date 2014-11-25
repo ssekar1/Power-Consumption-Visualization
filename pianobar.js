@@ -213,7 +213,8 @@ function drawZoomBrush(options)
 
 function drawZoomView(options)
 {
-	var rangeInMilliseconds = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
+	var overviewRangeInMilliseconds = options.overviewEndDate.getTime() - options.overviewStartDate.getTime();
+	var zoomRangeInMilliseconds = options.zoomEndDate.getTime() - options.zoomStartDate.getTime();
 	var svgBox = document.getElementById(options.zoomViewId).getBoundingClientRect();
 	var svg = d3.select("#" + options.zoomViewId);
 	
@@ -221,7 +222,7 @@ function drawZoomView(options)
 	var brushDragHandler = d3.behavior.drag()
 	.on("drag", function(d){ options.dragHandlers.dragZoomBrush(options)});
   		
-	svg.selectAll("g").remove();
+	svg.selectAll("g, .zoom.brush").remove();
 	
 	svg.append("g")
 	.attr("class", "eventContainer")
@@ -230,24 +231,22 @@ function drawZoomView(options)
 	.append("rect")
 	.attr("class", "event")
 	.attr("vector-effect","non-scaling-stroke")
-	.attr("x", function(d){ return (new Date(d.start).getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds * svgBox.width;})
+	.attr("x", function(d){ return (new Date(d.start).getTime() - options.overviewStartDate.getTime()) / overviewRangeInMilliseconds * svgBox.width;})
 	.attr("y", function(d){ return options.selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (svgBox.height / options.selectedCircuits.length);})
-	.attr("width", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds * svgBox.width})
+	.attr("width", function(d){ return (new Date(d.end).getTime() - new Date(d.start).getTime()) / overviewRangeInMilliseconds * svgBox.width})
 	.attr("height", function(d){ return svgBox.height / options.selectedCircuits.length;})
 	.attr("data-start", function(d){ return d.start;})
 	.attr("data-end", function(d){ return d.end;})
-	.attr("data-durationInSeconds", function(d){return (new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000})
+	.attr("data-durationInSeconds", function(d){return (new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000;})
 	.attr("data-avgKW", function(d){ return d.avgKW;})
 	.attr("fill", function(d){
 		return getColor(d.avgKW / maxCircuitValue);
 	})
-	.on("click", function(d, i){
-		PowerGraph.render([circuitNameToIndex[d.circuit]], new Date(d.start), new Date(d.end));
-	});
+	.attr("title", function(d){ return "avgKW: " + d.avgKW + " duration (seconds): " + (new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000;});
 	
 	options.zoomBrush = svg.append("rect")
 	.attr("class", "zoom brush")
-	.attr("x", ((options.brushTime.getTime() - options.zoomStartDate.getTime()) / rangeInMilliseconds) * svgBox.width)
+	.attr("x", ((options.brushTime.getTime() - options.zoomStartDate.getTime()) / zoomRangeInMilliseconds) * svgBox.width)
 	.attr("y", 0)
 	.attr("width", 2)
 	.attr("height", svgBox.height)
