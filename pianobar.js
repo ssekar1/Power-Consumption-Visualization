@@ -331,7 +331,11 @@ function drawOverview(options, attribute, startRange, endRange)
 			x = 0;
 		}
   			
-		if(options.kwFilterStart !== null && options.durationFilterStart !== null && 
+		if (options.kwFilterStart === null && option.durationFilterStart === null)
+		{
+			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
+		}
+		else if(options.kwFilterStart !== null && options.durationFilterStart !== null && 
 				options.kwFilterStart <= d.avgKW && d.avgKW <= options.kwFilterEnd &&
 				options.durationFilterStart <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
 				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
@@ -347,9 +351,6 @@ function drawOverview(options, attribute, startRange, endRange)
 				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
 		{
 			context.fillStyle = "lime";
-		}
-		else{
-			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
 		}
   		context.fillRect(x,y,w,h);
 	});
