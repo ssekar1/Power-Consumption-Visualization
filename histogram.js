@@ -86,8 +86,16 @@ function histogram(options, callback)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
-		    	d3.selectAll("#" + options.kwHistogramId + " .bar rect.dataBar, #"  + options.durationHistogramId + " .bar rect.dataBar").style("fill", "");
-		    	d3.select(this).style("fill", "black");
+		    	if(d3.select(this).style("fill") === "black")
+		    	{
+		    		d3.select(this).style("fill", "");
+		    	}
+		    	else
+		    	{
+		    		d3.selectAll(histogramSelector + " .bar rect.dataBar").style("fill", "");
+		    		d3.select(this).style("fill", "black");
+		    	}
+		    	
 		    	if((d.x + (((endRange - startRange) / bins))) === endRange)
 		    	{
 		    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});

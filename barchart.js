@@ -36,7 +36,7 @@ function render(options)
 	var data = options.intersectingEvents;
 	
 	x.domain(data.map(function(d) { return d.circuit; }));
-	y.domain([0, d3.max(data, function(d) { return d.avgKW; })]);
+	y.domain([0, 3]);
 	
 	svg.append("g")
 	    .attr("class", "x axis")
