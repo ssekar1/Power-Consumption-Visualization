@@ -1,6 +1,8 @@
 function initUI()
 {
 	$("#loading").puidialog({modal: true});
+	
+	$("#legend").puidialog();
   		
 	$("#circuitSelector").puidialog({
 		afterHide:function(){
@@ -125,6 +127,10 @@ function initUI()
 		$("#circuitQuery").css("z-index", "2");
 		$(this).toggleClass("pui-tabview-selected ui-state-active");
 		$("#showLevels").toggleClass("pui-tabview-selected ui-state-active");
+	});
+	
+	$("showLegend").click(function(){
+		$("#legend").puidialog("show");
 	});
 }
 
