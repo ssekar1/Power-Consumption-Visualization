@@ -420,3 +420,8 @@ rect.event:hover
 {
 	stroke: black;
 }
+
+rect.dataBar.selected
+{
+	fill: black;
+}

@@ -87,14 +87,14 @@ function histogram(options, callback)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
 		    	console.log(d3.select(this).style("fill"));
-		    	if(d3.select(this).style("fill") === "black")
+		    	if(d3.select(this).attr("class") === "selected")
 		    	{
-		    		d3.select(this).style("fill", "");
+		    		d3.select(this).classed("selected", false);
 		    	}
 		    	else
 		    	{
-		    		d3.selectAll(histogramSelector + " .bar rect.dataBar").style("fill", "");
-		    		d3.select(this).style("fill", "black");
+		    		d3.selectAll(histogramSelector + " .bar rect.dataBar").classed("selected", false);
+		    		d3.select(this).classed("selected", true);
 		    	}
 		    	
 		    	if((d.x + (((endRange - startRange) / bins))) === endRange)
