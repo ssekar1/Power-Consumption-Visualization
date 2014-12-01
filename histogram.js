@@ -88,7 +88,7 @@ function histogram(options, callback)
 		    .on("click", function (d){
 		    	console.log(d3.select(this).attr("class"));
 		    	console.log(histogramSelector + " .bar rect.dataBar");
-		    	if(d3.select(this).attr("class") === "selected")
+		    	if(d3.select(this).attr("class").indexOf("selected") >= 0)
 		    	{
 		    		d3.select(this).classed("selected", false);
 		    	}
