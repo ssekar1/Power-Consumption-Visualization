@@ -128,7 +128,7 @@ function histogramHighlight(options)
 			return true;
 		}
 	})
-	.attr("fill", "black");
+	.attr("fill", "lime");
 	
 	$("#" + options.zoomViewId + " rect.event")
 	.filter(function(){
@@ -335,17 +335,17 @@ function drawOverview(options, attribute, startRange, endRange)
 				options.durationFilterStart <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
 				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
 		{
-			context.fillStyle = "black";
+			context.fillStyle = "lime";
 		}	
 		else if(options.kwFilterStart !== null && options.kwFilterStart <= d.avgKW && d.avgKW <= options.kwFilterEnd)
 		{
-			context.fillStyle = "black";
+			context.fillStyle = "lime";
 		}
 		else if(options.durationFilterStart !== null && 
 				options.durationFilterStart <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
 				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
 		{
-			context.fillStyle = "black";
+			context.fillStyle = "lime";
 		}
 		else{
 			context.fillStyle = getColor(d.avgKW / maxCircuitValue);

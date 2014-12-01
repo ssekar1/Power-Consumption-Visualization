@@ -423,5 +423,5 @@ rect.event:hover
 
 rect.dataBar.selected
 {
-	fill: black;
+	fill: lime;
 }
