@@ -129,7 +129,7 @@ function initUI()
 		$("#showLevels").toggleClass("pui-tabview-selected ui-state-active");
 	});
 	
-	$("showLegend").click(function(){
+	$("#showLegend").click(function(){
 		$("#legend").puidialog("show");
 	});
 }
