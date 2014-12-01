@@ -78,15 +78,15 @@ function histogram(options, callback)
 			.attr("height", height)
 			.attr("style", "fill:white;")
 			.on("click", function (d){
-				console.log(this);
-				if(d3.select(this).select(" ~ .dataBar").attr("class").indexOf("selected") >= 0)
+				console.log(this.nextSibling);
+				if(d3.select(this.nextSibling).attr("class").indexOf("selected") >= 0)
 		    	{
-		    		d3.select(this).classed("selected", false);
+		    		d3.select(this.nextSibling).classed("selected", false);
 		    	}
 		    	else
 		    	{
 		    		d3.selectAll(selector + " .bar rect.dataBar").classed("selected", false);
-		    		d3.select(this).classed("selected", true);
+		    		d3.select(this.nextSibling).classed("selected", true);
 		    	}
 		    	
 		    	if((d.x + (((endRange - startRange) / bins))) === endRange)
