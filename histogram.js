@@ -32,14 +32,15 @@ function histogram(options, callback)
 		var startRange = histogramStartRange;
 		var endRange = histogramEndRange;
 		var bins = histogramNumberOfBins;
-		d3.select(histogramSelector).select("svg").remove();
+		var selector = histogramSelector;
+		d3.select(selector).select("svg").remove();
 	
 		// A formatter for counts.
 		var formatCount = d3.format(",.0f");
 	
 		var margin = {top: 10, right: 30, bottom: 30, left: 30},
-		    width = $(histogramSelector).width() - margin.left - margin.right,
-		    height = $(histogramSelector).height() - margin.top - margin.bottom;
+		    width = $(selector).width() - margin.left - margin.right,
+		    height = $(selector).height() - margin.top - margin.bottom;
 		
 		var x = d3.scale.linear()
 		    .domain([histogramStartRange, histogramEndRange])
@@ -57,7 +58,7 @@ function histogram(options, callback)
 		    .scale(x)
 		    .orient("bottom");
 	
-		var svg = d3.select(histogramSelector).append("svg")
+		var svg = d3.select(selector).append("svg")
 		    .attr("width", width + margin.left + margin.right)
 		    .attr("height", height + margin.top + margin.bottom)
 		  .append("g")
@@ -87,14 +88,14 @@ function histogram(options, callback)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
 		    	console.log(d3.select(this).attr("class"));
-		    	console.log(histogramSelector + " .bar rect.dataBar");
+		    	console.log(selector + " .bar rect.dataBar");
 		    	if(d3.select(this).attr("class").indexOf("selected") >= 0)
 		    	{
 		    		d3.select(this).classed("selected", false);
 		    	}
 		    	else
 		    	{
-		    		d3.selectAll(histogramSelector + " .bar rect.dataBar").classed("selected", false);
+		    		d3.selectAll(selector + " .bar rect.dataBar").classed("selected", false);
 		    		d3.select(this).classed("selected", true);
 		    	}
 		    	
