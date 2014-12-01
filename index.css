@@ -215,6 +215,12 @@
 	top: 50px;
 }
 
+#brushTime
+{
+	position:absolute;
+	top: 90px;
+}
+
 #labels svg
 {
 	position: absolute;
@@ -349,6 +355,12 @@
 {
 	position: absolute;
 	top: 50px;
+}
+
+#brushTime2
+{
+	position:absolute;
+	top: 90px;
 }
 
 #labels2 svg
