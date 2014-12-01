@@ -314,7 +314,19 @@ function drawOverview(options, attribute, startRange, endRange)
 	
 	var canvas = document.getElementById(options.overviewId);
 	var container = canvas.parentNode.getBoundingClientRect();
-		
+	
+	function between(data, start, end)
+	{
+		if start <= data && data <= end)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	canvas.width = container.width;
 	canvas.height = container.height; 
 	var context = canvas.getContext("2d");
@@ -324,34 +336,32 @@ function drawOverview(options, attribute, startRange, endRange)
 		var y = options.selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / options.selectedCircuits.length);
 		var w = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / rangeInMilliseconds) * canvas.width;
 		var h = (canvas.height / options.selectedCircuits.length);
-  			
+  		var durationInSeconds = ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000);
+		
 		if(x < 0)
 		{
 			w += x;
 			x = 0;
 		}
   			
-		if (options.kwFilterStart === null && option.durationFilterStart === null)
-		{
-			context.fillStyle = getColor(d.avgKW / maxCircuitValue);
-		}
-		else if(options.kwFilterStart !== null && options.durationFilterStart !== null && 
-				options.kwFilterStart <= d.avgKW && d.avgKW <= options.kwFilterEnd &&
-				options.durationFilterStart <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
-				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
+		context.fillStyle = getColor(d.avgKW / maxCircuitValue);
+
+		if(options.kwFilterStart !== null && options.durationFilterStart !== null && 
+				between(d.avgKW, options.kwFilterStart options.kwFilterEnd) &&
+				between(durationInSeconds, options.durationFilterStart, options.durationFilterEnd))
 		{
 			context.fillStyle = "lime";
 		}	
-		else if(options.kwFilterStart !== null && options.kwFilterStart <= d.avgKW && d.avgKW <= options.kwFilterEnd)
+		else if(options.kwFilterStart !== null && between(d.avgKW, options.kwFilterStart options.kwFilterEnd))
 		{
 			context.fillStyle = "lime";
 		}
 		else if(options.durationFilterStart !== null && 
-				options.durationFilterStart <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
-				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
+				between(durationInSeconds, options.durationFilterStart, options.durationFilterEnd))
 		{
 			context.fillStyle = "lime";
 		}
+		
   		context.fillRect(x,y,w,h);
 	});
   	
