@@ -347,12 +347,12 @@ function drawOverview(options, attribute, startRange, endRange)
 		context.fillStyle = getColor(d.avgKW / maxCircuitValue);
 
 		if(options.kwFilterStart !== null && options.durationFilterStart !== null && 
-				between(d.avgKW, options.kwFilterStart options.kwFilterEnd) &&
+				between(d.avgKW, options.kwFilterStart, options.kwFilterEnd) &&
 				between(durationInSeconds, options.durationFilterStart, options.durationFilterEnd))
 		{
 			context.fillStyle = "lime";
 		}	
-		else if(options.kwFilterStart !== null && between(d.avgKW, options.kwFilterStart options.kwFilterEnd))
+		else if(options.kwFilterStart !== null && between(d.avgKW, options.kwFilterStart, options.kwFilterEnd))
 		{
 			context.fillStyle = "lime";
 		}
