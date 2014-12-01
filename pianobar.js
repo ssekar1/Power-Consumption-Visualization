@@ -87,11 +87,17 @@ function drawEvents(options, fromLoad)
 
 function drawBrushes(options)
 {
+	drawBrushTime(options);
 	drawZoomTimeView(options);
     drawOverviewBrush(options);
     drawZoomBrush(options);
     getSelectedEvents(options);
     drawCircuits(options);
+}
+
+function drawBrushTime(options)
+{
+	$("#" + options.brushTimeId).text(options.brushTime);
 }
 
 function drawCircuits(options)
