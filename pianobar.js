@@ -317,7 +317,7 @@ function drawOverview(options, attribute, startRange, endRange)
 	
 	function between(data, start, end)
 	{
-		if start <= data && data <= end)
+		if(start <= data && data <= end)
 		{
 			return true;
 		}
