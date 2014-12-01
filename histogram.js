@@ -78,7 +78,24 @@ function histogram(options, callback)
 			.attr("height", height)
 			.attr("style", "fill:white;")
 			.on("click", function (d){
-				callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+				if(d3.select(this).select(" ~ .dataBar").attr("class").indexOf("selected") >= 0)
+		    	{
+		    		d3.select(this).classed("selected", false);
+		    	}
+		    	else
+		    	{
+		    		d3.selectAll(selector + " .bar rect.dataBar").classed("selected", false);
+		    		d3.select(this).classed("selected", true);
+		    	}
+		    	
+		    	if((d.x + (((endRange - startRange) / bins))) === endRange)
+		    	{
+		    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});
+		    	}
+		    	else
+		    	{
+		    		callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+		    	}
 			});
 		
 		bar.append("rect")
@@ -87,8 +104,6 @@ function histogram(options, callback)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
-		    	console.log(d3.select(this).attr("class"));
-		    	console.log(selector + " .bar rect.dataBar");
 		    	if(d3.select(this).attr("class").indexOf("selected") >= 0)
 		    	{
 		    		d3.select(this).classed("selected", false);
