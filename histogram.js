@@ -86,6 +86,7 @@ function histogram(options, callback)
 		    .attr("width", x(data[0].dx) - 1)
 		    .attr("height", function(d) { return height - y(d.y); })
 		    .on("click", function (d){
+		    	console.log(d3.select(this).style("fill"));
 		    	if(d3.select(this).style("fill") === "black")
 		    	{
 		    		d3.select(this).style("fill", "");
