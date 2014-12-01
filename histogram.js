@@ -78,24 +78,23 @@ function histogram(options, callback)
 			.attr("height", height)
 			.attr("style", "fill:white;")
 			.on("click", function (d){
-				console.log(this.nextSibling);
 				if(d3.select(this.nextSibling).attr("class").indexOf("selected") >= 0)
 		    	{
 		    		d3.select(this.nextSibling).classed("selected", false);
+		    		callback(options, {start: null, end: null});
 		    	}
 		    	else
 		    	{
 		    		d3.selectAll(selector + " .bar rect.dataBar").classed("selected", false);
 		    		d3.select(this.nextSibling).classed("selected", true);
-		    	}
-		    	
-		    	if((d.x + (((endRange - startRange) / bins))) === endRange)
-		    	{
-		    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});
-		    	}
-		    	else
-		    	{
-		    		callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+		    		if((d.x + (((endRange - startRange) / bins))) === endRange)
+			    	{
+			    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});
+			    	}
+			    	else
+			    	{
+			    		callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+			    	}
 		    	}
 			});
 		
@@ -108,20 +107,20 @@ function histogram(options, callback)
 		    	if(d3.select(this).attr("class").indexOf("selected") >= 0)
 		    	{
 		    		d3.select(this).classed("selected", false);
+		    		callback(options, {start: null, end: null});
 		    	}
 		    	else
 		    	{
 		    		d3.selectAll(selector + " .bar rect.dataBar").classed("selected", false);
 		    		d3.select(this).classed("selected", true);
-		    	}
-		    	
-		    	if((d.x + (((endRange - startRange) / bins))) === endRange)
-		    	{
-		    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});
-		    	}
-		    	else
-		    	{
-		    		callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+		    		if((d.x + (((endRange - startRange) / bins))) === endRange)
+			    	{
+			    		callback(options, {start:d.x, end: Number.POSITIVE_INFINITY});
+			    	}
+			    	else
+			    	{
+			    		callback(options, {start:d.x, end:(d.x + ((endRange - startRange) / bins))});
+			    	}
 		    	}
 		    });
 	

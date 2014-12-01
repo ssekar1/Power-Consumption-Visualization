@@ -99,44 +99,84 @@ function drawCircuits(options)
 	Barchart.render(options);
 }
 
-function kwOnClick(options, range)
+function histogramHighlight(options)
 {
 	$("#" + options.zoomViewId + " rect.event")
 	.filter(function(){
 		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
-		return range.start <= kw && kw <= range.end;
+		var durationInSeconds = $(this).get(0).getAttribute("data-durationInSeconds");
+		
+		if(options.durationFilterStart !== null && options.kwFilterStart !== null)
+		{	
+			return options.durationFilterStart <= durationInSeconds && 
+			durationInSeconds <= options.durationFilterEnd && 
+			options.kwFilterStart <= kw && 
+			kw <= options.kwFilterEnd;
+		}
+		else if(options.durationFilterStart !== null)
+		{
+			return options.durationFilterStart <= durationInSeconds && 
+				durationInSeconds <= options.durationFilterEnd;
+		}
+		else if(options.kwFilterStart !== null)
+		{
+			return options.kwFilterStart <= kw && 
+			kw <= options.kwFilterEnd;
+		}
+		else
+		{
+			return true;
+		}
 	})
 	.attr("fill", "black");
 	
 	$("#" + options.zoomViewId + " rect.event")
 	.filter(function(){
 		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
-		return range.start > kw || kw > range.end;
+		var durationInSeconds = $(this).get(0).getAttribute("data-durationInSeconds");
+		if(options.durationFilterStart !== null && options.kwFilterStart !== null)
+		{
+			return options.durationFilterStart > durationInSeconds || 
+				durationInSeconds > options.durationFilterEnd ||
+				options.kwFilterStart > kw || 
+				kw > options.kwFilterEnd;
+		}
+		else if(options.durationFilterStart !== null)
+		{
+			return options.durationFilterStart > durationInSeconds || 
+				durationInSeconds > options.durationFilterEnd;
+		}
+		else if(options.kwFilterStart !== null)
+		{
+			return options.kwFilterStart > kw || 
+			kw > options.kwFilterEnd;
+		}
+		else
+		{
+			return false;
+		}
 	}).each(function(){
 		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
 		$(this).attr("fill", getColor(kw / maxCircuitValue));
 	});
+}
+
+function kwOnClick(options, range)
+{
+	options.kwFilterStart = range.start;
+	options.kwFilterEnd = range.end;
+	
+	histogramHighlight(options);
 	
 	drawOverview(options, "avgKW", range.start, range.end);
 }
 
 function durationOnClick(options, range)
 {
-	$("#" + options.zoomViewId + " rect.event")
-	.filter(function(){
-		var durationInSeconds = $(this).get(0).getAttribute("data-durationInSeconds");
-		return range.start <= durationInSeconds && durationInSeconds <= range.end;
-	})
-	.attr("fill", "black");
+	options.durationFilterStart = range.start;
+	options.durationFilterEnd = range.end;
 	
-	$("#" + options.zoomViewId + " rect.event")
-	.filter(function(){
-		var durationInSeconds = $(this).get(0).getAttribute("data-durationInSeconds");
-		return range.start > durationInSeconds || durationInSeconds > range.end;
-	}).each(function(){
-		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
-		$(this).attr("fill", getColor(kw / maxCircuitValue));
-	});
+	histogramHighlight(options);
 	
 	drawOverview(options, "duration", range.start, range.end);
 }
@@ -290,13 +330,20 @@ function drawOverview(options, attribute, startRange, endRange)
 			x = 0;
 		}
   			
-		if(attribute === "avgKW" && startRange <= d[attribute] && d[attribute] <= endRange)
+		if(options.kwFilterStart !== null && options.durationFilterStart !== null && 
+				options.kwFilterStart <= d.avgKW && d.avgKW <= options.kwFilterEnd &&
+				options.durationFilterStart <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
+				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
+		{
+			context.fillStyle = "black";
+		}	
+		else if(options.kwFilterStart !== null && options.kwFilterStart <= d.avgKW && d.avgKW <= options.kwFilterEnd)
 		{
 			context.fillStyle = "black";
 		}
-		else if(attribute === "duration" && 
-				startRange <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
-				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000 <= endRange))
+		else if(options.durationFilterStart !== null && 
+				options.durationFilterStart <= ((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) && 
+				((new Date(d.end).getTime() - new Date(d.start).getTime()) / 1000) <= options.durationFilterEnd)
 		{
 			context.fillStyle = "black";
 		}
