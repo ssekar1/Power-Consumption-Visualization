@@ -125,7 +125,7 @@ function histogramHighlight(options)
 		}
 		else
 		{
-			return true;
+			return false;
 		}
 	})
 	.attr("fill", "lime");
