@@ -318,6 +318,7 @@ function drawOverview(options, attribute, startRange, endRange)
 	canvas.width = container.width;
 	canvas.height = container.height; 
 	var context = canvas.getContext("2d");
+	context.clearRect(0,0,canvas.width, canvas.height);
 	$.each(events, function(i, d){
 		var x = ((new Date(d.start).getTime() - options.overviewStartDate.getTime()) / rangeInMilliseconds) * canvas.width;
 		var y = options.selectedCircuits.indexOf(circuitNameToIndex[d.circuit]) * (canvas.height / options.selectedCircuits.length);
