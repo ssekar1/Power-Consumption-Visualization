@@ -159,7 +159,7 @@ function histogramHighlight(options)
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 	}).each(function(){
 		var kw = parseFloat($(this).get(0).getAttribute("data-avgKW"));
