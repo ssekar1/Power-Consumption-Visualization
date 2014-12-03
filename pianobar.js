@@ -119,12 +119,12 @@ function histogramHighlight(options)
 			options.kwFilterStart <= kw && 
 			kw <= options.kwFilterEnd;
 		}
-		else if(options.durationFilterStart !== null)
+		else if(options.durationFilterStart !== null && options.kwFilterStart === null)
 		{
 			return options.durationFilterStart <= durationInSeconds && 
 				durationInSeconds <= options.durationFilterEnd;
 		}
-		else if(options.kwFilterStart !== null)
+		else if(options.kwFilterStart !== null && options.durationFilterStart === null)
 		{
 			return options.kwFilterStart <= kw && 
 			kw <= options.kwFilterEnd;
@@ -147,12 +147,12 @@ function histogramHighlight(options)
 				options.kwFilterStart > kw || 
 				kw > options.kwFilterEnd;
 		}
-		else if(options.durationFilterStart !== null)
+		else if(options.durationFilterStart !== null && options.kwFilterStart === null)
 		{
 			return options.durationFilterStart > durationInSeconds || 
 				durationInSeconds > options.durationFilterEnd;
 		}
-		else if(options.kwFilterStart !== null)
+		else if(options.kwFilterStart !== null && options.durationFilterStart === null)
 		{
 			return options.kwFilterStart > kw || 
 			kw > options.kwFilterEnd;
