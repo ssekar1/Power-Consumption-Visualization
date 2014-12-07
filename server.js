@@ -329,7 +329,7 @@ var SampleApp = function() {
 	self.routes['/data/indexEvents/:circuits'] = function(req, res) {
 		
 		var circuits = ["circuit1kw as c1", "circuit2kw as c2", "circuit3kw as c3", "circuit4kw as c4", "circuit5kw as c5", "circuit6kw as c6", 
-		            "circuit7akw as c7a", "circuit1kw as c7b", "circuit8kw as c8", "circuit9kw as c9", "circuit10kw as c10", "circuit11kw as c11",
+		            "circuit7akw as c7a", "circuit7bkw as c7b", "circuit8kw as c8", "circuit9kw as c9", "circuit10kw as c10", "circuit11kw as c11",
 		            "circuit12kw as c12", "circuit13kw as c13", "circuit14kw as c14", "circuit15kw as c15", "circuit16kw as c16", "circuit17kw as c17", 
 		            "circuit18kw as c18", "circuit19kw as c19", "circuit20kw as c20"];
 		
